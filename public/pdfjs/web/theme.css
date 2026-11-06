@@ -1,0 +1,24 @@
+/*
+ * JIE theming for the self-hosted PDF.js viewer (light theming only).
+ * Toolbar chrome is brand crimson on white content; doorhanger panels,
+ * findbar, sidebar and the PDF pages themselves keep PDF.js defaults.
+ * Loaded from viewer.html after viewer.css; no functionality is changed.
+ */
+
+#outerContainer > #mainContainer > .toolbar {
+  --main-color: #ffffff;
+  --toolbar-bg-color: #74092b;
+  --toolbar-border-color: #4e061d;
+  --toolbar-icon-bg-color: #ffffff;
+  --toolbar-icon-hover-bg-color: #ffffff;
+  --toolbar-icon-opacity: 1;
+}
+
+/* Restores default colours inside panels spawned from the toolbar, so door
+   menus stay readable on their own paper backgrounds. */
+.toolbar :is(.doorHanger, .doorHangerRight, .editorParamsToolbar) {
+  --main-color: light-dark(rgb(12 12 13), rgb(249 249 250));
+  --toolbar-icon-bg-color: light-dark(rgb(0 0 0), rgb(255 255 255));
+  --toolbar-icon-hover-bg-color: light-dark(rgb(0 0 0), rgb(255 255 255));
+  --toolbar-icon-opacity: 0.7;
+}

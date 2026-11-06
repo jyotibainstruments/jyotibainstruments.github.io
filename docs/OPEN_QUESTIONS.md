@@ -21,6 +21,7 @@ Questions for the owner. The site does not wait for answers: anything missing is
 15. **Dark logo lettering on crimson.** The supplied `JIE_dark.svg` letters are rose `#BD254C` on crimson `#74092B` (about 1.9:1). Logos are exempt from WCAG text contrast, but the wordmark reads faintly in the footer. Approve this variant as-is, or supply a footer variant with white or `#F0C45A` lettering.
 16. **On-site calibration list.** The on-site page reproduces the instruments named in the letter: surface plates, Trimos, bench centers, CMMs, hardness testers, UTM, FTM, CTM and pressure gauges. Confirm this is still the current on-site scope, and whether bio-medical or civil cube testing can be added.
 17. **"Minor repair work is free of charge."** The site publishes this as a standing commitment, exactly as supplied. Confirm it should stay public, since it reads as a price statement.
+18. **Catalogue metadata per company.** Once a PDF exists for a brand, supply (a) optional first-page poster as `public/catalogues/<slug>.jpg`, (b) category names with their PDF page numbers for the open-at-page chips in `companies.json`, (c) optional highlights. The viewer and chips are live; they just need real page numbers.
 
 ## Not supplied, so not displayed
 

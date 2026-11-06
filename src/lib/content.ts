@@ -6,6 +6,7 @@ import servicesJson from '../data/services.json';
 import processJson from '../data/process.json';
 import homeJson from '../data/home.json';
 import servicesPageJson from '../data/services-page.json';
+import productsPageJson from '../data/products-page.json';
 
 /**
  * Validates a JSON collection and fails the build with a readable list of
@@ -396,3 +397,16 @@ export function clientsInCity(city: 'belgaum' | 'hubli' | 'dharwad'): Client[] {
 export function companyPath(slug: string): string {
   return `/products/${slug}/`;
 }
+
+/* Products hub */
+
+const productsPageSchema = z.object({
+  heading: z.string().min(1),
+  metaTitle: z.string().min(1).max(60, 'Meta titles must be 60 characters or fewer'),
+  metaDescription: z.string().min(1).max(155, 'Meta descriptions must be 155 characters or fewer'),
+  intro: z.array(z.string().min(1)).min(1).max(3),
+});
+
+export type ProductsPage = z.infer<typeof productsPageSchema>;
+
+export const productsPage = parseCollection('products page', productsPageSchema, productsPageJson);

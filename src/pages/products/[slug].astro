@@ -1,0 +1,246 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Section from '../../components/Section.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Card from '../../components/Card.astro';
+import WhatsAppButton from '../../components/WhatsAppButton.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import CatalogueViewer from '../../components/CatalogueViewer.astro';
+import { companyPath, getService, visibleCompanies } from '../../lib/content';
+import type { Company } from '../../lib/content';
+import { breadcrumbJsonLd, companyTitle, companyDescription } from '../../lib/seo';
+import { productEnquiry, serviceEnquiry } from '../../lib/whatsapp';
+import { url } from '../../lib/url';
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+export function getStaticPaths() {
+  return visibleCompanies.map((company) => ({
+    params: { slug: company.slug },
+    props: { company },
+  }));
+}
+
+const { company } = Astro.props as { company: Company };
+
+const items = [
+  { name: 'Home', path: '/' },
+  { name: 'Products', path: '/products/' },
+  { name: company.name, path: companyPath(company.slug) },
+];
+
+const heading = `${company.name} instruments: catalogue and enquiry`;
+
+/* Neutral, source-backed copy (CONTENT.md section 6). No dealer claims. */
+const intro = [
+  'JIE supplies measuring instruments and spares from leading brands, and provides calibration, expert repair and servicing for all major brands of measuring instruments.',
+  `Browse the ${company.name} catalogue below and enquire on WhatsApp for specifications and pricing.`,
+];
+
+const posterCandidate = `/catalogues/${company.slug}.jpg`;
+const posterSrc = existsSync(
+  fileURLToPath(new URL(`../../public${posterCandidate}`, import.meta.url)),
+)
+  ? posterCandidate
+  : null;
+
+/* Every company page links to calibration and repair for these instruments. */
+const relatedLinks = [getService('mechanical-pressure'), getService('repairs-and-tool-error-adjustment')];
+
+const others = visibleCompanies.filter((item) => item.slug !== company.slug);
+const enquiryMessage = productEnquiry(`${company.name} instruments`);
+const cantFindMessage = serviceEnquiry(`${company.name} instruments`);
+---
+
+<SiteLayout
+  title={companyTitle(company.name)}
+  description={companyDescription(company.name)}
+  path={companyPath(company.slug)}
+  jsonLd={[breadcrumbJsonLd(items)]}
+>
+  <PageHeader heading={heading} intro={intro} items={items}>
+    <WhatsAppButton
+      slot="actions"
+      placement={`products-${company.slug}`}
+      label={`Enquire about ${company.name} instruments on WhatsApp`}
+      message={enquiryMessage}
+    />
+  </PageHeader>
+
+  <Section tone="surface" labelledby="company-catalogue">
+    <SectionHeading id="company-catalogue" title="Catalogue" />
+    <CatalogueViewer slug={company.slug} name={company.name} pdf={company.pdf} poster={posterSrc} categories={company.categories} />
+  </Section>
+
+  {
+    company.pdf && (
+      <Section labelledby="company-cantfind">
+        <div class="cantfind">
+          <div class="cantfind__text">
+            <h2 id="company-cantfind">Can’t find a product?</h2>
+            <p>
+              Tell us what you measured or which part you need, and we will point you to the right place in the{' '}
+              {company.name} catalogue or supply it from another leading brand.
+            </p>
+          </div>
+          <WhatsAppButton
+            placement={`catalogue-${company.slug}-cantfind`}
+            label={`Ask about a ${company.name} product on WhatsApp`}
+            message={cantFindMessage}
+          />
+        </div>
+      </Section>
+    )
+  }
+
+  <Section tone="surface" labelledby="company-related">
+    <SectionHeading
+      id="company-related"
+      title="Keep your instruments in service"
+      intro="JIE calibrates, repairs and services these instruments as well as supplying them."
+    />
+    <ul class="grid">
+      {
+        relatedLinks.map((service) => (
+          <li>
+            <Card href={url(service.path)}>
+              <div class="tile">
+                <h3>{service.navTitle}</h3>
+                <p>{service.summary}</p>
+                <span class="more">View service →</span>
+              </div>
+            </Card>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  {
+    others.length > 0 && (
+      <Section labelledby="company-others">
+        <SectionHeading id="company-others" title="Other catalogues" link={{ label: 'All products', href: url('/products/') }} />
+        <ul class="others">
+          {others.map((item) => (
+            <li>
+              <a href={url(companyPath(item.slug))}>{item.name}</a>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    )
+  }
+
+  <CtaPanel
+    title={`Enquire about ${company.name} instruments`}
+    text="Tell us the instrument or spare part you need. We look forward to hearing from you."
+    placement={`products-${company.slug}-cta`}
+  />
+</SiteLayout>
+
+<style>
+  .grid {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .grid > li {
+    display: flex;
+    margin: 0;
+  }
+
+  @media (min-width: 760px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .tile {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .tile h3 {
+    margin: 0;
+    font-size: var(--text-lg);
+  }
+
+  .tile p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+  }
+
+  .more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    margin-top: auto;
+    padding-top: var(--space-4);
+    color: var(--crimson);
+    font-size: var(--text-xs);
+    font-weight: 650;
+  }
+
+  .cantfind {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding: clamp(20px, 4vw, 36px);
+    border: 1px solid rgb(116 9 43 / 18%);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-card);
+    background: var(--crimson-50);
+  }
+
+  .cantfind__text {
+    max-width: 62ch;
+  }
+
+  .cantfind h2 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-xl);
+  }
+
+  .cantfind p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+
+  .others {
+    display: grid;
+    gap: var(--space-2) var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 640px) {
+    .others {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .others a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--crimson);
+    font-weight: 650;
+    font-size: var(--text-sm);
+  }
+
+  .others a:hover {
+    color: var(--crimson-900);
+  }
+</style>

@@ -120,6 +120,28 @@ export function collectionPageJsonLd(input: {
   };
 }
 
+/**
+ * Company-page metadata. Neutral wording only: until the owner confirms
+ * dealer status, copy says JIE supplies measuring instruments and spares
+ * from leading brands and names the catalogue, not an exclusive deal.
+ * The guards fail the build for a company name that would break the limits.
+ */
+export function companyTitle(name: string): string {
+  const title = `${name} instruments, catalogue and enquiry | JIE`;
+  if (title.length > 60) {
+    throw new Error(`Meta title is ${title.length} chars for company "${name}" (max 60)`);
+  }
+  return title;
+}
+
+export function companyDescription(name: string): string {
+  const description = `Calibration, repair and supply of measuring instruments and spares from JIE. Browse the ${name} catalogue and enquire on WhatsApp.`;
+  if (description.length > 155) {
+    throw new Error(`Meta description is ${description.length} chars for company "${name}" (max 155)`);
+  }
+  return description;
+}
+
 export function faqJsonLd(items: Array<{ question: string; answer: string }>): JsonLd {
   return {
     '@context': 'https://schema.org',
