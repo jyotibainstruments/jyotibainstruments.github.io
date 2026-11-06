@@ -47,7 +47,7 @@ const { items, class: className } = Astro.props;
     margin: 0;
   }
 
-  .breadcrumbs li + li::before {
+  .breadcrumbs li:not(:last-child)::after {
     width: 1px;
     height: 12px;
     margin-inline: 0.7rem;

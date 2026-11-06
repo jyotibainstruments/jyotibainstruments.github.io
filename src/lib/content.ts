@@ -5,6 +5,7 @@ import clientsJson from '../data/clients.json';
 import servicesJson from '../data/services.json';
 import processJson from '../data/process.json';
 import homeJson from '../data/home.json';
+import servicesPageJson from '../data/services-page.json';
 
 /**
  * Validates a JSON collection and fails the build with a readable list of
@@ -158,6 +159,11 @@ const faqSchema = z.object({
   answer: z.string().min(1),
 });
 
+const serviceNoteSchema = z.object({
+  title: z.string().min(1),
+  body: z.string().min(1),
+});
+
 const serviceSchema = z.object({
   slug: z
     .string()
@@ -167,13 +173,24 @@ const serviceSchema = z.object({
     .regex(/^\/services\/(?:[a-z0-9-]+\/){1,2}$/, 'Expected a path under /services/ with a trailing slash'),
   title: z.string().min(1),
   navTitle: z.string().min(1),
+  heading: z.string().min(1),
+  metaTitle: z.string().min(1).max(60, 'Meta titles must be 60 characters or fewer'),
+  metaDescription: z
+    .string()
+    .min(1)
+    .max(155, 'Meta descriptions must be 155 characters or fewer'),
   kind: z.enum(['overview', 'discipline', 'service']),
   parent: z.string().nullable().default(null),
   order: z.number().int().nonnegative(),
   summary: z.string().min(1),
+  intro: z.array(z.string().min(1)).min(1).max(3),
+  listTitle: z.string().min(1),
   examples: z.array(z.string().min(1)).default([]),
   instruments: z.array(z.string().min(1)).default([]),
-  faq: z.array(faqSchema).default([]),
+  notes: z.array(serviceNoteSchema).default([]),
+  onSiteNote: z.string().min(1).nullable().default(null),
+  related: z.array(z.string().min(1)).default([]),
+  faq: z.array(faqSchema).min(3).max(5),
 });
 
 export type Service = z.infer<typeof serviceSchema>;
@@ -226,6 +243,30 @@ const services = parseCollection(
             message: `Expected "${expectedPath}" for this service`,
           });
         }
+
+        item.related.forEach((slug, relatedIndex) => {
+          if (slug === item.slug) {
+            ctx.addIssue({
+              code: 'custom',
+              path: [index, 'related', relatedIndex],
+              message: 'A service cannot link to itself',
+            });
+          } else if (!items.some((other) => other.slug === slug)) {
+            ctx.addIssue({
+              code: 'custom',
+              path: [index, 'related', relatedIndex],
+              message: `Unknown service slug "${slug}"`,
+            });
+          }
+        });
+
+        if (!hasUniqueValues(item.related)) {
+          ctx.addIssue({
+            code: 'custom',
+            path: [index, 'related'],
+            message: 'Related service slugs must be unique',
+          });
+        }
       });
     }),
   servicesJson,
@@ -243,6 +284,34 @@ export const calibrationDisciplines = orderedServices.filter(
 );
 
 export const otherServices = orderedServices.filter((service) => service.kind === 'service');
+
+export const servicesBySlug = new Map(services.map((service) => [service.slug, service]));
+
+export function getService(slug: string): Service {
+  const service = servicesBySlug.get(slug);
+  if (!service) {
+    throw new Error(`Unknown service slug "${slug}"`);
+  }
+  return service;
+}
+
+export function relatedServices(service: Service): Service[] {
+  return service.related.map((slug) => getService(slug));
+}
+
+/* Services hub */
+
+const servicesPageSchema = z.object({
+  heading: z.string().min(1),
+  metaTitle: z.string().min(1).max(60, 'Meta titles must be 60 characters or fewer'),
+  metaDescription: z.string().min(1).max(155, 'Meta descriptions must be 155 characters or fewer'),
+  intro: z.array(z.string().min(1)).min(1).max(3),
+  faq: z.array(faqSchema).min(3).max(5),
+});
+
+export type ServicesPage = z.infer<typeof servicesPageSchema>;
+
+export const servicesPage = parseCollection('services page', servicesPageSchema, servicesPageJson);
 
 /* Process */
 

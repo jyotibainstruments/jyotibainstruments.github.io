@@ -1,0 +1,38 @@
+---
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import ServicePage from '../../../components/services/ServicePage.astro';
+import { calibrationDisciplines } from '../../../lib/content';
+import { breadcrumbJsonLd, serviceJsonLd } from '../../../lib/seo';
+
+export function getStaticPaths() {
+  return calibrationDisciplines.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+
+const items = [
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '/services/' },
+  { name: 'Calibration', path: '/services/calibration/' },
+  { name: service.navTitle, path: service.path },
+];
+---
+
+<SiteLayout
+  title={service.metaTitle}
+  description={service.metaDescription}
+  path={service.path}
+  jsonLd={[
+    serviceJsonLd({
+      name: service.title,
+      description: service.metaDescription,
+      path: service.path,
+    }),
+    breadcrumbJsonLd(items),
+  ]}
+>
+  <ServicePage service={service} items={items} />
+</SiteLayout>

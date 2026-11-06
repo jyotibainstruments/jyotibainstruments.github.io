@@ -4,23 +4,68 @@
     "path": "/services/calibration/",
     "title": "Calibration",
     "navTitle": "Calibration overview",
+    "heading": "Calibration services in Belgaum and Hubli",
+    "metaTitle": "Calibration services in Belgaum and Hubli | JIE",
+    "metaDescription": "Mechanical, electro-technical, thermal, fluid and flow, medical and civil calibration, traceable to National and International Standards.",
     "kind": "overview",
     "parent": null,
     "order": 1,
     "summary": "Precise, reliable and traceable calibration for a wide range of instruments and equipment, helping industries, institutions and hospitals meet quality, safety and regulatory requirements.",
+    "intro": [
+      "JIE provides precise, reliable and traceable calibration for a wide range of instruments and equipment, helping industries, institutions and hospitals meet quality, safety and regulatory requirements.",
+      "Calibration covers mechanical and pressure, electro-technical, thermal and temperature, fluid and flow, medical and bio-medical, and civil, construction and material testing instruments. Simple and cost-effective pricing is part of the service approach, with calibration restricted to the equipment necessary to meet product-liability and safety requirements and, where relevant, BIS and ISO standards."
+    ],
+    "listTitle": "Calibration disciplines",
     "examples": [],
     "instruments": [],
-    "faq": []
+    "notes": [],
+    "onSiteNote": "On-site calibration is available for selected instruments and equipment, including surface plates, Trimos, bench centers, CMMs, hardness testers, UTM, FTM, CTM and pressure gauges.",
+    "related": [
+      "on-site-calibration",
+      "repairs-and-tool-error-adjustment",
+      "spare-parts-and-instruments",
+      "mechanical-pressure"
+    ],
+    "faq": [
+      {
+        "question": "Which calibration disciplines does JIE cover?",
+        "answer": "Mechanical and pressure, electro-technical, thermal and temperature, fluid and flow, medical and bio-medical, and civil, construction and material testing."
+      },
+      {
+        "question": "Is calibration traceable to national or international standards?",
+        "answer": "Certification is maintained and updated, traceable to National / International Standards."
+      },
+      {
+        "question": "Can instruments be calibrated at our own facility?",
+        "answer": "On-site calibration is available for selected instruments, including surface plates, Trimos, bench centers, CMMs, hardness testers, UTM, FTM, CTM and pressure gauges. Calibration is performed at your facility, saving time and travel cost, and refers to BIS and ISO standards."
+      },
+      {
+        "question": "What documentation is provided?",
+        "answer": "Documentation is intended to satisfy industry, technical-institute, medical-institute, hospital, government-project, regulatory and audit requirements."
+      },
+      {
+        "question": "What happens if an instrument is outside tolerance?",
+        "answer": "Where tools or equipment are outside specified tolerance, JIE carries out repairs or adjustments wherever possible to bring them back within specified limits. Minor repair work is free of charge; major repair work is charged extra at actual."
+      }
+    ]
   },
   {
     "slug": "mechanical-pressure",
     "path": "/services/calibration/mechanical-pressure/",
     "title": "Mechanical and pressure calibration",
     "navTitle": "Mechanical and pressure",
+    "heading": "Mechanical and pressure calibration in Belgaum and Hubli",
+    "metaTitle": "Mechanical and pressure calibration | JIE",
+    "metaDescription": "Calibration of vernier calipers, micrometers, gauges, torque wrenches, surface plates and pressure gauges in Belgaum and Hubli.",
     "kind": "discipline",
     "parent": "calibration",
     "order": 2,
     "summary": "Calibration of mechanical measuring instruments and pressure gauges, including vernier calipers, micrometers, gauges, torque tools and surface plates.",
+    "intro": [
+      "Mechanical and pressure calibration covers the measuring instruments and gauges used in manufacturing, inspection and quality control. Instruments are calibrated at the JIE calibration lab in Belgaum, with on-site calibration available for selected equipment.",
+      "The instrument list ranges from 2D height gauges (Trimos) and profile projectors to vernier calipers, micrometers, gauges, torque tools, surface plates and pressure gauges."
+    ],
+    "listTitle": "Instruments we calibrate",
     "examples": ["Vernier calipers", "Micrometers", "Pressure gauges", "Torque wrenches"],
     "instruments": [
       "2D height gauge (Trimos)",
@@ -48,17 +93,50 @@
       "Vacuum pressure gauges",
       "Digital pressure gauges"
     ],
-    "faq": []
+    "notes": [],
+    "onSiteNote": "Surface plates, Trimos, bench centers, CMMs, hardness testers, UTM, FTM, CTM and pressure gauges can be calibrated at your facility.",
+    "related": [
+      "calibration",
+      "on-site-calibration",
+      "repairs-and-tool-error-adjustment",
+      "electro-technical"
+    ],
+    "faq": [
+      {
+        "question": "Which mechanical instruments are calibrated?",
+        "answer": "2D height gauges (Trimos), profile projectors, combination sets, compression testers, depth gauges, engineer squares, feeler gauges, vernier calipers, micrometers, limit gauges, snap gauges, scales, thread plug gauges, slip gauges, steel rules and tapes, surface plates, plug gauges, torque tools, torque wrenches, Mag V blocks, air gauges and more."
+      },
+      {
+        "question": "Are pressure gauges calibrated?",
+        "answer": "Yes. Pressure gauges, vacuum pressure gauges and digital pressure gauges are on the mechanical and pressure calibration list."
+      },
+      {
+        "question": "Can a torque wrench outside tolerance be adjusted?",
+        "answer": "Where tools or equipment are outside specified tolerance, JIE carries out repairs or adjustments wherever possible to bring them back within specified limits. Minor repair work is free of charge; major repair work is charged extra at actual."
+      },
+      {
+        "question": "Can surface plates and Trimos be calibrated on site?",
+        "answer": "Yes. Surface plates, Trimos, bench centers, CMMs, hardness testers, UTM, FTM, CTM and pressure gauges are among the instruments available for on-site calibration."
+      }
+    ]
   },
   {
     "slug": "electro-technical",
     "path": "/services/calibration/electro-technical/",
     "title": "Electro-technical calibration",
     "navTitle": "Electro-technical",
+    "heading": "Electro-technical calibration in Belgaum and Hubli",
+    "metaTitle": "Electro-technical calibration | JIE",
+    "metaDescription": "Calibration of multimeters, clamp meters, insulation testers, LCR meters, oscilloscopes and mV/mA calibrators at the JIE lab.",
     "kind": "discipline",
     "parent": "calibration",
     "order": 3,
     "summary": "Calibration of electrical and electronic test instruments, including multimeters, clamp meters, insulation testers, LCR meters and calibrators.",
+    "intro": [
+      "Electro-technical calibration covers the electrical and electronic test instruments used to check voltage, current, resistance, frequency and insulation. Instruments are calibrated at the JIE calibration lab in Belgaum.",
+      "The instrument list ranges from multimeters, tong testers and clamp meters to insulation testers, LCR meters, oscilloscopes and mV/mA calibrators."
+    ],
+    "listTitle": "Instruments we calibrate",
     "examples": ["Multimeters", "Clamp meters", "Insulation testers", "Oscilloscope"],
     "instruments": [
       "Multimeters",
@@ -76,17 +154,50 @@
       "Belt tension meter",
       "mV/mA calibrators"
     ],
-    "faq": []
+    "notes": [],
+    "onSiteNote": null,
+    "related": [
+      "calibration",
+      "mechanical-pressure",
+      "thermal",
+      "repairs-and-tool-error-adjustment"
+    ],
+    "faq": [
+      {
+        "question": "Which electrical instruments are calibrated?",
+        "answer": "Multimeters, tong testers, clamp meters, insulation testers, voltmeters, ammeters, frequency meters, CosOmeter, LCR meters, oscilloscopes, brake fluid testers, battery chargers, belt tension meters and mV/mA calibrators."
+      },
+      {
+        "question": "Are clamp meters and insulation testers calibrated?",
+        "answer": "Yes. Clamp meters, tong testers and insulation testers are part of the electro-technical calibration list."
+      },
+      {
+        "question": "Are oscilloscopes and LCR meters calibrated?",
+        "answer": "Yes. Oscilloscopes, LCR meters and frequency meters are on the electro-technical calibration list."
+      },
+      {
+        "question": "How do I send instruments for calibration?",
+        "answer": "Calibration follows four steps: receive and inspect, calibrate, documentation, and return. Contact JIE on WhatsApp or by phone to arrange sending instruments to the Belgaum lab or the Hubli branch."
+      }
+    ]
   },
   {
     "slug": "thermal",
     "path": "/services/calibration/thermal/",
     "title": "Thermal and temperature calibration",
     "navTitle": "Thermal and temperature",
+    "heading": "Thermal and temperature calibration in Belgaum and Hubli",
+    "metaTitle": "Thermal and temperature calibration | JIE",
+    "metaDescription": "Calibration of temperature indicators, controllers, recorders, thermocouples, RTD sensors and thermometers at the JIE lab.",
     "kind": "discipline",
     "parent": "calibration",
     "order": 4,
     "summary": "Calibration of temperature instruments and sensors, including indicators, controllers, recorders, thermocouples and RTD sensors.",
+    "intro": [
+      "Thermal and temperature calibration covers the instruments and sensors used to measure, indicate and control temperature. Instruments are calibrated at the JIE calibration lab in Belgaum.",
+      "The instrument list ranges from temperature indicators, controllers and recorders to thermocouples, RTD sensors and thermometers."
+    ],
+    "listTitle": "Instruments we calibrate",
     "examples": ["Thermocouples", "RTD sensors", "Temperature controllers", "Recorders"],
     "instruments": [
       "Temperature indicators",
@@ -99,30 +210,92 @@
       "Gauge",
       "Thermometer"
     ],
-    "faq": []
+    "notes": [],
+    "onSiteNote": null,
+    "related": [
+      "calibration",
+      "mechanical-pressure",
+      "electro-technical",
+      "spare-parts-and-instruments"
+    ],
+    "faq": [
+      {
+        "question": "Which temperature instruments are calibrated?",
+        "answer": "Temperature indicators, controllers, recorders, scanners, thermocouples, RTD sensors, thermostats, gauges and thermometers."
+      },
+      {
+        "question": "Are thermocouples and RTD sensors calibrated?",
+        "answer": "Yes. Thermocouples and RTD sensors are part of the thermal and temperature calibration list."
+      },
+      {
+        "question": "Can replacement sensors and controllers be supplied?",
+        "answer": "Yes. Spare parts and instruments include thermowells, thermocouples and RTD sensors, temperature controllers and PID controllers."
+      },
+      {
+        "question": "What happens if a controller is outside tolerance?",
+        "answer": "Where tools or equipment are outside specified tolerance, JIE carries out repairs or adjustments wherever possible to bring them back within specified limits. Minor repair work is free of charge; major repair work is charged extra at actual."
+      }
+    ]
   },
   {
     "slug": "fluid-flow",
     "path": "/services/calibration/fluid-flow/",
     "title": "Fluid and flow calibration",
     "navTitle": "Fluid and flow",
+    "heading": "Fluid and flow calibration in Belgaum and Hubli",
+    "metaTitle": "Fluid and flow calibration | JIE",
+    "metaDescription": "Calibration of flow meters for gas and liquid, and differential pressure transmitters, at the JIE calibration lab in Belgaum.",
     "kind": "discipline",
     "parent": "calibration",
     "order": 5,
     "summary": "Calibration of flow meters for gas and liquid, and differential pressure transmitters.",
+    "intro": [
+      "Fluid and flow calibration covers flow meters for gas and liquid, and differential pressure transmitters.",
+      "Calibration is carried out at the calibration lab in Belgaum, with certification maintained and updated, traceable to National / International Standards."
+    ],
+    "listTitle": "Instruments we calibrate",
     "examples": ["Flow meters for gas and liquid", "Differential pressure transmitter"],
     "instruments": ["Flow meters for gas and liquid", "Differential pressure transmitter"],
-    "faq": []
+    "notes": [],
+    "onSiteNote": null,
+    "related": [
+      "calibration",
+      "mechanical-pressure",
+      "on-site-calibration",
+      "repairs-and-tool-error-adjustment"
+    ],
+    "faq": [
+      {
+        "question": "Which flow instruments are calibrated?",
+        "answer": "Flow meters for gas and liquid, and differential pressure transmitters."
+      },
+      {
+        "question": "Is a differential pressure transmitter calibrated?",
+        "answer": "Yes. Differential pressure transmitters are on the fluid and flow calibration list."
+      },
+      {
+        "question": "Can flow meters be calibrated on site?",
+        "answer": "On-site calibration is available for selected instruments and equipment, including surface plates, Trimos, bench centers, CMMs, hardness testers, UTM, FTM, CTM and pressure gauges. Ask about your specific flow instrument on WhatsApp."
+      }
+    ]
   },
   {
     "slug": "medical",
     "path": "/services/calibration/medical/",
     "title": "Bio-medical calibration",
     "navTitle": "Medical and bio-medical",
+    "heading": "Bio-medical calibration in Belgaum and Hubli",
+    "metaTitle": "Bio-medical equipment calibration | JIE",
+    "metaDescription": "Calibration of pulse oximeters, defibrillators, infusion pumps, spectrophotometers and other bio-medical equipment for hospitals.",
     "kind": "discipline",
     "parent": "calibration",
     "order": 6,
     "summary": "Calibration for hospitals and medical institutes, covering pulse oximeters, defibrillators, infusion pumps and more.",
+    "intro": [
+      "Bio-medical calibration covers the equipment used by hospitals, medical institutes and medical colleges. The list ranges from pulse oximeters, defibrillators and infusion pumps to UV spectrophotometers, microscopes and bio safety cabinets.",
+      "Documentation is intended to satisfy industry, technical-institute, medical-institute, hospital, government-project, regulatory and audit requirements."
+    ],
+    "listTitle": "Equipment we calibrate",
     "examples": ["Pulse oximeter", "Defibrillators", "Infusion pump", "UV spectrophotometer"],
     "instruments": [
       "Pulse oximeter",
@@ -136,17 +309,50 @@
       "Density meter",
       "Bio safety cabinet"
     ],
-    "faq": []
+    "notes": [],
+    "onSiteNote": null,
+    "related": [
+      "calibration",
+      "thermal",
+      "electro-technical",
+      "on-site-calibration"
+    ],
+    "faq": [
+      {
+        "question": "Which bio-medical equipment is calibrated?",
+        "answer": "Pulse oximeters, defibrillators, infusion pumps, concentrators, vortex mixers, bottle top dispensers, UV spectrophotometers, microscopes, density meters and bio safety cabinets."
+      },
+      {
+        "question": "Who is bio-medical calibration for?",
+        "answer": "Hospitals, medical institutes and medical colleges. JIE's customers include J.N. Medical College, B.L.D.E.A's Medical College and Hospital, Thyro Care and Minerva Health Care & Scientific Pvt. Ltd."
+      },
+      {
+        "question": "What documentation is provided for hospitals?",
+        "answer": "Documentation is intended to satisfy industry, technical-institute, medical-institute, hospital, government-project, regulatory and audit requirements."
+      },
+      {
+        "question": "Can bio-medical equipment be calibrated on site?",
+        "answer": "On-site calibration is available for selected instruments and equipment. Contact JIE on WhatsApp with the equipment list to confirm what can be calibrated at your facility."
+      }
+    ]
   },
   {
     "slug": "civil",
     "path": "/services/calibration/civil/",
     "title": "Civil, construction and material testing",
     "navTitle": "Civil and material testing",
+    "heading": "Civil, construction and material testing in Belgaum and Hubli",
+    "metaTitle": "Civil and material testing calibration | JIE",
+    "metaDescription": "Cube compressive strength, aggregate and building material testing, UTM, TTM, CTM and jack efficiency calibration from JIE, Belgaum.",
     "kind": "discipline",
     "parent": "calibration",
     "order": 7,
     "summary": "Compressive strength of cubes, physical and aggregate testing, building material testing, force measuring machines and jack efficiency tests.",
+    "intro": [
+      "Civil, construction and material testing covers compressive strength of cubes, physical testing, aggregate testing, building material testing, force measuring machines including UTM, TTM and CTM, and jack efficiency tests.",
+      "Force measuring machines including UTM, FTM and CTM are also available for on-site calibration. Documentation is intended to satisfy industry, government-project, regulatory and audit requirements."
+    ],
+    "listTitle": "Tests and equipment",
     "examples": ["Compressive strength of cubes", "Aggregate testing", "UTM, TTM and CTM", "Jack efficiency test"],
     "instruments": [
       "Compressive strength of cubes",
@@ -156,17 +362,54 @@
       "Force measuring machines including UTM, TTM, CTM",
       "Jack efficiency test"
     ],
-    "faq": []
+    "notes": [],
+    "onSiteNote": "Force measuring machines including UTM, FTM and CTM are among the instruments available for on-site calibration at your facility.",
+    "related": [
+      "calibration",
+      "on-site-calibration",
+      "mechanical-pressure",
+      "repairs-and-tool-error-adjustment"
+    ],
+    "faq": [
+      {
+        "question": "What does civil and material testing cover?",
+        "answer": "Compressive strength of cubes, physical testing, aggregate testing, building material testing, force measuring machines including UTM, TTM and CTM, and jack efficiency tests."
+      },
+      {
+        "question": "Are UTM, TTM and CTM machines calibrated?",
+        "answer": "Yes. Force measuring machines including UTM, TTM and CTM are part of the civil and material testing list."
+      },
+      {
+        "question": "Can a UTM or CTM be calibrated on site?",
+        "answer": "Yes. Force measuring machines including UTM, FTM and CTM are among the instruments available for on-site calibration."
+      },
+      {
+        "question": "What is a jack efficiency test?",
+        "answer": "Jack efficiency testing is part of the civil, construction and material testing services listed by JIE."
+      },
+      {
+        "question": "Which construction customers does JIE work with?",
+        "answer": "Cement and construction customers include Bagalkot Cement Factory, Ratna Cements, ULCCS Kerala, JK Cement Works, L&T Construction, Jandu Construction, KPR Constructions and Dileep Buildcon."
+      }
+    ]
   },
   {
     "slug": "on-site-calibration",
     "path": "/services/on-site-calibration/",
     "title": "On-site calibration",
     "navTitle": "On-site calibration",
+    "heading": "On-site calibration at your facility",
+    "metaTitle": "On-site calibration in Belgaum and Hubli | JIE",
+    "metaDescription": "On-site calibration for surface plates, Trimos, bench centers, CMMs, hardness testers, UTM, FTM, CTM and pressure gauges.",
     "kind": "service",
     "parent": null,
     "order": 8,
     "summary": "On-site calibration at your facility for selected instruments and equipment. It saves time and travel cost, and refers to BIS and ISO standards.",
+    "intro": [
+      "JIE has developed on-site calibration facilities for selected instruments and equipment. Calibration is performed at your facility, saving time and travel cost, and refers to BIS and ISO standards.",
+      "The on-site instrument list includes surface plates, Trimos, bench centers, CMMs, hardness testers, UTM, FTM, CTM, pressure gauges and more. The service is described as convenient, reliable and professional."
+    ],
+    "listTitle": "Instruments calibrated on site",
     "examples": ["Surface plate", "CMM", "UTM", "Pressure gauges"],
     "instruments": [
       "Surface plate",
@@ -179,30 +422,109 @@
       "CTM",
       "Pressure gauges"
     ],
-    "faq": []
+    "notes": [],
+    "onSiteNote": null,
+    "related": [
+      "calibration",
+      "mechanical-pressure",
+      "civil",
+      "repairs-and-tool-error-adjustment"
+    ],
+    "faq": [
+      {
+        "question": "Which instruments can be calibrated on site?",
+        "answer": "Surface plates, Trimos, bench centers, CMMs, hardness testers, UTM, FTM, CTM, pressure gauges and more."
+      },
+      {
+        "question": "What are the advantages of on-site calibration?",
+        "answer": "Calibration is performed at your facility, saving time and travel cost. It refers to BIS and ISO standards and is described as convenient, reliable and professional."
+      },
+      {
+        "question": "Is on-site calibration available for every instrument?",
+        "answer": "On-site calibration is available for selected instruments and equipment. Other instruments are calibrated at the JIE calibration lab in Belgaum."
+      },
+      {
+        "question": "How do I arrange an on-site calibration visit?",
+        "answer": "Contact JIE on WhatsApp or by phone with the instrument list and your location. The Belgaum lab and the Hubli branch serve customers in Belgaum, Hubli, Dharwad, Pune and Ahmedabad."
+      }
+    ]
   },
   {
     "slug": "repairs-and-tool-error-adjustment",
     "path": "/services/repairs-and-tool-error-adjustment/",
     "title": "Repairs and tool-error adjustment",
     "navTitle": "Repairs and tool-error adjustment",
+    "heading": "Repairs and tool-error adjustment in Belgaum and Hubli",
+    "metaTitle": "Repairs and tool-error adjustment | JIE",
+    "metaDescription": "Expert repair and servicing for all major brands of measuring instruments, with tool-error adjustment and free minor repair work.",
     "kind": "service",
     "parent": null,
     "order": 9,
     "summary": "Expert repair and servicing for all major brands of measuring instruments. Tools outside tolerance are repaired or adjusted where possible; minor repair work is free of charge and major repair work is charged extra at actual.",
+    "intro": [
+      "JIE provides expert repair and servicing for all major brands of measuring instruments, with quick service and minimal downtime.",
+      "Where tools or equipment are outside specified tolerance, JIE carries out repairs or adjustments wherever possible to bring them back within specified limits. Minor repair work is free of charge; major repair work is charged extra at actual."
+    ],
+    "listTitle": "What we repair",
     "examples": [],
     "instruments": [],
-    "faq": []
+    "notes": [
+      {
+        "title": "Tool error adjustment",
+        "body": "Where tools or equipment are outside specified tolerance, JIE carries out repairs or adjustments wherever possible to bring them back within specified limits."
+      },
+      {
+        "title": "Minor and major repair work",
+        "body": "Minor repair work is free of charge. Major repair work is charged extra at actual."
+      },
+      {
+        "title": "Quick service",
+        "body": "Expert repair and servicing for all major brands of measuring instruments, with quick service and minimal downtime."
+      }
+    ],
+    "onSiteNote": null,
+    "related": [
+      "calibration",
+      "mechanical-pressure",
+      "spare-parts-and-instruments",
+      "on-site-calibration"
+    ],
+    "faq": [
+      {
+        "question": "Which brands of measuring instruments are repaired?",
+        "answer": "JIE provides expert repair and servicing for all major brands of measuring instruments."
+      },
+      {
+        "question": "What is tool error adjustment?",
+        "answer": "Where tools or equipment are outside specified tolerance, JIE carries out repairs or adjustments wherever possible to bring them back within specified limits."
+      },
+      {
+        "question": "Is repair work chargeable?",
+        "answer": "Minor repair work is free of charge. Major repair work is charged extra at actual."
+      },
+      {
+        "question": "Can an instrument be repaired after it fails calibration?",
+        "answer": "Yes. Instruments found outside tolerance are repaired or adjusted wherever possible, and then brought back within specified limits. Contact JIE on WhatsApp with the instrument details."
+      }
+    ]
   },
   {
     "slug": "spare-parts-and-instruments",
     "path": "/services/spare-parts-and-instruments/",
     "title": "Spare parts and instruments",
     "navTitle": "Spare parts and instruments",
+    "heading": "Spare parts and instruments in Belgaum and Hubli",
+    "metaTitle": "Spare parts and instruments supplied | JIE",
+    "metaDescription": "Pressure gauges, thermocouples, RTD sensors, electrical and lab instruments, temperature controllers and PID controllers from JIE.",
     "kind": "service",
     "parent": null,
     "order": 10,
     "summary": "Spare parts and instruments, including measuring instruments, pressure gauges, thermocouples and RTD sensors, electrical and lab instruments, and temperature and PID controllers.",
+    "intro": [
+      "JIE supplies spare parts and instruments, including pressure gauges, thermocouples and RTD sensors, electrical instruments, lab instruments, temperature controllers and PID controllers.",
+      "The supply list includes measuring instruments and named makes: Mitutoyo, Baker, Insize and Britool for measuring instruments; WIKA, Micro and SHRIJI for pressure gauges; and Reliable for thermowells, thermocouples and RTD sensors."
+    ],
+    "listTitle": "What we supply",
     "examples": [],
     "instruments": [
       "Measuring instruments",
@@ -213,6 +535,36 @@
       "Temperature controllers",
       "PID controllers"
     ],
-    "faq": []
+    "notes": [
+      {
+        "title": "Electrical and lab instruments",
+        "body": "Electrical instruments include ammeters, voltmeters (digital and analog) and clamp meters. Lab instruments include pH meters, thermometers and stop watches."
+      }
+    ],
+    "onSiteNote": null,
+    "related": [
+      "calibration",
+      "repairs-and-tool-error-adjustment",
+      "thermal",
+      "mechanical-pressure"
+    ],
+    "faq": [
+      {
+        "question": "Which spare parts and instruments are supplied?",
+        "answer": "Pressure gauges, thermocouples and RTD sensors, electrical instruments, lab instruments, temperature controllers, PID controllers and measuring instruments."
+      },
+      {
+        "question": "Which makes are named in the supply list?",
+        "answer": "Mitutoyo, Baker, Insize and Britool for measuring instruments; WIKA, Micro and SHRIJI for pressure gauges; and Reliable for thermowells, thermocouples and RTD sensors."
+      },
+      {
+        "question": "Are complete instruments supplied, not only spares?",
+        "answer": "Yes. The supply list includes mechanical measuring instruments, pressure gauges, thermocouples and RTD sensors, electrical instruments such as ammeters, voltmeters and clamp meters, lab instruments such as pH meters, thermometers and stop watches, and temperature and PID controllers."
+      },
+      {
+        "question": "Can supplied instruments be calibrated or repaired by JIE?",
+        "answer": "Yes. JIE calibrates a wide range of instruments and provides expert repair and servicing for all major brands of measuring instruments."
+      }
+    ]
   }
 ]

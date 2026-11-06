@@ -12,6 +12,7 @@ The site renders a neutral `Placeholder` wherever an image is missing. Do not us
 - [ ] Workshop / repair bench.
 - [ ] Civil testing equipment (UTM/CTM or cube testing) if available.
 - [ ] Medical equipment calibration (pulse oximeter, defibrillator) if available.
+- [ ] One image per calibration discipline for the six service pages (mechanical, electro-technical, thermal, fluid and flow, medical, civil); optional, the pages read correctly without them.
 
 For each image: permission to publish, a short caption, and a note on what it shows. Images will be converted to AVIF/WebP with `astro:assets`.
 

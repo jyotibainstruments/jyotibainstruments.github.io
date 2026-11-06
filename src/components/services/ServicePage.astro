@@ -1,0 +1,413 @@
+---
+import type { Service } from '../../lib/content';
+import {
+  calibrationDisciplines,
+  clientsBySector,
+  relatedServices,
+} from '../../lib/content';
+import PageHeader from '../PageHeader.astro';
+import Section from '../Section.astro';
+import SectionHeading from '../SectionHeading.astro';
+import Card from '../Card.astro';
+import ProcessSteps from '../ProcessSteps.astro';
+import Faq from '../Faq.astro';
+import Button from '../Button.astro';
+import WhatsAppButton from '../WhatsAppButton.astro';
+import CtaPanel from '../CtaPanel.astro';
+import { primaryPhone } from '../../config/site';
+import { telHref, url } from '../../lib/url';
+
+interface Item {
+  name: string;
+  path: string;
+}
+
+interface Props {
+  service: Service;
+  items: Item[];
+}
+
+const { service, items } = Astro.props;
+
+const related = relatedServices(service);
+const disciplines = service.kind === 'overview' ? calibrationDisciplines : [];
+const civilClients =
+  service.slug === 'civil'
+    ? (clientsBySector.find((group) => group.sector === 'Cement and construction')?.clients ?? [])
+    : [];
+
+// Alternate background tones block by block so no two sections share a background.
+let tone: 'bg' | 'surface' = 'bg';
+const nextTone = (): 'bg' | 'surface' => {
+  tone = tone === 'bg' ? 'surface' : 'bg';
+  return tone;
+};
+
+const disciplinesTone = disciplines.length > 0 ? nextTone() : null;
+const instrumentsTone = service.instruments.length > 0 ? nextTone() : null;
+const notesTone = service.notes.length > 0 ? nextTone() : null;
+const onSiteTone = service.onSiteNote ? nextTone() : null;
+const processTone = nextTone();
+const civilTone = civilClients.length > 0 ? nextTone() : null;
+const faqTone = nextTone();
+const relatedTone = nextTone();
+
+const lowerTitle = service.title.charAt(0).toLowerCase() + service.title.slice(1);
+---
+
+<PageHeader heading={service.heading} intro={service.intro} items={items}>
+  <Fragment slot="actions">
+    <WhatsAppButton placement={`service-${service.slug}`} service={service.title} label="Enquire on WhatsApp" />
+    {
+      primaryPhone && (
+        <Button href={telHref(primaryPhone)} variant="ghost">
+          Call {primaryPhone}
+        </Button>
+      )
+    }
+  </Fragment>
+</PageHeader>
+
+{
+  disciplinesTone && (
+    <Section tone={disciplinesTone} labelledby="service-disciplines">
+      <SectionHeading
+        id="service-disciplines"
+        title={service.listTitle}
+        intro="Six calibration disciplines, each with its own instrument list."
+      />
+
+      <ul class="grid grid--three">
+        {disciplines.map((discipline) => (
+          <li>
+            <Card href={url(discipline.path)}>
+              <div class="tile">
+                <h3>{discipline.navTitle}</h3>
+                <p>{discipline.examples.slice(0, 4).join(' · ')}</p>
+                <span class="more">
+                  Calibration details
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                    <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </div>
+            </Card>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )
+}
+
+{
+  instrumentsTone && (
+    <Section tone={instrumentsTone} labelledby="service-instruments">
+      <SectionHeading id="service-instruments" title={service.listTitle} />
+
+      <ul class="checklist">
+        {service.instruments.map((instrument) => (
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true" focusable="false">
+              <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>{instrument}</span>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )
+}
+
+{
+  notesTone && (
+    <Section tone={notesTone} labelledby="service-notes">
+      <SectionHeading id="service-notes" title="Service details" />
+
+      <ul class="notes">
+        {service.notes.map((note) => (
+          <li>
+            <Card>
+              <h3>{note.title}</h3>
+              <p>{note.body}</p>
+            </Card>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )
+}
+
+{
+  onSiteTone && (
+    <Section tone={onSiteTone} labelledby="service-onsite">
+      <div class="onsite">
+        <div class="onsite__text">
+          <h2 id="service-onsite">On-site calibration available</h2>
+          <p>{service.onSiteNote}</p>
+        </div>
+        <Button href={url('/services/on-site-calibration/')} variant="secondary">
+          On-site calibration details
+        </Button>
+      </div>
+    </Section>
+  )
+}
+
+<Section tone={processTone} labelledby="service-process">
+  <SectionHeading
+    id="service-process"
+    title="How it works"
+    intro="Four steps from receipt to return, with documentation intended for industry, regulatory and audit requirements."
+  />
+  <ProcessSteps />
+</Section>
+
+{
+  civilTone && (
+    <Section tone={civilTone} labelledby="service-clients">
+      <SectionHeading
+        id="service-clients"
+        title="Cement and construction customers"
+        intro="A selection of the cement, construction and material-testing customers named by JIE."
+      />
+
+      <ul class="clients">
+        {civilClients.map((client) => (
+          <li>
+            <span class="clients__name">{client.name}</span>
+            <span class="clients__location">{client.location}</span>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )
+}
+
+<Section tone={faqTone} labelledby="service-faq">
+  <SectionHeading id="service-faq" title="Frequently asked questions" intro={`Answers about ${lowerTitle} in Belgaum, Hubli and Dharwad.`} />
+  <Faq items={service.faq} />
+</Section>
+
+<Section tone={relatedTone} labelledby="service-related">
+  <SectionHeading
+    id="service-related"
+    title="Related services"
+    link={{ label: 'All services', href: url('/services/') }}
+  />
+
+  <ul class="grid grid--two">
+    {
+      related.map((item) => (
+        <li>
+          <Card href={url(item.path)}>
+            <div class="tile">
+              <h3>{item.navTitle}</h3>
+              <p>{item.summary}</p>
+              <span class="more">
+                View service
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </div>
+          </Card>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<CtaPanel
+  title={`Enquire about ${lowerTitle}`}
+  text="Tell us what needs calibration, repair or replacement. We look forward to hearing from you."
+  placement={`service-${service.slug}-cta`}
+  service={service.title}
+/>
+
+<style>
+  .grid {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .grid > li {
+    display: flex;
+    margin: 0;
+  }
+
+  @media (min-width: 640px) {
+    .grid--two,
+    .grid--three {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .grid--three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .tile {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .tile h3 {
+    margin: 0;
+    font-size: var(--text-lg);
+  }
+
+  .tile p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+  }
+
+  .more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    margin-top: auto;
+    padding-top: var(--space-4);
+    color: var(--crimson);
+    font-size: var(--text-xs);
+    font-weight: 650;
+  }
+
+  .more svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+  }
+
+  .checklist {
+    display: grid;
+    gap: 0 var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 640px) {
+    .checklist {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    margin: 0;
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    font-size: var(--text-sm);
+  }
+
+  .checklist svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    margin-top: 0.28em;
+    color: var(--crimson);
+  }
+
+  .notes {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 760px) {
+    .notes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .notes > li {
+    display: flex;
+    margin: 0;
+  }
+
+  .notes h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-lg);
+  }
+
+  .notes p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+
+  .onsite {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding: clamp(20px, 4vw, 36px);
+    border: 1px solid rgb(116 9 43 / 18%);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-card);
+    background: var(--crimson-50);
+  }
+
+  .onsite__text {
+    max-width: 62ch;
+  }
+
+  .onsite h2 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-xl);
+  }
+
+  .onsite p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+
+  .clients {
+    display: grid;
+    gap: var(--space-3) var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 640px) {
+    .clients {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .clients li {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: var(--space-3) 0 var(--space-3) var(--space-4);
+    border-left: 3px solid var(--gold);
+  }
+
+  .clients__name {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+
+  .clients__location {
+    color: var(--ink-3);
+    font-size: var(--text-xs);
+  }
+</style>

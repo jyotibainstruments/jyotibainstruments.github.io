@@ -19,6 +19,8 @@ Questions for the owner. The site does not wait for answers: anything missing is
 13. **Privacy policy.** Required if analytics is enabled. `PUBLIC_GA_ID` is not set, so no analytics are loaded yet. Provide privacy wording or approval to write a short factual page.
 14. **Custom domain.** The site currently targets `https://jyotibainstruments.github.io`. If a custom domain is added later, set `ASTRO_SITE`, add `public/CNAME`, and submit the new sitemap.
 15. **Dark logo lettering on crimson.** The supplied `JIE_dark.svg` letters are rose `#BD254C` on crimson `#74092B` (about 1.9:1). Logos are exempt from WCAG text contrast, but the wordmark reads faintly in the footer. Approve this variant as-is, or supply a footer variant with white or `#F0C45A` lettering.
+16. **On-site calibration list.** The on-site page reproduces the instruments named in the letter: surface plates, Trimos, bench centers, CMMs, hardness testers, UTM, FTM, CTM and pressure gauges. Confirm this is still the current on-site scope, and whether bio-medical or civil cube testing can be added.
+17. **"Minor repair work is free of charge."** The site publishes this as a standing commitment, exactly as supplied. Confirm it should stay public, since it reads as a price statement.
 
 ## Not supplied, so not displayed
 

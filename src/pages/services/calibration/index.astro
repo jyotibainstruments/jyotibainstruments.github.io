@@ -1,0 +1,30 @@
+---
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import ServicePage from '../../../components/services/ServicePage.astro';
+import { getService } from '../../../lib/content';
+import { breadcrumbJsonLd, serviceJsonLd } from '../../../lib/seo';
+
+const service = getService('calibration');
+
+const items = [
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '/services/' },
+  { name: 'Calibration', path: '/services/calibration/' },
+];
+---
+
+<SiteLayout
+  title={service.metaTitle}
+  description={service.metaDescription}
+  path={service.path}
+  jsonLd={[
+    serviceJsonLd({
+      name: service.title,
+      description: service.metaDescription,
+      path: service.path,
+    }),
+    breadcrumbJsonLd(items),
+  ]}
+>
+  <ServicePage service={service} items={items} />
+</SiteLayout>

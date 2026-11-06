@@ -1,0 +1,93 @@
+---
+import Button from './Button.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+import { primaryPhone } from '../config/site';
+import { telHref } from '../lib/url';
+
+interface Props {
+  title: string;
+  text: string;
+  placement: string;
+  service?: string;
+  class?: string;
+}
+
+const { title, text, placement, service, class: className } = Astro.props;
+---
+
+<section class:list={['cta', className]} aria-labelledby="cta-panel-title">
+  <div class="container">
+    <div class="cta__panel">
+      <div class="cta__body">
+        <h2 id="cta-panel-title">{title}</h2>
+        <p>{text}</p>
+      </div>
+
+      <div class="cta__actions">
+        <WhatsAppButton placement={placement} service={service} label="Enquire on WhatsApp" />
+        {
+          primaryPhone && (
+            <Button href={telHref(primaryPhone)} variant="ghost">
+              Call {primaryPhone}
+            </Button>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding-block: var(--section-y);
+  }
+
+  .cta__panel {
+    --focus-gap: var(--crimson);
+    --focus-keyline: #ffffff;
+
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+    padding: clamp(28px, 5vw, 56px);
+    border-radius: 24px;
+    background: var(--crimson);
+    color: #ffffff;
+  }
+
+  @media (min-width: 880px) {
+    .cta__panel {
+      grid-template-columns: minmax(0, 1.2fr) auto;
+      gap: var(--space-8);
+    }
+  }
+
+  .cta h2 {
+    margin: 0 0 var(--space-3);
+    color: #ffffff;
+  }
+
+  .cta p {
+    max-width: 52ch;
+    margin: 0;
+    color: rgb(255 255 255 / 84%);
+    font-size: var(--text-sm);
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .cta__panel :global(.btn--ghost) {
+    border-color: rgb(255 255 255 / 65%);
+    color: #ffffff;
+  }
+
+  .cta__panel :global(.btn--ghost:hover) {
+    border-color: #ffffff;
+    background: #ffffff;
+    color: var(--crimson);
+  }
+</style>
