@@ -20,6 +20,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+      - name: Use Actions as the Pages deployment source
+        # Upgrades the repo setting from "Deploy from branch" (Jekyll) to
+        # "GitHub Actions" so this workflow, not jekyll-build-pages, deploys.
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - name: Build and upload
         uses: withastro/action@v6
         with:
