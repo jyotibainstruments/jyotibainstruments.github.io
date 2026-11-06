@@ -1,0 +1,80 @@
+---
+import { url } from '../lib/url';
+
+interface Item {
+  name: string;
+  path: string;
+}
+
+interface Props {
+  items: Item[];
+  class?: string;
+}
+
+const { items, class: className } = Astro.props;
+---
+
+<nav class:list={['breadcrumbs', className]} aria-label="Breadcrumb">
+  <ol>
+    {
+      items.map((item, index) => (
+        <li>
+          {index === items.length - 1 ? (
+            <span aria-current="page">{item.name}</span>
+          ) : (
+            <a href={url(item.path)}>{item.name}</a>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-xs);
+  }
+
+  .breadcrumbs li {
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+
+  .breadcrumbs li + li::before {
+    width: 1px;
+    height: 12px;
+    margin-inline: 0.7rem;
+    transform: rotate(20deg);
+    background: var(--line);
+    content: '';
+  }
+
+  .breadcrumbs a,
+  .breadcrumbs [aria-current='page'] {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .breadcrumbs a {
+    color: var(--ink-2);
+    text-decoration: none;
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--crimson);
+    text-decoration: underline;
+  }
+
+  .breadcrumbs [aria-current='page'] {
+    color: var(--ink-3);
+    font-weight: 600;
+  }
+</style>

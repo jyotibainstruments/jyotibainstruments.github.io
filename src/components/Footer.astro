@@ -1,0 +1,270 @@
+---
+import Logo from './Logo.astro';
+import {
+  calibrationOverview,
+  otherServices,
+  visibleCompanies,
+  companyPath,
+} from '../lib/content';
+import { site } from '../config/site';
+import { mailtoHref, telHref, url } from '../lib/url';
+
+const lab = site.offices.find((office) => office.kind === 'lab');
+const branch = site.offices.find((office) => office.kind === 'branch');
+const year = new Date().getFullYear();
+
+const serviceLinks = [
+  ...(calibrationOverview ? [{ label: 'Calibration', href: calibrationOverview.path }] : []),
+  ...otherServices.map((service) => ({ label: service.title, href: service.path })),
+  { label: 'All services', href: '/services/' },
+];
+---
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <div class="footer__logo">
+        <a href={url('/')} aria-label="Jyotiba Instruments Enterprises home">
+          <Logo height={52} tone="white" decorative />
+        </a>
+      </div>
+      <p>
+        JIE is a trusted partner providing industrial measuring instruments, calibration, sales and
+        repair services, with a commitment to accurate results and reliable support for measurement
+        needs.
+      </p>
+      <p class="footer__gstin">GSTIN: {site.gstin}</p>
+    </div>
+
+    <nav class="footer__col" aria-labelledby="footer-services">
+      <h2 id="footer-services">Services</h2>
+      <ul class="footer__links">
+        {
+          serviceLinks.map((link) => (
+            <li>
+              <a href={url(link.href)}>{link.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <nav class="footer__col" aria-labelledby="footer-products">
+      <h2 id="footer-products">Products</h2>
+      <ul class="footer__links">
+        {
+          visibleCompanies.map((company) => (
+            <li>
+              <a href={url(companyPath(company.slug))}>{company.name}</a>
+            </li>
+          ))
+        }
+        <li>
+          <a href={url('/products/')}>All products</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="footer__col footer__contact">
+      <h2>Contact</h2>
+
+      {
+        lab && (
+          <address>
+            <strong>{lab.shortName}</strong>
+            <br />
+            {lab.address}
+            <br />
+            <span class="footer__phones">
+              {lab.phones.map((phone, index) => (
+                <Fragment>
+                  {index > 0 && <span aria-hidden="true"> · </span>}
+                  <a href={telHref(phone)}>{phone}</a>
+                </Fragment>
+              ))}
+            </span>
+          </address>
+        )
+      }
+
+      {
+        branch && (
+          <address>
+            <strong>{branch.shortName}</strong>
+            <br />
+            {branch.address}
+            <br />
+            <span class="footer__phones">
+              {branch.phones.map((phone, index) => (
+                <Fragment>
+                  {index > 0 && <span aria-hidden="true"> · </span>}
+                  <a href={telHref(phone)}>{phone}</a>
+                </Fragment>
+              ))}
+            </span>
+          </address>
+        )
+      }
+
+      <p class="footer__emails">
+        {site.emails.map((email, index) => (
+          <Fragment>
+            {index > 0 && <br />}
+            <a href={mailtoHref(email)}>{email}</a>
+          </Fragment>
+        ))}
+      </p>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="container footer__bottom-inner">
+      <p>© {year} {site.name}</p>
+      <a href={url('/privacy/')}>Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    --focus-gap: var(--crimson);
+    --focus-keyline: #ffffff;
+
+    background: var(--crimson);
+    color: #ffffff;
+  }
+
+  .footer__grid {
+    display: grid;
+    gap: var(--space-7);
+    padding-block: var(--space-9) var(--space-8);
+  }
+
+  @media (min-width: 640px) {
+    .footer__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .footer__grid {
+      grid-template-columns: 1.35fr 0.65fr 0.65fr 1.35fr;
+      gap: var(--space-6);
+    }
+  }
+
+  .footer__logo {
+    margin-bottom: var(--space-4);
+  }
+
+  .footer__logo a {
+    display: inline-flex;
+    text-decoration: none;
+  }
+
+  .footer p {
+    margin: 0 0 var(--space-3);
+    color: rgb(255 255 255 / 82%);
+    font-size: var(--text-xs);
+  }
+
+  .footer__gstin {
+    color: rgb(255 255 255 / 72%);
+  }
+
+  .footer h2 {
+    margin: 0 0 var(--space-3);
+    color: #ffffff;
+    font-size: var(--text-sm);
+    letter-spacing: 0;
+  }
+
+  .footer__links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer__links li {
+    margin: 0;
+  }
+
+  .footer a {
+    color: rgb(255 255 255 / 88%);
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+
+  .footer__links a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    font-size: 0.9375rem;
+  }
+
+  .footer__contact address {
+    margin: 0 0 var(--space-4);
+    color: rgb(255 255 255 / 82%);
+    font-size: var(--text-xs);
+    font-style: normal;
+    line-height: 1.6;
+  }
+
+  .footer__contact address strong {
+    color: #ffffff;
+    font-weight: 650;
+  }
+
+  .footer__contact address a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .footer__phones {
+    white-space: nowrap;
+  }
+
+  .footer__emails {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+    word-break: break-word;
+  }
+
+  .footer__emails a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .footer__bottom {
+    border-top: 1px solid rgb(255 255 255 / 18%);
+  }
+
+  .footer__bottom-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+  }
+
+  .footer__bottom p {
+    margin: 0;
+    color: rgb(255 255 255 / 72%);
+  }
+
+  .footer__bottom a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    font-size: var(--text-xs);
+  }
+</style>

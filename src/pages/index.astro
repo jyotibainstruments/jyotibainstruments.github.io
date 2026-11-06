@@ -1,15 +1,15 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Placeholder from '../components/Placeholder.astro';
 import { site } from '../config/site';
 import { buildTitle, organizationJsonLd, webSiteJsonLd } from '../lib/seo';
-import logo from '../assets/brand/jie-logo.svg?url';
 
 const title = buildTitle('Calibration, repairs and sales');
 const description =
   'Calibration, repair and sales of industrial measuring instruments, with a calibration lab in Belgaum, Karnataka.';
 ---
 
-<BaseLayout
+<SiteLayout
   title={title}
   description={description}
   path="/"
@@ -27,12 +27,12 @@ const description =
         <p class="hero__note">{site.tagline}</p>
       </div>
       <div class="hero__mark">
-        <img src={logo} width="320" height="318" alt="Jyotiba Instruments Enterprises logo" />
+        <Placeholder ratio="4 / 3" label="Lab photo to be supplied" />
       </div>
     </div>
     <div class="ruler" aria-hidden="true"></div>
   </section>
-</BaseLayout>
+</SiteLayout>
 
 <style>
   .hero {
@@ -84,9 +84,15 @@ const description =
     }
   }
 
-  .hero__mark img {
-    width: min(320px, 70vw);
-    height: auto;
+  .hero__mark {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  @media (min-width: 860px) {
+    .hero__mark {
+      max-width: none;
+    }
   }
 
   .hero .ruler {

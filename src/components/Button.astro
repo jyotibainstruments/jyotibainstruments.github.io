@@ -1,0 +1,53 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'md' | 'sm';
+  block?: boolean;
+  disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  target?: string;
+  rel?: string;
+  id?: string;
+  class?: string;
+  'aria-label'?: string;
+  'data-wa'?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  block = false,
+  disabled = false,
+  type = 'button',
+  target,
+  rel,
+  id,
+  class: className,
+  'aria-label': ariaLabel,
+  'data-wa': dataWa,
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  href={href}
+  id={id}
+  class:list={[
+    'btn',
+    `btn--${variant}`,
+    size === 'sm' && 'btn--sm',
+    block && 'btn--block',
+    className,
+  ]}
+  type={href ? undefined : type}
+  disabled={href ? undefined : disabled}
+  target={target}
+  rel={rel}
+  aria-label={ariaLabel}
+  data-wa={dataWa}
+>
+  <slot />
+</Tag>

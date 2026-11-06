@@ -1,0 +1,128 @@
+---
+interface Props {
+  label: string;
+  class?: string;
+}
+
+const { label, class: className } = Astro.props;
+---
+
+<div class:list={['carousel', className]} data-carousel role="region" aria-roledescription="carousel" aria-label={label}>
+  <div class="carousel__track" data-carousel-track role="group" aria-label={label} tabindex="0">
+    <slot />
+  </div>
+  <div class="carousel__controls">
+    <button
+      class="carousel__btn"
+      type="button"
+      data-carousel-prev
+      aria-label="Show previous items"
+      disabled
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+        <path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+    <button class="carousel__btn" type="button" data-carousel-next aria-label="Show next items">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+        <path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => {
+    const track = carousel.querySelector<HTMLElement>('[data-carousel-track]');
+    const prev = carousel.querySelector<HTMLButtonElement>('[data-carousel-prev]');
+    const next = carousel.querySelector<HTMLButtonElement>('[data-carousel-next]');
+    if (!track || !prev || !next) return;
+
+    const stepSize = (): number => {
+      const first = track.firstElementChild as HTMLElement | null;
+      const gap = Number.parseFloat(getComputedStyle(track).columnGap || '0') || 0;
+      return (first?.getBoundingClientRect().width ?? track.clientWidth * 0.8) + gap;
+    };
+
+    const update = (): void => {
+      const max = track.scrollWidth - track.clientWidth - 2;
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= max;
+    };
+
+    const scroll = (direction: number): void => {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      track.scrollBy({ left: direction * stepSize(), behavior: reduce ? 'auto' : 'smooth' });
+    };
+
+    prev.addEventListener('click', () => scroll(-1));
+    next.addEventListener('click', () => scroll(1));
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
+</script>
+
+<style>
+  .carousel {
+    position: relative;
+  }
+
+  .carousel__track {
+    display: flex;
+    gap: var(--space-4);
+    padding-block: var(--space-1) var(--space-3);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel__track > :global(*) {
+    min-width: 0;
+    flex: 0 0 min(320px, 82%);
+    scroll-snap-align: start;
+  }
+
+  .carousel__controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+
+  .carousel__btn {
+    display: inline-grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    color: var(--crimson);
+    transition:
+      background-color var(--dur-base) var(--ease),
+      border-color var(--dur-base) var(--ease),
+      color var(--dur-base) var(--ease),
+      opacity var(--dur-base) var(--ease);
+  }
+
+  .carousel__btn:hover:not(:disabled) {
+    border-color: var(--crimson);
+    background: var(--crimson);
+    color: #ffffff;
+  }
+
+  .carousel__btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .carousel__btn svg {
+    width: 20px;
+    height: 20px;
+  }
+</style>

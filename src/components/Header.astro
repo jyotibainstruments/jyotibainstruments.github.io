@@ -1,0 +1,829 @@
+---
+import Logo from './Logo.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+import {
+  calibrationDisciplines,
+  calibrationOverview,
+  companyPath,
+  otherServices,
+  visibleCompanies,
+} from '../lib/content';
+import { url } from '../lib/url';
+
+const path = Astro.url.pathname;
+
+function isCurrent(href: string): boolean {
+  if (href === '/') return path === '/';
+  return path === href || path.startsWith(href);
+}
+
+const primaryLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about/' },
+];
+
+const secondaryLinks = [
+  { label: 'Clients', href: '/clients/' },
+  { label: 'Contact', href: '/contact/' },
+];
+---
+
+<header class="header" data-header>
+  <div class="container header__inner">
+    <a class="header__logo" href={url('/')} aria-label="Jyotiba Instruments Enterprises home">
+      <Logo decorative />
+    </a>
+
+    <nav class="header__nav" aria-label="Primary">
+      <ul class="nav">
+        {
+          primaryLinks.map((link) => (
+            <li>
+              <a
+                class="nav__link"
+                href={url(link.href)}
+                aria-current={isCurrent(link.href) ? 'page' : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+
+        <li class="nav__item" data-dropdown>
+          <button
+            class="nav__link nav__toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="nav-services"
+            data-dropdown-toggle
+          >
+            Services
+            <svg
+              class="nav__chevron"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="dropdown dropdown--services" id="nav-services" data-dropdown-panel hidden>
+            <div class="dropdown__grid">
+              <div>
+                <p class="dropdown__label">Services</p>
+                <ul class="dropdown__list">
+                  {
+                    calibrationOverview && (
+                      <li>
+                        <a class="dropdown__link" href={url(calibrationOverview.path)}>
+                          {calibrationOverview.navTitle}
+                        </a>
+                      </li>
+                    )
+                  }
+                  {
+                    otherServices.map((service) => (
+                      <li>
+                        <a class="dropdown__link" href={url(service.path)}>
+                          {service.navTitle}
+                        </a>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
+              <div>
+                <p class="dropdown__label">Calibration disciplines</p>
+                <ul class="dropdown__list">
+                  {
+                    calibrationDisciplines.map((service) => (
+                      <li>
+                        <a class="dropdown__link" href={url(service.path)}>
+                          {service.navTitle}
+                        </a>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
+            </div>
+            <div class="dropdown__footer">
+              <a href={url('/services/')}>All services</a>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav__item" data-dropdown>
+          <button
+            class="nav__link nav__toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="nav-products"
+            data-dropdown-toggle
+          >
+            Products
+            <svg
+              class="nav__chevron"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="dropdown dropdown--products" id="nav-products" data-dropdown-panel hidden>
+            <ul class="dropdown__list">
+              {
+                visibleCompanies.map((company) => (
+                  <li>
+                    <a class="dropdown__link" href={url(companyPath(company.slug))}>
+                      {company.name}
+                    </a>
+                  </li>
+                ))
+              }
+              {
+                visibleCompanies.length === 0 && (
+                  <li class="dropdown__note">Catalogues coming soon.</li>
+                )
+              }
+              <li class="dropdown__footer-item">
+                <a class="dropdown__link dropdown__link--strong" href={url('/products/')}>
+                  All products
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        {
+          secondaryLinks.map((link) => (
+            <li>
+              <a
+                class="nav__link"
+                href={url(link.href)}
+                aria-current={isCurrent(link.href) ? 'page' : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <WhatsAppButton placement="header" size="sm" />
+      <button
+        class="header__burger"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        data-menu-open
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<dialog class="sheet" id="mobile-nav" data-menu aria-label="Site menu">
+  <div class="sheet__inner">
+    <div class="sheet__top">
+      <a class="sheet__logo" href={url('/')} aria-label="Jyotiba Instruments Enterprises home">
+        <Logo height={40} decorative />
+      </a>
+      <button class="sheet__close" type="button" data-menu-close aria-label="Close menu" autofocus>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+          <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="sheet__nav" aria-label="Mobile">
+      <ul class="sheet__list">
+        <li>
+          <a class="sheet__link" href={url('/')} aria-current={isCurrent('/') ? 'page' : undefined}>
+            Home
+          </a>
+        </li>
+        <li>
+          <a class="sheet__link" href={url('/about/')} aria-current={isCurrent('/about/') ? 'page' : undefined}>
+            About
+          </a>
+        </li>
+
+        <li>
+          <details class="sheet__group">
+            <summary class="sheet__summary">
+              Services
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </summary>
+            <ul class="sheet__sublist">
+              <li>
+                <a href={url('/services/')}>All services</a>
+              </li>
+              {
+                calibrationOverview && (
+                  <li>
+                    <a href={url(calibrationOverview.path)}>{calibrationOverview.title}</a>
+                  </li>
+                )
+              }
+              <li class="sheet__subhead">Calibration disciplines</li>
+              {
+                calibrationDisciplines.map((service) => (
+                  <li>
+                    <a href={url(service.path)}>{service.title}</a>
+                  </li>
+                ))
+              }
+              {
+                otherServices.map((service) => (
+                  <li>
+                    <a href={url(service.path)}>{service.title}</a>
+                  </li>
+                ))
+              }
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details class="sheet__group">
+            <summary class="sheet__summary">
+              Products
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </summary>
+            <ul class="sheet__sublist">
+              {
+                visibleCompanies.map((company) => (
+                  <li>
+                    <a href={url(companyPath(company.slug))}>{company.name}</a>
+                  </li>
+                ))
+              }
+              <li>
+                <a href={url('/products/')}>All products</a>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        {
+          secondaryLinks.map((link) => (
+            <li>
+              <a
+                class="sheet__link"
+                href={url(link.href)}
+                aria-current={isCurrent(link.href) ? 'page' : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="sheet__cta">
+      <WhatsAppButton placement="mobile-sheet" block />
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+
+  if (header) {
+    const dropdowns = Array.from(header.querySelectorAll<HTMLElement>('[data-dropdown]'));
+    const hoverQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+    let closeTimer: number | undefined;
+
+    const setOpen = (item: HTMLElement, open: boolean): void => {
+      const toggle = item.querySelector<HTMLButtonElement>('[data-dropdown-toggle]');
+      const panel = item.querySelector<HTMLElement>('[data-dropdown-panel]');
+      if (!toggle || !panel) return;
+      toggle.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+      item.toggleAttribute('data-open', open);
+      if (!open) item.removeAttribute('data-pinned');
+    };
+
+    const closeAll = (except?: HTMLElement): void => {
+      dropdowns.forEach((item) => {
+        if (item !== except) setOpen(item, false);
+      });
+    };
+
+    dropdowns.forEach((item) => {
+      const toggle = item.querySelector<HTMLButtonElement>('[data-dropdown-toggle]');
+      const panel = item.querySelector<HTMLElement>('[data-dropdown-panel]');
+      if (!toggle || !panel) return;
+
+      toggle.addEventListener('click', () => {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        const isPinned = item.hasAttribute('data-pinned');
+
+        if (!isOpen) {
+          closeAll(item);
+          setOpen(item, true);
+          item.setAttribute('data-pinned', 'true');
+        } else if (isPinned) {
+          setOpen(item, false);
+        } else {
+          // A hover-opened menu is pinned by the first click instead of closing.
+          item.setAttribute('data-pinned', 'true');
+        }
+      });
+
+      toggle.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          closeAll(item);
+          setOpen(item, true);
+          item.setAttribute('data-pinned', 'true');
+          panel.querySelector<HTMLElement>('a, button')?.focus();
+        }
+      });
+
+      item.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+          event.stopPropagation();
+          setOpen(item, false);
+          toggle.focus();
+        }
+      });
+
+      item.addEventListener('focusout', (event) => {
+        const next = event.relatedTarget as Node | null;
+        if (next && item.contains(next)) return;
+        setOpen(item, false);
+      });
+
+      item.addEventListener('pointerenter', () => {
+        if (!hoverQuery.matches) return;
+        if (toggle.getAttribute('aria-expanded') === 'true') return;
+        window.clearTimeout(closeTimer);
+        closeAll(item);
+        setOpen(item, true);
+      });
+
+      item.addEventListener('pointerleave', () => {
+        if (!hoverQuery.matches) return;
+        if (item.hasAttribute('data-pinned')) return;
+        window.clearTimeout(closeTimer);
+        closeTimer = window.setTimeout(() => {
+          if (!item.contains(document.activeElement) && !item.hasAttribute('data-pinned')) {
+            setOpen(item, false);
+          }
+        }, 140);
+      });
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      const target = event.target as Node;
+      if (!dropdowns.some((item) => item.contains(target))) closeAll();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeAll();
+    });
+  }
+
+  const dialog = document.querySelector<HTMLDialogElement>('[data-menu]');
+  const openButton = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+
+  if (dialog && openButton) {
+    const closeButton = dialog.querySelector<HTMLButtonElement>('[data-menu-close]');
+
+    const setExpanded = (value: boolean): void => {
+      openButton.setAttribute('aria-expanded', String(value));
+    };
+
+    openButton.addEventListener('click', () => {
+      dialog.showModal();
+      setExpanded(true);
+      document.body.classList.add('menu-open');
+    });
+
+    closeButton?.addEventListener('click', () => dialog.close());
+
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    dialog.addEventListener('close', () => {
+      setExpanded(false);
+      document.body.classList.remove('menu-open');
+      if (openButton.offsetParent !== null) openButton.focus();
+    });
+
+    dialog.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => dialog.close());
+    });
+
+    const desktop = window.matchMedia('(min-width: 960px)');
+    desktop.addEventListener('change', () => {
+      if (desktop.matches && dialog.open) dialog.close();
+    });
+  }
+</script>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .header__inner {
+    display: flex;
+    height: var(--header-h);
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .header__logo {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .header__nav {
+    display: none;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav > li {
+    margin: 0;
+  }
+
+  .nav__item {
+    position: relative;
+  }
+
+  .nav__link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 0.3em;
+    padding-inline: 0.7rem;
+    border: 0;
+    border-radius: 10px;
+    background: none;
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav__link:hover {
+    background: var(--crimson-50);
+    color: var(--crimson);
+  }
+
+  .nav__link[aria-current='page'] {
+    box-shadow: inset 0 -2px 0 var(--crimson);
+    color: var(--crimson);
+  }
+
+  .nav__chevron {
+    width: 14px;
+    height: 14px;
+    transition: transform var(--dur-base) var(--ease);
+  }
+
+  .nav__toggle[aria-expanded='true'] .nav__chevron {
+    transform: rotate(180deg);
+  }
+
+  .dropdown {
+    position: absolute;
+    top: calc(100% + 15px);
+    left: 50%;
+    z-index: 10;
+    min-width: 280px;
+    transform: translateX(-50%);
+    padding: var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+
+  .dropdown--services {
+    width: 620px;
+    max-width: calc(100vw - 32px);
+  }
+
+  .dropdown__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: var(--space-4);
+  }
+
+  .dropdown__label {
+    margin: 0 0 var(--space-2);
+    padding-inline: var(--space-2);
+    color: var(--ink-3);
+    font-size: var(--text-xs);
+    font-weight: 600;
+  }
+
+  .dropdown__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .dropdown__list li {
+    margin: 0;
+  }
+
+  .dropdown__link {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    padding: var(--space-2) var(--space-3);
+    border-radius: 10px;
+    color: var(--ink);
+    font-size: 0.9375rem;
+    text-decoration: none;
+  }
+
+  .dropdown__link:hover {
+    background: var(--crimson-50);
+    color: var(--crimson-900);
+  }
+
+  .dropdown__link--strong {
+    color: var(--crimson);
+    font-weight: 600;
+  }
+
+  .dropdown__footer {
+    margin-top: var(--space-2);
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--line);
+  }
+
+  .dropdown__footer a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    padding-inline: var(--space-3);
+    color: var(--crimson);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .dropdown__footer a:hover {
+    text-decoration: underline;
+  }
+
+  .dropdown__footer-item {
+    margin-top: var(--space-2);
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--line);
+  }
+
+  .dropdown__note {
+    padding: var(--space-2) var(--space-3);
+    color: var(--ink-3);
+    font-size: var(--text-xs);
+  }
+
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-left: auto;
+  }
+
+  .header__burger {
+    display: inline-grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  .header__burger:hover {
+    border-color: var(--crimson);
+    color: var(--crimson);
+  }
+
+  .header__burger svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  @media (min-width: 960px) {
+    .header__nav {
+      display: block;
+      margin-inline: auto;
+    }
+
+    .header__actions {
+      margin-left: 0;
+    }
+
+    .header__burger {
+      display: none;
+    }
+  }
+
+  /* Mobile sheet */
+
+  .sheet {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(100%, var(--sheet-max));
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  .sheet::backdrop {
+    background: rgb(31 26 28 / 48%);
+  }
+
+  .sheet__inner {
+    display: grid;
+    height: 100%;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .sheet__top {
+    display: flex;
+    height: var(--header-h);
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: var(--gutter);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sheet__logo {
+    display: inline-flex;
+    align-items: center;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .sheet__close {
+    display: inline-grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  .sheet__close:hover {
+    border-color: var(--crimson);
+    color: var(--crimson);
+  }
+
+  .sheet__close svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .sheet__nav {
+    padding: var(--space-3) var(--gutter) var(--space-6);
+    overflow-y: auto;
+  }
+
+  .sheet__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sheet__list > li {
+    margin: 0;
+  }
+
+  .sheet__link,
+  .sheet__summary {
+    display: flex;
+    min-height: 52px;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-2);
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    font-family: var(--font-heading);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    list-style: none;
+    text-decoration: none;
+  }
+
+  .sheet__link[aria-current='page'] {
+    color: var(--crimson);
+  }
+
+  .sheet__summary {
+    cursor: pointer;
+  }
+
+  .sheet__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .sheet__summary svg {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    color: var(--crimson);
+    transition: transform var(--dur-base) var(--ease);
+  }
+
+  .sheet__group[open] > .sheet__summary svg {
+    transform: rotate(180deg);
+  }
+
+  .sheet__sublist {
+    margin: 0;
+    padding: var(--space-2) 0 var(--space-3);
+    list-style: none;
+  }
+
+  .sheet__sublist li {
+    margin: 0;
+  }
+
+  .sheet__sublist a {
+    display: flex;
+    min-height: 46px;
+    align-items: center;
+    padding-inline: var(--space-4);
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+    text-decoration: none;
+  }
+
+  .sheet__sublist a:hover {
+    background: var(--crimson-50);
+    color: var(--crimson);
+  }
+
+  .sheet__subhead {
+    padding: var(--space-2) var(--space-4) 0;
+    color: var(--ink-3);
+    font-size: var(--text-xs);
+    font-weight: 600;
+  }
+
+  .sheet__cta {
+    padding: var(--space-4) var(--gutter) calc(var(--space-4) + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  :global(body.menu-open) {
+    overflow: hidden;
+  }
+</style>

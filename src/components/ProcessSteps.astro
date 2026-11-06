@@ -1,0 +1,82 @@
+---
+import { processSteps, type ProcessStep } from '../lib/content';
+
+interface Props {
+  steps?: ProcessStep[];
+  class?: string;
+}
+
+const { steps = processSteps, class: className } = Astro.props;
+---
+
+<ol class:list={['process', className]}>
+  {
+    steps.map((step, index) => (
+      <li class="process__step">
+        <span class="process__num" aria-hidden="true">
+          {index + 1}
+        </span>
+        <h3>{step.title}</h3>
+        <p>{step.description}</p>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .process {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 640px) {
+    .process {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .process {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .process__step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: 0;
+    padding: var(--space-5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+  }
+
+  .process__num {
+    display: inline-grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border-radius: var(--radius-pill);
+    background: var(--crimson);
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 700;
+  }
+
+  .process__step h3 {
+    margin: var(--space-1) 0 0;
+    font-size: var(--text-sm);
+  }
+
+  .process__step p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--text-xs);
+    line-height: 1.55;
+  }
+</style>

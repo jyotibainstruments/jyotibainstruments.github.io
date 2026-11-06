@@ -1,0 +1,33 @@
+---
+interface Props {
+  ratio?: string;
+  label?: string;
+  class?: string;
+}
+
+const { ratio = '16 / 9', label = 'Photo to be supplied', class: className } = Astro.props;
+---
+
+<div class:list={['placeholder', className]} style={`--placeholder-ratio: ${ratio}`}>
+  <span class="placeholder__label">{label}</span>
+</div>
+
+<style>
+  .placeholder {
+    display: grid;
+    aspect-ratio: var(--placeholder-ratio, 16 / 9);
+    place-items: center;
+    padding: var(--space-4);
+    overflow: hidden;
+    border: 1px dashed rgb(116 9 43 / 30%);
+    border-radius: var(--radius-card);
+    background: var(--crimson-50);
+    text-align: center;
+  }
+
+  .placeholder__label {
+    color: var(--ink-3);
+    font-size: var(--text-xs);
+    font-weight: 500;
+  }
+</style>

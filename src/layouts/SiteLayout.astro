@@ -1,0 +1,32 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TopBar from '../components/TopBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
+import type { JsonLd } from '../lib/seo';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  jsonLd?: JsonLd[];
+  noindex?: boolean;
+}
+
+const props = Astro.props;
+---
+
+<BaseLayout {...props}>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <TopBar />
+  <Header />
+  <main id="main" tabindex="-1">
+    <slot />
+  </main>
+  <div class="ruler" aria-hidden="true"></div>
+  <Footer />
+  <FloatingWhatsApp />
+</BaseLayout>

@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Receive and inspect",
+    "description": "Instruments are received and inspected on arrival."
+  },
+  {
+    "title": "Calibrate",
+    "description": "Calibration is carried out in the lab or on site, as applicable."
+  },
+  {
+    "title": "Documentation",
+    "description": "Results are documented for industry, regulatory and audit requirements."
+  },
+  {
+    "title": "Return",
+    "description": "Instruments are returned ready for use."
+  }
+]

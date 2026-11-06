@@ -1,43 +1,11 @@
-import { z } from 'zod';
-import officesJson from '../data/offices.json';
+import { offices, type Office } from '../lib/content';
 
 /**
  * Facts in this file come from docs/CONTENT.md only.
  * Anything marked UNCONFIRMED stays behind a flag below and is not rendered.
  */
 
-const phoneSchema = z
-  .string()
-  .regex(/^\d{5} \d{5}$/, 'Expected a 10-digit mobile number formatted as "00000 00000"');
-
-const addressPartsSchema = z.object({
-  streetAddress: z.string().min(1),
-  addressLocality: z.string().min(1),
-  postalCode: z.string().min(1),
-  addressRegion: z.string().min(1),
-  addressCountry: z.string().min(2).max(2),
-});
-
-const officeSchema = z.object({
-  slug: z.enum(['belgaum', 'hubli', 'pune', 'ahmedabad']),
-  name: z.string().min(1),
-  shortName: z.string().min(1),
-  kind: z.enum(['lab', 'branch', 'office']),
-  address: z.string().min(1),
-  phones: z.array(phoneSchema),
-  mapQuery: z.string().min(1).nullable(),
-  addressParts: addressPartsSchema.nullable(),
-});
-
-const offices = z
-  .array(officeSchema)
-  .min(1)
-  .refine((items) => new Set(items.map((item) => item.slug)).size === items.length, {
-    message: 'Office slugs must be unique',
-  })
-  .parse(officesJson);
-
-export type Office = z.infer<typeof officeSchema>;
+export type { Office };
 
 export type ClaimFlag =
   | 'showIsoClaim'

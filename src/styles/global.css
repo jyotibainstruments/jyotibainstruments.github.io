@@ -35,11 +35,17 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+[id] {
+  scroll-margin-top: calc(var(--header-h) + 16px);
 }
 
 body {
   min-height: 100svh;
   margin: 0;
+  overflow-x: clip;
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-body);
@@ -47,6 +53,10 @@ body {
   line-height: var(--leading-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+#main:focus {
+  outline: none;
 }
 
 img,
@@ -216,6 +226,119 @@ hr {
     repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 24px)
       bottom left / 100% 6px no-repeat,
     linear-gradient(var(--tick), var(--tick)) bottom left / 100% 1px no-repeat;
+}
+
+/* Buttons */
+
+.btn {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 0 1.4rem;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-button);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    background-color var(--dur-base) var(--ease),
+    border-color var(--dur-base) var(--ease),
+    color var(--dur-base) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+
+.btn:hover {
+  text-decoration: none;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.btn--primary:hover {
+  background: var(--gold-hover);
+  color: var(--ink);
+}
+
+.btn--secondary {
+  background: var(--crimson);
+  color: #ffffff;
+}
+
+.btn--secondary:hover {
+  background: var(--crimson-900);
+  color: #ffffff;
+}
+
+.btn--ghost {
+  border-color: var(--crimson);
+  background: transparent;
+  color: var(--crimson);
+}
+
+.btn--ghost:hover {
+  border-color: var(--crimson-900);
+  background: var(--crimson-50);
+  color: var(--crimson-900);
+}
+
+.btn--sm {
+  min-height: 44px;
+  padding-inline: 1rem;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn svg {
+  width: 1.2em;
+  height: 1.2em;
+  flex: none;
+}
+
+/* Secondary and ghost buttons on crimson surfaces */
+
+.section--crimson .btn--secondary,
+.footer .btn--secondary {
+  background: #ffffff;
+  color: var(--crimson);
+}
+
+.section--crimson .btn--secondary:hover,
+.footer .btn--secondary:hover {
+  background: var(--crimson-50);
+  color: var(--crimson-900);
+}
+
+.section--crimson .btn--ghost,
+.footer .btn--ghost {
+  border-color: rgb(255 255 255 / 65%);
+  color: #ffffff;
+}
+
+.section--crimson .btn--ghost:hover,
+.footer .btn--ghost:hover {
+  border-color: #ffffff;
+  background: #ffffff;
+  color: var(--crimson);
 }
 
 /* Accessibility */

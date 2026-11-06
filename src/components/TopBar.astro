@@ -1,0 +1,127 @@
+---
+import { primaryOffice, site } from '../config/site';
+import { mailtoHref, telHref } from '../lib/url';
+
+const phone = primaryOffice.phones[0];
+const altPhone = primaryOffice.phones[1];
+const email = site.emails[0];
+---
+
+<div class="topbar">
+  <div class="container topbar__inner">
+    <p class="topbar__cities">{site.cities.join(' · ')}</p>
+    <ul class="topbar__contacts">
+      {
+        phone && (
+          <li>
+            <a class="topbar__link" href={telHref(phone)}>
+              {phone}
+            </a>
+          </li>
+        )
+      }
+      {
+        altPhone && (
+          <li class="topbar__secondary">
+            <a class="topbar__link" href={telHref(altPhone)}>
+              {altPhone}
+            </a>
+          </li>
+        )
+      }
+      {
+        email && (
+          <li class="topbar__secondary">
+            <a class="topbar__link topbar__email" href={mailtoHref(email)}>
+              {email}
+            </a>
+          </li>
+        )
+      }
+    </ul>
+  </div>
+</div>
+
+<style>
+  .topbar {
+    --focus-gap: var(--crimson);
+    --focus-keyline: #ffffff;
+
+    background: var(--crimson);
+    color: #ffffff;
+  }
+
+  .topbar__inner {
+    display: flex;
+    height: var(--topbar-h);
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .topbar__cities {
+    max-width: none;
+    margin: 0;
+    color: rgb(255 255 255 / 82%);
+    font-size: var(--text-xs);
+  }
+
+  .topbar__contacts {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .topbar__contacts li {
+    margin: 0;
+  }
+
+  .topbar__link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    margin-block: calc((var(--topbar-h) - 44px) / 2);
+    color: #ffffff;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .topbar__link:hover {
+    color: var(--gold-on-crimson);
+    text-decoration: underline;
+  }
+
+  .topbar__email {
+    color: rgb(255 255 255 / 82%);
+    font-weight: 500;
+  }
+
+  @media (max-width: 959px) {
+    .topbar__email {
+      display: none;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .topbar {
+      --topbar-h: 44px;
+    }
+
+    .topbar__cities,
+    .topbar__secondary {
+      display: none;
+    }
+
+    .topbar__inner {
+      justify-content: center;
+    }
+
+    .topbar__link {
+      font-size: var(--text-sm);
+    }
+  }
+</style>

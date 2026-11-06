@@ -45,6 +45,9 @@
   --gutter: 20px;
   --gutter-md: 24px;
   --container: 1200px;
+  --header-h: 72px;
+  --topbar-h: 36px;
+  --sheet-max: 480px;
 
   /* Shape */
   --radius-card: 16px;

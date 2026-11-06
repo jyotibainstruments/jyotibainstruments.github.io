@@ -1,0 +1,362 @@
+[
+  {
+    "slug": "bagalkot-cement-factory",
+    "name": "Bagalkot Cement Factory",
+    "location": "Bagalkot",
+    "sector": "Cement and construction",
+    "featured": true,
+    "city": null
+  },
+  {
+    "slug": "ratna-cements",
+    "name": "Ratna Cements (Y) Ltd",
+    "location": "Yadwad, Belgaum",
+    "sector": "Cement and construction",
+    "featured": true,
+    "city": "belgaum"
+  },
+  {
+    "slug": "ulccs",
+    "name": "Uralungal Labour Contract Co-operative Society Ltd. (ULCCS)",
+    "location": "Kerala",
+    "sector": "Cement and construction",
+    "featured": true,
+    "city": null
+  },
+  {
+    "slug": "jk-cement-works",
+    "name": "JK Cement Works",
+    "location": "Mudhol, Bagalkot",
+    "sector": "Cement and construction",
+    "featured": true,
+    "city": null
+  },
+  {
+    "slug": "l-and-t-construction",
+    "name": "L&T Construction",
+    "location": "All India Projects",
+    "sector": "Cement and construction",
+    "featured": true,
+    "city": null
+  },
+  {
+    "slug": "jandu-construction",
+    "name": "Jandu Construction India Pvt. Ltd.",
+    "location": "Hubli",
+    "sector": "Cement and construction",
+    "featured": false,
+    "city": "hubli"
+  },
+  {
+    "slug": "kpr-constructions",
+    "name": "KPR Constructions",
+    "location": "Hubli",
+    "sector": "Cement and construction",
+    "featured": false,
+    "city": "hubli"
+  },
+  {
+    "slug": "dileep-buildcon",
+    "name": "Dileep Buildcon Ltd.",
+    "location": "All India Projects",
+    "sector": "Cement and construction",
+    "featured": true,
+    "city": null
+  },
+  {
+    "slug": "hydropack-india",
+    "name": "Hydropack India Pvt. Ltd.",
+    "location": "Belgaum",
+    "sector": "Hydraulics, valves, pumps and flow",
+    "featured": false,
+    "city": "belgaum"
+  },
+  {
+    "slug": "orione-hydraulics",
+    "name": "Orione Hydraulics Pvt. Ltd.",
+    "location": "Belgaum",
+    "sector": "Hydraulics, valves, pumps and flow",
+    "featured": false,
+    "city": "belgaum"
+  },
+  {
+    "slug": "spica-hydraulics",
+    "name": "Spica Hydraulics Pvt. Ltd.",
+    "location": "Belgaum",
+    "sector": "Hydraulics, valves, pumps and flow",
+    "featured": false,
+    "city": "belgaum"
+  },
+  {
+    "slug": "hydrolines-india",
+    "name": "HYDROLINES-INDIA",
+    "location": "Dharwad",
+    "sector": "Hydraulics, valves, pumps and flow",
+    "featured": false,
+    "city": "dharwad"
+  },
+  {
+    "slug": "shalimar-valves",
+    "name": "Shalimar Valves Pvt. Ltd.",
+    "location": "Anchatageri, Hubli",
+    "sector": "Hydraulics, valves, pumps and flow",
+    "featured": false,
+    "city": "hubli"
+  },
+  {
+    "slug": "microfinish-valves",
+    "name": "Microfinish Valves & Pumps Pvt. Ltd.",
+    "location": "Hubli and Itigatti",
+    "sector": "Hydraulics, valves, pumps and flow",
+    "featured": false,
+    "city": "hubli"
+  },
+  {
+    "slug": "flowserve-microfinish",
+    "name": "Flowserve Microfinish Pumps & Valves Pvt. Ltd.",
+    "location": "Hubli",
+    "sector": "Hydraulics, valves, pumps and flow",
+    "featured": true,
+    "city": "hubli"
+  },
+  {
+    "slug": "khimji-flow",
+    "name": "Khimji Flow Equipments Pvt. Ltd.",
+    "location": "Hubli",
+    "sector": "Hydraulics, valves, pumps and flow",
+    "featured": false,
+    "city": "hubli"
+  },
+  {
+    "slug": "tata-motors-hitachi",
+    "name": "Tata Motors & Tata Hitachi",
+    "location": "Dharwad",
+    "sector": "Automotive and engineering",
+    "featured": true,
+    "city": "dharwad"
+  },
+  {
+    "slug": "tata-marcopolo",
+    "name": "Tata Marcopolo",
+    "location": "Dharwad",
+    "sector": "Automotive and engineering",
+    "featured": true,
+    "city": "dharwad"
+  },
+  {
+    "slug": "bharat-forge",
+    "name": "Bharat Forge Ltd.",
+    "location": "Pune",
+    "sector": "Automotive and engineering",
+    "featured": true,
+    "city": null
+  },
+  {
+    "slug": "kirloskar-electric",
+    "name": "Kirloskar Electric Company",
+    "location": "Hubli",
+    "sector": "Automotive and engineering",
+    "featured": true,
+    "city": "hubli"
+  },
+  {
+    "slug": "aequs",
+    "name": "Aequs Pvt. Ltd. & SEZ Units",
+    "location": "Belgaum",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": "belgaum"
+  },
+  {
+    "slug": "automobile-corporation-goa",
+    "name": "Automobile Corporation Goa Ltd",
+    "location": "Goa and Dharwad",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": "dharwad"
+  },
+  {
+    "slug": "rns-motors",
+    "name": "RNS Motors Ltd",
+    "location": "Hubli (all branches)",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": "hubli"
+  },
+  {
+    "slug": "rns-trucking",
+    "name": "RNS Trucking (Bharat Benz)",
+    "location": "All Karnataka branches",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": null
+  },
+  {
+    "slug": "nidec-industrial-automation",
+    "name": "Nidec Industrial Automation India Pvt. Ltd.",
+    "location": "Hubli",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": "hubli"
+  },
+  {
+    "slug": "fastners-and-allied",
+    "name": "Fastners & Allied Products Pvt. Ltd.",
+    "location": "Hubli",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": "hubli"
+  },
+  {
+    "slug": "miven-mayfran",
+    "name": "Miven Mayfran Conveyors Pvt. Ltd.",
+    "location": "Hubli",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": "hubli"
+  },
+  {
+    "slug": "micon-engineers",
+    "name": "Micon Engineers Pvt. Ltd.",
+    "location": "Hubli",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": "hubli"
+  },
+  {
+    "slug": "rsb-transmission",
+    "name": "RSB Transmission (I) Ltd.",
+    "location": "Dharwad",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": "dharwad"
+  },
+  {
+    "slug": "spicer-india",
+    "name": "Spicer India Pvt. Ltd.",
+    "location": "Jodalli, Dharwad",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": "dharwad"
+  },
+  {
+    "slug": "uni-deritend",
+    "name": "Uni Deritend Ltd & UNI Abex Ltd.",
+    "location": "Dharwad",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": "dharwad"
+  },
+  {
+    "slug": "uni-vtl",
+    "name": "Uni-Vtl Precession Pvt. Ltd.",
+    "location": "Dharwad",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": "dharwad"
+  },
+  {
+    "slug": "star-auto-industries",
+    "name": "Star Auto Industries Pvt. Ltd.",
+    "location": "Belur, Dharwad",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": "dharwad"
+  },
+  {
+    "slug": "ashok-iron",
+    "name": "Ashok Iron Pvt. Ltd.",
+    "location": "Belgaum",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": "belgaum"
+  },
+  {
+    "slug": "vega-auto-accessories",
+    "name": "Vega Auto Accessories Pvt. Ltd.",
+    "location": "Belgaum",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": "belgaum"
+  },
+  {
+    "slug": "prateek-enterprises",
+    "name": "Prateek Enterprises (Marine Division)",
+    "location": "Karwar",
+    "sector": "Automotive and engineering",
+    "featured": false,
+    "city": null
+  },
+  {
+    "slug": "kudgi-thermal-power-plant",
+    "name": "Kudgi Thermal Power Plant (NTPC)",
+    "location": "Vijayapur",
+    "sector": "Power and railways",
+    "featured": true,
+    "city": null
+  },
+  {
+    "slug": "western-railway-zone",
+    "name": "Western Railway Zone",
+    "location": "Bhavnagar",
+    "sector": "Power and railways",
+    "featured": false,
+    "city": null
+  },
+  {
+    "slug": "south-western-railway",
+    "name": "South Western Railway",
+    "location": "Hubli",
+    "sector": "Power and railways",
+    "featured": true,
+    "city": "hubli"
+  },
+  {
+    "slug": "jn-medical-college",
+    "name": "J.N. Medical College",
+    "location": "Belgaum",
+    "sector": "Medical and healthcare",
+    "featured": true,
+    "city": "belgaum"
+  },
+  {
+    "slug": "blde-medical-college",
+    "name": "B.L.D.E.A's Medical College and Hospital",
+    "location": "Vijayapur",
+    "sector": "Medical and healthcare",
+    "featured": false,
+    "city": null
+  },
+  {
+    "slug": "thyro-care",
+    "name": "Thyro Care",
+    "location": "Belgaum",
+    "sector": "Medical and healthcare",
+    "featured": false,
+    "city": "belgaum"
+  },
+  {
+    "slug": "minerva-health-care",
+    "name": "Minerva Health Care & Scientific Pvt. Ltd.",
+    "location": "Harihar",
+    "sector": "Medical and healthcare",
+    "featured": false,
+    "city": null
+  },
+  {
+    "slug": "karnataka-police-forensic",
+    "name": "Govt. of Karnataka Police Dept.",
+    "location": "All Regional Forensic Science Laboratories",
+    "sector": "Government and forensic",
+    "featured": false,
+    "city": null
+  },
+  {
+    "slug": "vrl-logistics",
+    "name": "VRL Logistics Limited",
+    "location": "Varur",
+    "sector": "Logistics",
+    "featured": false,
+    "city": null
+  }
+]

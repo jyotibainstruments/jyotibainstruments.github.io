@@ -1,0 +1,32 @@
+---
+interface Props {
+  tone?: 'bg' | 'surface' | 'crimson';
+  id?: string;
+  class?: string;
+  bleed?: boolean;
+  labelledby?: string;
+}
+
+const { tone = 'bg', id, class: className, bleed = false, labelledby } = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={[
+    'section',
+    tone === 'surface' && 'section--surface',
+    tone === 'crimson' && 'section--crimson',
+    className,
+  ]}
+  aria-labelledby={labelledby}
+>
+  {
+    bleed ? (
+      <slot />
+    ) : (
+      <div class="container">
+        <slot />
+      </div>
+    )
+  }
+</section>

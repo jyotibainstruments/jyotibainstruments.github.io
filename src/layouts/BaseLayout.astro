@@ -76,9 +76,6 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : absoluteAsset(ogImage)
     <slot name="head" />
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to main content</a>
-    <main id="main" tabindex="-1">
-      <slot />
-    </main>
+    <slot />
   </body>
 </html>

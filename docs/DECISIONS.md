@@ -32,3 +32,15 @@ Deviations from `AGENTS.md`, `docs/BRIEF.md` or `docs/PHASES.md`, with the reaso
 - **2026-11-06 — Lighthouse browser on the owner's machine.** Only Microsoft Edge is installed, so `npm run lighthouse` and `npm run audit` need a browser path:
   `CHROME_PATH="C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" npm run audit`.
   No project change is needed; CI and any machine with Chrome work without it.
+
+## Phase 2 — site shell
+
+- **2026-11-06 — One validation layer.** All four collections plus the process steps are parsed once in `src/lib/content.ts`. A duplicate slug, invalid path or wrong parent fails the build with a short list rather than a stack trace. `src/config/site.ts` imports `offices` from this module, so the office schema is no longer duplicated.
+- **2026-11-06 — `src/data/process.json` added.** BRIEF section 6 lists four data files, but the four process steps are shared content used by the home page. They live in data rather than being hard-coded in `ProcessSteps.astro`, following the rule that content lives in `src/data/`.
+- **2026-11-06 — `examples` added to `services.json`.** The home page needs three or four representative instruments per discipline. They are selected from the CONTENT.md lists and do not add facts.
+- **2026-11-06 — The five companies stay unpublished.** Phase 2 specifies `published: false` for all seeds. `PUBLIC_SHOW_DRAFTS=1` makes them visible in development, including the Products dropdown. A production build shows "Catalogues coming soon" and the All products link until the owner publishes a company (see `OPEN_QUESTIONS.md` item 6).
+- **2026-11-06 — Top bar height and touch targets.** The bar remains 36px on desktop as specified. Its links carry a 44px hit area using negative block margins, and the bar becomes 44px under 640px. Footer phone and email links are 44px rows. This follows the 44px tap-target rule without changing the desktop bar height.
+- **2026-11-06 — Button styles live in `global.css`.** `.btn` is a design-system primitive used by most components. Keeping it global ships the rules once and guarantees identical focus, hover and crimson-surface behaviour; every other component keeps scoped styles.
+- **2026-11-06 — Header interactions are vanilla.** Desktop dropdowns use disclosure buttons with `aria-expanded`, click and hover opening, ArrowDown, Escape and outside-click closing. The mobile sheet is a native `<dialog>` with focus trapping, Escape and a pinned WhatsApp button. No client framework.
+- **2026-11-06 — WhatsApp glyph inline.** The glyph path is from Simple Icons (CC0), inlined to avoid a dependency. It inherits `currentColor`, so no WhatsApp green enters the palette.
+- **2026-11-06 — Link checks deferred to Phase 4+.** The shell links to routes that arrive in Phases 4 to 6 (`/about/`, `/services/`, `/products/`, `/clients/`, `/contact/`, `/privacy/`). `npm run links` will report those until the pages exist; `npm run build` is the Phase 2 gate.
