@@ -1,0 +1,52 @@
+# Assets needed
+
+The site renders a neutral `Placeholder` wherever an image is missing. Do not use stock-photo hotlinks or invented logos.
+
+## Photographs (from JIE, with permission)
+
+- [ ] Hero photograph: lab, instrument or team image, landscape, at least 2000px wide.
+- [ ] Calibration lab interior, Belgaum.
+- [ ] Instruments: pressure gauge, vernier/micrometer, torque wrench, temperature calibrator.
+- [ ] On-site calibration visit.
+- [ ] Team at work (no names required; captions will stay generic).
+- [ ] Workshop / repair bench.
+- [ ] Civil testing equipment (UTM/CTM or cube testing) if available.
+- [ ] Medical equipment calibration (pulse oximeter, defibrillator) if available.
+
+For each image: permission to publish, a short caption, and a note on what it shows. Images will be converted to AVIF/WebP with `astro:assets`.
+
+## Brand logos (with permission)
+
+- [ ] Mahr
+- [ ] Mitutoyo
+- [ ] Insize
+- [ ] Baker
+- [ ] WIKA
+- [ ] Any other brand to be listed (Markvel, Mass, Kains, Crystal, Luthra, Britool, Micro, SHRIJI, Reliable, Shimaden)
+
+Prefer SVG; otherwise a transparent PNG at least 400px wide.
+
+## Customer logos (with written permission)
+
+- [ ] The featured clients named in CONTENT.md section 7.
+- [ ] Any additional client logo the owner wants displayed.
+
+Until permission and files arrive, the site shows text wordmarks.
+
+## Catalogues
+
+- [ ] `public/catalogues/mahr.pdf`
+- [ ] `public/catalogues/mitutoyo.pdf`
+- [ ] `public/catalogues/insize.pdf`
+- [ ] `public/catalogues/baker.pdf`
+- [ ] `public/catalogues/wika.pdf`
+- [ ] Optional first-page posters: `public/catalogues/<slug>.jpg`
+
+The owner supplies the PDFs. The site builds the viewer and facade.
+
+## Other
+
+- [ ] ISO/IEC 17025 certificate scan, if the claim is to be shown (see `OPEN_QUESTIONS.md`).
+- [ ] A simplified square logo mark for favicons. The full logo is used for now; it is detailed at 32px.
+- [ ] Privacy policy wording, if analytics is enabled.
+- [ ] Product photographs for the four highlighted products, if available.

@@ -1,0 +1,72 @@
+:root {
+  /* Colour */
+  --bg: #eef5f8;
+  --surface: #ffffff;
+  --crimson: #74092b;
+  --crimson-900: #4e061d;
+  --crimson-50: #f6e8ec;
+  --gold: #d4951a;
+  --gold-hover: #e0a52b;
+  --gold-on-crimson: #f0c45a;
+  --ink: #1f1a1c;
+  --ink-2: #4a4046;
+  --ink-3: #6b5f66;
+  --line: #d5e0e6;
+
+  /* Type */
+  --font-heading: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --text-xs: 0.875rem;
+  --text-sm: 1rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem);
+  --text-3xl: clamp(2.25rem, 1.6rem + 3vw, 3.75rem);
+  --leading-tight: 1.15;
+  --leading-body: 1.65;
+  --tracking-heading: -0.02em;
+  --measure: 70ch;
+
+  /* Space */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 2.5rem;
+  --space-8: 3rem;
+  --space-9: 4rem;
+  --space-10: 5rem;
+  --space-11: 6rem;
+  --space-12: 8rem;
+  --section-y: clamp(56px, 8vw, 104px);
+  --gutter: 20px;
+  --gutter-md: 24px;
+  --container: 1200px;
+
+  /* Shape */
+  --radius-card: 16px;
+  --radius-button: 12px;
+  --radius-pill: 999px;
+  --shadow-card:
+    0 1px 2px rgb(31 26 28 / 6%),
+    0 8px 24px rgb(31 26 28 / 8%);
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+
+  /* Focus: gold ring with a crimson keyline for WCAG 1.4.11 contrast. */
+  --focus-gap: var(--bg);
+  --focus-ring: var(--gold);
+  --focus-keyline: var(--crimson-900);
+
+  /* Layers */
+  --z-header: 100;
+  --z-skip: 200;
+  --z-floating: 90;
+  --z-overlay: 300;
+}

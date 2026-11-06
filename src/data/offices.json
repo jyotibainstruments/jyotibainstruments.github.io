@@ -1,0 +1,54 @@
+[
+  {
+    "slug": "belgaum",
+    "name": "Calibration Lab (main branch), Belgaum",
+    "shortName": "Belgaum lab",
+    "kind": "lab",
+    "address": "Shree Complex, Block No. 7, 1st Floor, Plot No. 182/A/186, Udyambag, Belgaum - 590 008, Karnataka.",
+    "phones": ["72047 68923", "83102 72964"],
+    "mapQuery": "Jyotiba Instruments Enterprises, Shree Complex, Block No. 7, 1st Floor, Plot No. 182/A/186, Udyambag, Belgaum - 590 008, Karnataka",
+    "addressParts": {
+      "streetAddress": "Shree Complex, Block No. 7, 1st Floor, Plot No. 182/A/186, Udyambag",
+      "addressLocality": "Belgaum",
+      "postalCode": "590008",
+      "addressRegion": "Karnataka",
+      "addressCountry": "IN"
+    }
+  },
+  {
+    "slug": "hubli",
+    "name": "Branch office, Hubli",
+    "shortName": "Hubli branch",
+    "kind": "branch",
+    "address": "H.No. 28, Hemareddi Mallamma Colony, R.N. Shetty Road, Hubli - 580 024, Karnataka.",
+    "phones": ["83102 72964", "89514 93167"],
+    "mapQuery": "Jyotiba Instruments Enterprises, H.No. 28, Hemareddi Mallamma Colony, R.N. Shetty Road, Hubli - 580 024, Karnataka",
+    "addressParts": {
+      "streetAddress": "H.No. 28, Hemareddi Mallamma Colony, R.N. Shetty Road",
+      "addressLocality": "Hubli",
+      "postalCode": "580024",
+      "addressRegion": "Karnataka",
+      "addressCountry": "IN"
+    }
+  },
+  {
+    "slug": "pune",
+    "name": "Pune",
+    "shortName": "Pune",
+    "kind": "office",
+    "address": "Mahadev Nagar, Hadapsar.",
+    "phones": [],
+    "mapQuery": null,
+    "addressParts": null
+  },
+  {
+    "slug": "ahmedabad",
+    "name": "Ahmedabad",
+    "shortName": "Ahmedabad",
+    "kind": "office",
+    "address": "C-503, Rade Govind, Sanand.",
+    "phones": [],
+    "mapQuery": null,
+    "addressParts": null
+  }
+]

@@ -1,0 +1,84 @@
+---
+import '../styles/global.css';
+import headingFont from '../assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2?url';
+import bodyFont from '../assets/fonts/inter-latin-wght-normal.woff2?url';
+import { site } from '../config/site';
+import type { JsonLd } from '../lib/seo';
+import { absoluteAsset, absoluteUrl, asset } from '../lib/url';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  jsonLd?: JsonLd[];
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  path,
+  ogImage = absoluteAsset('/og-default.png'),
+  ogImageAlt = `${site.name} logo`,
+  jsonLd = [],
+  noindex = false,
+} = Astro.props;
+
+const canonical = absoluteUrl(path);
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : absoluteAsset(ogImage);
+---
+
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#74092B" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={asset('/favicon-32.png')} sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png')} />
+    <link rel="sitemap" type="application/xml" href={asset('/sitemap-index.xml')} />
+
+    <link rel="preload" href={headingFont} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin="anonymous" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+
+    {jsonLd.map((schema) => (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+    ))}
+
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+  </body>
+</html>
