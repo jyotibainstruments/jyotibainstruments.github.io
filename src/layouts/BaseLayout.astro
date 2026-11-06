@@ -28,6 +28,9 @@ const {
 
 const canonical = absoluteUrl(path);
 const ogImageUrl = ogImage.startsWith('http') ? ogImage : absoluteAsset(ogImage);
+
+/** Analytics are opt-in: nothing analytics-related renders until PUBLIC_GA_ID is set. */
+const gaId = (import.meta.env as { PUBLIC_GA_ID?: string }).PUBLIC_GA_ID;
 ---
 
 <!doctype html>
@@ -41,7 +44,8 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : absoluteAsset(ogImage)
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {/* The only noindex page is the 404: a canonical pointing at an unserved URL is noise, so noindex pages omit it. */}
+    {!noindex && <link rel="canonical" href={canonical} />}
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <link rel="icon" href={asset('/favicon.ico')} sizes="32x32" />
@@ -74,6 +78,28 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : absoluteAsset(ogImage)
     {jsonLd.map((schema) => (
       <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
     ))}
+
+    {gaId && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
+        <script is:inline define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', gaId, { anonymize_ip: true });
+
+          document.addEventListener('click', function (event) {
+            var target = event.target instanceof Element ? event.target : null;
+            var placement = target && target.closest ? target.closest('[data-wa]') : null;
+            if (placement) {
+              gtag('event', 'whatsapp_click', { event_placement: placement.getAttribute('data-wa') });
+            }
+          });
+        </script>
+      </>
+    )}
 
     <slot name="head" />
   </head>

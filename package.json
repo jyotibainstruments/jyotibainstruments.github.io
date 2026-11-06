@@ -12,7 +12,7 @@
     "preview": "astro preview",
     "check": "astro check --minimumFailingSeverity warning",
     "brand": "node scripts/brand-assets.mjs",
-    "links": "linkinator ./dist --recurse --verbosity error --skip \"https://jyotibainstruments.github.io\"",
+    "links": "linkinator ./dist --recurse --verbosity error --skip \"https://jyotibainstruments.github.io\" --skip \"https://www.google.com/maps\"",
     "lighthouse": "lhci autorun",
     "audit": "npm run build && npm run links && npm run lighthouse"
   },

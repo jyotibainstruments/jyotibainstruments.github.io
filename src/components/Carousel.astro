@@ -8,7 +8,7 @@ const { label, class: className } = Astro.props;
 ---
 
 <div class:list={['carousel', className]} data-carousel role="region" aria-roledescription="carousel" aria-label={label}>
-  <div class="carousel__track" data-carousel-track role="group" aria-label={label} tabindex="0">
+  <div class="carousel__track" data-carousel-track role="group" aria-label={`${label} — scrollable list`} tabindex="0">
     <slot />
   </div>
   <div class="carousel__controls">

@@ -491,6 +491,8 @@ const contactPageSchema = z.object({
   whatsappTitle: z.string().min(1),
   whatsappText: z.string().min(1),
   serviceMessage: z.string().min(1),
+  closingTitle: z.string().min(1),
+  closingText: z.string().min(1),
   locationsLink: z.string().min(1),
 });
 

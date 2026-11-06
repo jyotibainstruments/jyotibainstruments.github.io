@@ -152,8 +152,8 @@ const cityName = (slug: string) => slug.charAt(0).toUpperCase() + slug.slice(1);
   </Section>
 
   <CtaPanel
-    title={content.whatsappTitle}
-    text={content.whatsappText}
+    title={content.closingTitle}
+    text={content.closingText}
     placement="contact-cta"
     message={content.serviceMessage}
   />
@@ -353,5 +353,26 @@ const cityName = (slug: string) => slug.charAt(0).toUpperCase() + slug.slice(1);
     font-weight: 650;
     text-decoration-thickness: 2px;
     text-underline-offset: 3px;
+  }
+
+  /* Print: reveal the maps URL (useless as an untappable link on paper) and drop nav-only rows. */
+  @media print {
+    .office__more,
+    .locations-link {
+      display: none !important;
+    }
+
+    .office .map::after {
+      content: ' (' attr(href) ')';
+      max-width: 100%;
+      font-size: 0.75rem;
+      font-weight: 400;
+      word-break: break-all;
+    }
+
+    .office .map svg,
+    .office .map .sr-only {
+      display: none;
+    }
   }
 </style>
