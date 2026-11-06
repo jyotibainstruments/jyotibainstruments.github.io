@@ -7,6 +7,12 @@ import processJson from '../data/process.json';
 import homeJson from '../data/home.json';
 import servicesPageJson from '../data/services-page.json';
 import productsPageJson from '../data/products-page.json';
+import clientsPageJson from '../data/clients-page.json';
+import aboutPageJson from '../data/about-page.json';
+import contactPageJson from '../data/contact-page.json';
+import locationsJson from '../data/locations.json';
+import privacyPageJson from '../data/privacy-page.json';
+import notFoundJson from '../data/not-found.json';
 
 /**
  * Validates a JSON collection and fails the build with a readable list of
@@ -410,3 +416,192 @@ const productsPageSchema = z.object({
 export type ProductsPage = z.infer<typeof productsPageSchema>;
 
 export const productsPage = parseCollection('products page', productsPageSchema, productsPageJson);
+
+/* Clients page */
+
+const clientsPageSchema = z.object({
+  heading: z.string().min(1),
+  metaTitle: z.string().min(1).max(60, 'Meta titles must be 60 characters or fewer'),
+  metaDescription: z.string().min(1).max(155, 'Meta descriptions must be 155 characters or fewer'),
+  intro: z.array(z.string().min(1)).min(1).max(3),
+  featuredLabel: z.string().min(1),
+});
+
+export type ClientsPage = z.infer<typeof clientsPageSchema>;
+
+export const clientsPage = parseCollection('clients page', clientsPageSchema, clientsPageJson);
+
+/* About page */
+
+const aboutPageSchema = z.object({
+  heading: z.string().min(1),
+  metaTitle: z.string().min(1).max(60, 'Meta titles must be 60 characters or fewer'),
+  metaDescription: z.string().min(1).max(155, 'Meta descriptions must be 155 characters or fewer'),
+  intro: z.array(z.string().min(1)).min(1).max(3),
+  whatWeDo: z.object({
+    title: z.string().min(1),
+    paragraph: z.string().min(1),
+    activities: z.array(z.string().min(1)).min(1),
+    audiences: z.object({
+      title: z.string().min(1),
+      paragraph: z.string().min(1),
+    }),
+  }),
+  principles: z.object({
+    title: z.string().min(1),
+    paragraph: z.string().min(1),
+    items: z
+      .array(
+        z.object({
+          title: z.string().min(1),
+          body: z.string().min(1),
+        }),
+      )
+      .min(1),
+  }),
+  strengths: z.object({
+    title: z.string().min(1),
+    items: z.array(z.string().min(1)).min(1),
+  }),
+  processTitle: z.string().min(1),
+  processIntro: z.string().min(1),
+  placesTitle: z.string().min(1),
+  placesNote: z.string().min(1),
+});
+
+export type AboutPage = z.infer<typeof aboutPageSchema>;
+
+export const aboutPage = parseCollection('about page', aboutPageSchema, aboutPageJson);
+
+/* Contact page */
+
+const contactPageSchema = z.object({
+  heading: z.string().min(1),
+  metaTitle: z.string().min(1).max(60, 'Meta titles must be 60 characters or fewer'),
+  metaDescription: z.string().min(1).max(155, 'Meta descriptions must be 155 characters or fewer'),
+  intro: z.array(z.string().min(1)).min(1).max(3),
+  officesTitle: z.string().min(1),
+  officesIntro: z.string().min(1),
+  statedOnlyLabel: z.string().min(1),
+  statedOnlyNote: z.string().min(1),
+  emailsTitle: z.string().min(1),
+  gstinTitle: z.string().min(1),
+  gstinNote: z.string().min(1),
+  mapsText: z.string().min(1),
+  whatsappTitle: z.string().min(1),
+  whatsappText: z.string().min(1),
+  serviceMessage: z.string().min(1),
+  locationsLink: z.string().min(1),
+});
+
+export type ContactPage = z.infer<typeof contactPageSchema>;
+
+export const contactPage = parseCollection('contact page', contactPageSchema, contactPageJson);
+
+/* Locations */
+
+const narrativeSchema = z.array(z.string().min(1)).min(4).superRefine((paragraphs, ctx) => {
+  const wordCount = paragraphs
+    .join(' ')
+    .split(/\s+/)
+    .filter(Boolean).length;
+  if (wordCount < 250) {
+    ctx.addIssue({
+      code: 'custom',
+      message: `Location narrative needs 250+ words of unique copy (found ${wordCount})`,
+    });
+  }
+});
+
+const locationCitySchema = z.object({
+  slug: z.enum(['belgaum', 'hubli', 'dharwad']),
+  serviceArea: z.boolean(),
+  heading: z.string().min(1),
+  metaTitle: z.string().min(1).max(60, 'Meta titles must be 60 characters or fewer'),
+  metaDescription: z.string().min(1).max(155, 'Meta descriptions must be 155 characters or fewer'),
+  narrative: narrativeSchema,
+});
+
+const locationsSchema = z.object({
+  heading: z.string().min(1),
+  metaTitle: z.string().min(1).max(60, 'Meta titles must be 60 characters or fewer'),
+  metaDescription: z.string().min(1).max(155, 'Meta descriptions must be 155 characters or fewer'),
+  intro: z.array(z.string().min(1)).min(1).max(3),
+  detailsLabel: z.string().min(1),
+  serviceAreaLabel: z.string().min(1),
+  realOfficeLabel: z.string().min(1),
+  statedOnlyLabel: z.string().min(1),
+  statedOnlyNote: z.string().min(1),
+  cities: z
+    .array(locationCitySchema)
+    .refine((cities) => hasUniqueValues(cities.map((city) => city.slug)), {
+      message: 'City slugs must be unique',
+    }),
+});
+
+export type LocationCity = z.infer<typeof locationCitySchema>;
+export type LocationsContent = z.infer<typeof locationsSchema>;
+
+export const locationsContent = parseCollection('locations', locationsSchema, locationsJson);
+
+export const locationCities = locationsContent.cities;
+
+export function getLocationCity(slug: string): LocationCity {
+  const city = locationCities.find((entry) => entry.slug === slug);
+  if (!city) {
+    throw new Error(`Unknown location city "${slug}"`);
+  }
+  return city;
+}
+
+export function getOffice(slug: string): Office | undefined {
+  return offices.find((office) => office.slug === slug);
+}
+
+/* Privacy page */
+
+const privacyPageSchema = z.object({
+  heading: z.string().min(1),
+  metaTitle: z.string().min(1).max(60, 'Meta titles must be 60 characters or fewer'),
+  metaDescription: z.string().min(1).max(155, 'Meta descriptions must be 155 characters or fewer'),
+  intro: z.array(z.string().min(1)).min(1).max(3),
+  items: z
+    .array(
+      z.object({
+        title: z.string().min(1),
+        body: z.array(z.string().min(1)).min(1),
+      }),
+    )
+    .min(1),
+});
+
+export type PrivacyPage = z.infer<typeof privacyPageSchema>;
+
+export const privacyPage = parseCollection('privacy page', privacyPageSchema, privacyPageJson);
+
+/* 404 page */
+
+const notFoundSchema = z.object({
+  heading: z.string().min(1),
+  metaTitle: z.string().min(1).max(60, 'Meta titles must be 60 characters or fewer'),
+  metaDescription: z.string().min(1).max(155, 'Meta descriptions must be 155 characters or fewer'),
+  text: z.string().min(1),
+  quickLinks: z.object({
+    title: z.string().min(1),
+    items: z
+      .array(
+        z.object({
+          label: z.string().min(1),
+          path: z.string().regex(/^\/(?:[a-z0-9-]+\/)*$/),
+        }),
+      )
+      .min(1),
+  }),
+  whatsappTitle: z.string().min(1),
+  whatsappText: z.string().min(1),
+  serviceMessage: z.string().min(1),
+});
+
+export type NotFoundPage = z.infer<typeof notFoundSchema>;
+
+export const notFoundPage = parseCollection('not-found page', notFoundSchema, notFoundJson);

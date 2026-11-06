@@ -9,10 +9,11 @@ interface Props {
   text: string;
   placement: string;
   service?: string;
+  message?: string;
   class?: string;
 }
 
-const { title, text, placement, service, class: className } = Astro.props;
+const { title, text, placement, service, message, class: className } = Astro.props;
 ---
 
 <section class:list={['cta', className]} aria-labelledby="cta-panel-title">
@@ -24,7 +25,7 @@ const { title, text, placement, service, class: className } = Astro.props;
       </div>
 
       <div class="cta__actions">
-        <WhatsAppButton placement={placement} service={service} label="Enquire on WhatsApp" />
+        <WhatsAppButton placement={placement} service={service} message={message} label="Enquire on WhatsApp" />
         {
           primaryPhone && (
             <Button href={telHref(primaryPhone)} variant="ghost">

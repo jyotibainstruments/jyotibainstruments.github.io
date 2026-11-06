@@ -1,0 +1,41 @@
+{
+  "heading": "Privacy policy",
+  "metaTitle": "Privacy policy | JIE",
+  "metaDescription": "How the JIE website treats contact links, WhatsApp messages and analytics. A static brochure site with no contact forms and no advertising cookies.",
+  "intro": [
+    "This is the website of Jyotiba Instruments Enterprises (JIE), a calibration, repair and sales business. This page explains what the site itself does — and does not do — with information."
+  ],
+  "items": [
+    {
+      "title": "The short version",
+      "body": [
+        "The site is a static brochure for the business. It has no user accounts, stores nothing you type in a database, and does not sell, rent or share data with advertisers. The only interactive contact happens where you choose to contact us: WhatsApp, a phone call or an email."
+      ]
+    },
+    {
+      "title": "Contacting JIE",
+      "body": [
+        "WhatsApp, call and email buttons open WhatsApp, your phone app or your email app with contact details and, in most cases, a ready-made message. What you type and send goes directly to JIE through those channels. Once you write to us, we have your contact details and your message — we use them to answer your enquiry and nothing else.",
+        "The address, phone and GSTIN details shown on the contact page are the business's own published contact details."
+      ]
+    },
+    {
+      "title": "What the site does not do",
+      "body": [
+        "There are no contact forms on the site, so no form data exists. Nothing is installed from social-network companies, no behaviour of yours is profiled, and the site does not set cookies of its own."
+      ]
+    },
+    {
+      "title": "Analytics (only if enabled)",
+      "body": [
+        "If website analytics have been enabled, a small script loads that records page views and link taps — for example that a catalogue was opened or a WhatsApp button tapped — together with basic browser and country information. Analytics are never required for the site to work: with the ID unset, no such script loads at all."
+      ]
+    },
+    {
+      "title": "Changes",
+      "body": [
+        "If the website changes, this page is updated to match. Questions are welcome through the details on the contact page."
+      ]
+    }
+  ]
+}

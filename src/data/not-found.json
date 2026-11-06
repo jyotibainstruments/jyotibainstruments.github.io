@@ -1,0 +1,18 @@
+{
+  "heading": "Page not found",
+  "metaTitle": "Page not found | JIE",
+  "metaDescription": "This page does not exist. Browse JIE's calibration and repair services, product catalogues or the contact page instead.",
+  "text": "The address may be mistyped, or the page may have moved while the site was being built. Nothing is lost — everything on the site is a few clicks away.",
+  "quickLinks": {
+    "title": "Popular pages",
+    "items": [
+      { "label": "Home", "path": "/" },
+      { "label": "Calibration services", "path": "/services/" },
+      { "label": "Products and catalogues", "path": "/products/" },
+      { "label": "Contact and offices", "path": "/contact/" }
+    ]
+  },
+  "whatsappTitle": "Chat to the team instead",
+  "whatsappText": "If you were looking for something specific — an instrument, a service or a spare part — ask on WhatsApp and we will point you to it.",
+  "serviceMessage": "Hello JIE, I would like to know more about your calibration and repair services."
+}

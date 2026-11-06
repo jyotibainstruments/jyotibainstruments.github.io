@@ -1,0 +1,376 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import CtaPanel from '../components/CtaPanel.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import { primaryPhone } from '../config/site';
+import { aboutPage, getOffice, getService } from '../lib/content';
+import { breadcrumbJsonLd, collectionPageJsonLd } from '../lib/seo';
+import { telHref, mapSearchHref, url } from '../lib/url';
+
+const content = aboutPage;
+
+const items = [
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about/' },
+];
+
+const offices = [
+  getOffice('belgaum'),
+  getOffice('hubli'),
+].filter((office): office is NonNullable<typeof office> => Boolean(office));
+
+const topServices = [
+  getService('calibration'),
+  getService('on-site-calibration'),
+  getService('repairs-and-tool-error-adjustment'),
+  getService('spare-parts-and-instruments'),
+];
+const cityPage = (slug: string) => url(`/locations/${slug}/`);
+---
+
+<SiteLayout
+  title={content.metaTitle}
+  description={content.metaDescription}
+  path="/about/"
+  jsonLd={[
+    collectionPageJsonLd({
+      name: content.heading,
+      description: content.metaDescription,
+      path: '/about/',
+    }),
+    breadcrumbJsonLd(items),
+  ]}
+>
+  <PageHeader heading={content.heading} intro={content.intro} items={items}>
+    <Fragment slot="actions">
+      <WhatsAppButton placement="about" label="Chat on WhatsApp" />
+      {primaryPhone && <Button href={telHref(primaryPhone)} variant="ghost">Call {primaryPhone}</Button>}
+    </Fragment>
+  </PageHeader>
+
+  <Section tone="surface" labelledby="about-what">
+    <SectionHeading id="about-what" title={content.whatWeDo.title} intro={content.whatWeDo.paragraph} />
+
+    <ul class="checklist">
+      {content.whatWeDo.activities.map((activity) => (
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true" focusable="false">
+            <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span>{activity}</span>
+        </li>
+      ))}
+    </ul>
+
+    <div class="audiences">
+      <h3>{content.whatWeDo.audiences.title}</h3>
+      <p>{content.whatWeDo.audiences.paragraph}</p>
+    </div>
+  </Section>
+
+  <Section tone="bg" labelledby="about-principles">
+    <SectionHeading id="about-principles" title={content.principles.title} intro={content.principles.paragraph} />
+
+    <ul class="grid grid--four">
+      {content.principles.items.map((principle) => (
+        <li>
+          <Card>
+            <div class="pillar">
+              <h3>{principle.title}</h3>
+              <p>{principle.body}</p>
+            </div>
+          </Card>
+        </li>
+      ))}
+    </ul>
+
+    <div class="strengths">
+      <h3>{content.strengths.title}</h3>
+      <ul class="chips">
+        {content.strengths.items.map((strength) => (
+          <li>{strength}</li>
+        ))}
+      </ul>
+    </div>
+  </Section>
+
+  <Section tone="surface" labelledby="about-process">
+    <SectionHeading id="about-process" title={content.processTitle} intro={content.processIntro} />
+    <ProcessSteps />
+
+    <ul class="grid grid--services">
+      {topServices.map((service) => (
+        <li>
+          <Card href={url(service.path)}>
+            <div class="service-tile">
+              <h3>{service.navTitle}</h3>
+              <p>{service.summary}</p>
+              <span class="more">
+                View service
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </div>
+          </Card>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section tone="bg" labelledby="about-places">
+    <SectionHeading
+      id="about-places"
+      title={content.placesTitle}
+      link={{ label: 'All places', href: url('/locations/') }}
+    />
+
+    <p class="places-note">{content.placesNote}</p>
+
+    <ul class="grid grid--two">
+      {offices.map((office) => (
+        <li>
+          <Card href={cityPage(office.slug)}>
+            <div class="place">
+              <p class="place__kind">{office.kind === 'lab' ? 'Calibration lab' : 'Branch office'}</p>
+              <h3>{office.shortName}</h3>
+              <address>{office.address}</address>
+              {office.mapQuery && (
+                <a class="map" href={mapSearchHref(office.mapQuery)} target="_blank" rel="noopener">
+                  Open in Google Maps
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                    <path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span class="sr-only">(opens in a new tab)</span>
+                </a>
+              )}
+            </div>
+          </Card>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <CtaPanel
+    title="Talk about your instruments"
+    text="Whether it is calibration, a repair, or a part you need supplied — we look forward to hearing from you."
+    placement="about-cta"
+  />
+</SiteLayout>
+
+<style>
+  .checklist {
+    display: grid;
+    gap: 0 var(--space-8);
+    margin: 0 0 var(--space-6);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 640px) {
+    .checklist {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    margin: 0;
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    font-size: var(--text-sm);
+  }
+
+  .checklist svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    margin-top: 0.28em;
+    color: var(--crimson);
+  }
+
+  .audiences {
+    max-width: 62ch;
+    padding: clamp(20px, 4vw, 32px);
+    border: 1px solid rgb(116 9 43 / 16%);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-card);
+    background: var(--crimson-50);
+  }
+
+  .audiences h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-lg);
+  }
+
+  .audiences p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .grid > li {
+    display: flex;
+    margin: 0;
+  }
+
+  @media (min-width: 640px) {
+    .grid--four,
+    .grid--two,
+    .grid--services {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .grid--four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .grid--services {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .pillar h3,
+  .service-tile h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-base);
+  }
+
+  .pillar p,
+  .service-tile p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+  }
+
+  .service-tile {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .service-tile .more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    margin-top: auto;
+    padding-top: var(--space-4);
+    color: var(--crimson);
+    font-size: var(--text-xs);
+    font-weight: 650;
+  }
+
+  .service-tile .more svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+  }
+
+  .strengths {
+    margin-top: var(--space-6);
+  }
+
+  .strengths h3 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-base);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chips li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.5em 0.9em;
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink);
+    font-size: var(--text-xs);
+    font-weight: 650;
+  }
+
+  .chips li::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .places-note {
+    max-width: 62ch;
+    margin: 0 0 var(--space-5);
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+
+  .place {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .place__kind {
+    margin: 0;
+    color: var(--ink-3);
+    font-size: var(--text-xs);
+    font-weight: 650;
+  }
+
+  .place h3 {
+    margin: 0;
+    font-size: var(--text-lg);
+  }
+
+  .place address {
+    font-style: normal;
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  .place .map {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    color: var(--crimson);
+    font-size: var(--text-xs);
+    font-weight: 650;
+  }
+
+  .place .map svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+  }
+</style>

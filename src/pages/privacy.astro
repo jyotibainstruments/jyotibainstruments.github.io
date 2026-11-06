@@ -1,0 +1,77 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import { privacyPage } from '../lib/content';
+import { breadcrumbJsonLd } from '../lib/seo';
+import { url } from '../lib/url';
+
+const content = privacyPage;
+
+const items = [
+  { name: 'Home', path: '/' },
+  { name: 'Privacy', path: '/privacy/' },
+];
+---
+
+<SiteLayout
+  title={content.metaTitle}
+  description={content.metaDescription}
+  path="/privacy/"
+  jsonLd={[breadcrumbJsonLd(items)]}
+>
+  <PageHeader heading={content.heading} intro={content.intro} items={items} />
+
+  {
+    content.items.map((item, index) => (
+      <Section tone={index % 2 === 0 ? 'surface' : 'bg'} labelledby={`privacy-${index}`}>
+        <div class="entry">
+          <h2 id={`privacy-${index}`}>{item.title}</h2>
+          <div class="entry__body">
+            {item.body.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+        </div>
+      </Section>
+    ))
+  }
+
+  <Section tone="surface">
+    <p class="contact-line">
+      Anything to ask or correct? The <a href={url('/contact/')}>contact page</a> lists every published way to reach the business.
+    </p>
+  </Section>
+</SiteLayout>
+
+<style>
+  .entry {
+    max-width: 72ch;
+  }
+
+  .entry h2 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-xl);
+  }
+
+  .entry__body {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .entry__body p {
+    margin: 0;
+  }
+
+  .contact-line {
+    max-width: 72ch;
+    margin: 0;
+  }
+
+  .contact-line a {
+    color: var(--crimson);
+    font-weight: 650;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+</style>

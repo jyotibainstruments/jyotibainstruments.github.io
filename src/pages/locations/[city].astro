@@ -1,0 +1,324 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Section from '../../components/Section.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Button from '../../components/Button.astro';
+import WhatsAppButton from '../../components/WhatsAppButton.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import { primaryPhone } from '../../config/site';
+import {
+  calibrationDisciplines,
+  clientsInCity,
+  locationCities,
+  offices,
+  otherServices,
+} from '../../lib/content';
+import { breadcrumbJsonLd } from '../../lib/seo';
+import { serviceEnquiry } from '../../lib/whatsapp';
+import { mapSearchHref, telHref, url } from '../../lib/url';
+
+export function getStaticPaths() {
+  return locationCities.map((city) => ({
+    params: { city: city.slug },
+    props: { city },
+  }));
+}
+
+const { city } = Astro.props;
+
+const cityName = city.slug.charAt(0).toUpperCase() + city.slug.slice(1);
+
+const items = [
+  { name: 'Home', path: '/' },
+  { name: 'Locations', path: '/locations/' },
+  { name: cityName, path: `/locations/${city.slug}/` },
+];
+
+/** The office card: Belgaum and Hubli have real addresses; Dharwad has none. */
+const officeKinds: Record<string, string> = {
+  belgaum: 'Calibration lab (main branch)',
+  hubli: 'Branch office',
+};
+
+const office = city.serviceArea
+  ? null
+  : offices.find((candidate) => candidate.slug === city.slug && candidate.addressParts) ?? null;
+
+const disciplines = calibrationDisciplines;
+const cityServices = otherServices;
+const customers = clientsInCity(city.slug as 'belgaum' | 'hubli' | 'dharwad');
+
+const [lead, ...rest] = city.narrative;
+
+const ctaMessage = serviceEnquiry(`calibration, repairs or supplies in ${cityName}`);
+---
+
+<SiteLayout
+  title={city.metaTitle}
+  description={city.metaDescription}
+  path={`/locations/${city.slug}/`}
+  jsonLd={[breadcrumbJsonLd(items)]}
+>
+  <PageHeader heading={city.heading} intro={[lead]} items={items}>
+    <Fragment slot="actions">
+      <WhatsAppButton placement={`location-${city.slug}`} message={ctaMessage} label="Enquire on WhatsApp" />
+      {
+        primaryPhone && (
+          <Button href={telHref(primaryPhone)} variant="ghost">
+            Call {primaryPhone}
+          </Button>
+        )
+      }
+    </Fragment>
+  </PageHeader>
+
+  <Section tone="bg" labelledby={`city-${city.slug}-prose`}>
+    <div class="prose">
+      {
+        office && (
+          <aside class="address-card">
+            <p class="address-card__kind">{officeKinds[city.slug]}</p>
+            <h2>The {cityName} address</h2>
+            <address>{office.address}</address>
+            <ul class="phones">
+              {office.phones.map((phone) => (
+                <li>
+                  <a href={telHref(phone)}>{phone}</a>
+                </li>
+              ))}
+            </ul>
+            <a class="map" href={mapSearchHref(office.mapQuery!)} target="_blank" rel="noopener">
+              Open in Google Maps
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                <path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="sr-only">(opens in a new tab)</span>
+            </a>
+          </aside>
+        )
+      }
+
+      <div class="prose__text">
+        {rest.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="surface" labelledby={`city-${city.slug}-services`}>
+    <SectionHeading id={`city-${city.slug}-services`} title="Services you can book here" intro="Each service page carries the full instrument list and the four-step process." />
+
+    <ul class="service-grid">
+      {[...disciplines, ...cityServices].map((service) => (
+        <li>
+          <a href={url(service.path)}>
+            <span class="service-grid__name">{service.navTitle}</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  {
+    customers.length > 0 && (
+      <Section tone="bg" labelledby={`city-${city.slug}-customers`}>
+        <SectionHeading
+          id={`city-${city.slug}-customers`}
+          title={`Named customers in and around ${cityName}`}
+          intro="From the customer list in JIE's own documents, with locations as printed."
+          link={{ label: 'All clients', href: url('/clients/') }}
+        />
+
+        <ul class="clients">
+          {customers.map((client) => (
+            <li>
+              <span class="clients__name">{client.name}</span>
+              <span class="clients__location">{client.location}</span>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    )
+  }
+
+  <CtaPanel
+    title={`Calibration and repairs for ${cityName} plants and labs`}
+    text="Send the instruments that need attention and the team comes back with the fastest safe route to a certificate."
+    placement={`location-${city.slug}-cta`}
+    message={ctaMessage}
+  />
+</SiteLayout>
+
+<style>
+  .prose {
+    display: grid;
+    gap: var(--space-6) var(--space-9);
+  }
+
+  @media (min-width: 860px) {
+    .prose:has(.address-card) {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      align-items: start;
+    }
+  }
+
+  .address-card {
+    align-self: start;
+    display: grid;
+    justify-items: start;
+    gap: var(--space-2);
+    padding: clamp(24px, 4vw, 36px);
+    border: 1px solid rgb(116 9 43 / 16%);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+  }
+
+  .address-card__kind {
+    margin: 0;
+    color: var(--ink-3);
+    font-size: var(--text-xs);
+    font-weight: 650;
+  }
+
+  .address-card h2 {
+    margin: 0;
+    font-size: var(--text-lg);
+  }
+
+  .address-card address {
+    font-style: normal;
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+  }
+
+  .phones {
+    display: grid;
+    gap: 0.15rem;
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .phones a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--ink);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  .address-card .map {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    margin-top: var(--space-2);
+    color: var(--crimson);
+    font-size: var(--text-sm);
+    font-weight: 650;
+  }
+
+  .address-card .map svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+  }
+
+  .prose__text {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 70ch;
+  }
+
+  .prose__text p {
+    margin: 0;
+  }
+
+  .service-grid {
+    display: grid;
+    gap: var(--space-2) var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 640px) {
+    .service-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .service-grid li {
+    margin: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .service-grid a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 48px;
+    padding-block: 0.5rem;
+    color: var(--ink);
+    font-weight: 650;
+    font-size: var(--text-sm);
+  }
+
+  .service-grid a:hover .service-grid__name,
+  .service-grid a:focus-visible .service-grid__name {
+    color: var(--crimson);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  .service-grid svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    color: var(--crimson);
+  }
+
+  .clients {
+    display: grid;
+    gap: var(--space-3) var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 640px) {
+    .clients {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .clients li {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: var(--space-3) 0 var(--space-3) var(--space-4);
+    border-left: 3px solid var(--gold);
+  }
+
+  .clients__name {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+
+  .clients__location {
+    margin-top: 0.2em;
+    color: var(--ink-3);
+    font-size: var(--text-xs);
+  }
+</style>

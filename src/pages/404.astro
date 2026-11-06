@@ -1,0 +1,128 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Button from '../components/Button.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { notFoundPage } from '../lib/content';
+import { site } from '../config/site';
+import { telHref, url } from '../lib/url';
+
+const content = notFoundPage;
+const primaryPhone = site.offices.find((office) => office.kind === 'lab')?.phones.at(0) ?? null;
+---
+
+<SiteLayout
+  title={content.metaTitle}
+  description={content.metaDescription}
+  path="/404/"
+  noindex
+>
+  <div class="nf">
+    <div class="container">
+      <p class="nf__code" aria-hidden="true">404</p>
+      <h1>{content.heading}</h1>
+      <p class="nf__text">{content.text}</p>
+
+      <ul class="nf__links">
+        {content.quickLinks.items.map((link) => (
+          <li>
+            <a href={url(link.path)}>
+              {link.label}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="nf__actions">
+        <WhatsAppButton placement="not-found" message={content.serviceMessage} label={content.whatsappTitle} />
+        {primaryPhone && <Button href={telHref(primaryPhone)} variant="ghost">Call {primaryPhone}</Button>}
+      </div>
+    </div>
+  </div>
+</SiteLayout>
+
+<style>
+  .nf {
+    display: grid;
+    flex: 1;
+    align-content: center;
+    min-height: min(62vh, 640px);
+    padding-block: clamp(40px, 8vw, 96px);
+  }
+
+  .nf__code {
+    margin: 0;
+    color: rgb(116 9 43 / 18%);
+    font-family: var(--font-heading);
+    font-size: clamp(4rem, 10vw + 2rem, 9rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  h1 {
+    max-width: 16ch;
+    margin: var(--space-3) 0 var(--space-2);
+  }
+
+  .nf__text {
+    max-width: 52ch;
+    margin: 0;
+    color: var(--ink-2);
+  }
+
+  .nf__links {
+    display: grid;
+    gap: var(--space-2);
+    margin: var(--space-6) 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nf__links li {
+    display: flex;
+    margin: 0;
+  }
+
+  .nf__links a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 52px;
+    padding: 0 var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    color: var(--ink);
+    font-weight: 650;
+    font-size: var(--text-sm);
+  }
+
+  .nf__links a:hover,
+  .nf__links a:focus-visible {
+    border-color: var(--crimson);
+    color: var(--crimson);
+  }
+
+  .nf__links svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+  }
+
+  .nf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 640px) {
+    .nf__links {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

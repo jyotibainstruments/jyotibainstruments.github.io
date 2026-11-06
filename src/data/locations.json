@@ -1,0 +1,62 @@
+{
+  "heading": "Places where JIE works",
+  "metaTitle": "Offices and service area of JIE | JIE",
+  "metaDescription": "The Udyambag calibration lab in Belgaum, the Hubli branch, the Dharwad service area, plus offices stated in Pune and Ahmedabad.",
+  "intro": [
+    "JIE runs a calibration laboratory in Udyambag, Belgaum and a branch office in Hubli — the two addresses printed with phone numbers in the company's documents.",
+    "Two more office locations are stated in Pune and Ahmedabad with partial addresses only, and Dharwad is served as a service area from the Belgaum lab and Hubli branch."
+  ],
+  "detailsLabel": "Read the {city} page",
+  "serviceAreaLabel": "Service area",
+  "realOfficeLabel": "Office with phones",
+  "statedOnlyLabel": "Address as stated",
+  "statedOnlyNote": "Partial address only — phone and directions are not published.",
+  "cities": [
+    {
+      "slug": "belgaum",
+      "serviceArea": false,
+      "heading": "Calibration lab in Udyambag, Belgaum",
+      "metaTitle": "Calibration lab in Udyambag, Belgaum | JIE",
+      "metaDescription": "JIE's main calibration laboratory is at Shree Complex, Udyambag, Belgaum - 590 008. Mechanical, electro-technical, thermal, medical and civil calibration.",
+      "narrative": [
+        "JIE's main facility is its calibration laboratory in Udyambag, the industrial belt of Belgaum. The full printed address is Shree Complex, Block No. 7, 1st Floor, Plot No. 182/A/186, Udyambag, Belgaum - 590 008, Karnataka. This is the site the company calls its main branch — where instrument calibration and certification work is carried out.",
+        "Calibration here covers six disciplines. Mechanical and pressure instruments include vernier calipers, micrometers, slip gauges, thread plug gauges, surface plates, steel rules and tapes, torque wrenches and pressure gauges. Electro-technical equipment includes multimeters, clamp meters, insulation testers, voltmeters and oscilloscopes. Thermal and temperature equipment covers indicators, controllers, recorders, thermocouples and RTD sensors.",
+        "The remaining disciplines continue the same pattern: bio-medical equipment such as infusion pumps, defibrillators and pulse oximeters; fluid and flow instruments such as gas and liquid flow meters and differential pressure transmitters; and civil material testing such as compressive strength of cubes and force measuring machines including UTM, TTM and CTM.",
+        "Work at the lab follows the company's four-step process — receive and inspect, calibrate, document, return — with documentation intended to satisfy industry, hospital, institute, government-project, regulatory and audit requirements, traceable to National / International Standards.",
+        "Where an instrument cannot travel, JIE moves the work instead: on-site calibration facilities have been developed for selected instruments, with surface plates, Trimos height gauges, bench centres, hardness testers, UTM, FTM, CTM and pressure gauges among those named for on-site work at the customer's facility.",
+        "The lab also handles tool-error adjustment and repairs to bring instruments back within specified limits (minor repairs free of charge, major work charged extra at actual), and it supplies spares such as pressure gauges, thermocouples, RTD sensors and temperature controllers.",
+        "Named customers in and around Belgaum include Ratna Cements of Yadwad, Hydropack India, Orione Hydraulics, Spica Hydraulics and Ashok Iron Pvt. Ltd., Vega Auto Accessories, Aequs Pvt. Ltd. and its SEZ units, and the medical accounts J.N. Medical College and Thyro Care."
+      ]
+    },
+    {
+      "slug": "hubli",
+      "serviceArea": false,
+      "heading": "Branch office in Hubli",
+      "metaTitle": "JIE branch office in Hubli, Karnataka | JIE",
+      "metaDescription": "JIE's Hubli branch handles instruments, spares, calibration and repair enquiries for the Hubli-Dharwad belt, with on-site calibration too.",
+      "narrative": [
+        "JIE's branch office in Hubli is at H.No. 28, Hemareddi Mallamma Colony, R.N. Shetty Road, Hubli - 580 024, Karnataka. It is the second of the company's two fully listed contact points, and it puts a member of the team within reach of the Hubli–Dharwad industrial belt alongside the main calibration laboratory in Udyambag, Belgaum.",
+        "Customers can approach the Hubli office for any part of the business: instrument calibration and tool repair enquiries, spare parts and instrument supply, or arrangements for on-site calibration at a plant in Hubli. Laboratory calibration work itself runs from the Belgaum lab, with certification passed back to the customer.",
+        "Instruments covered follow the same discipline spread as elsewhere in the company: mechanical measuring instruments such as vernier calipers, micrometers, engineer squares and combination sets; pressure gauges from analogue dials to digital pressure gauges and vacuum pressure gauges; electrical test equipment such as tong testers, LCR meters, mV/mA calibrators and brake fluid testers; and temperature indicators, controllers, thermocouples and thermostats.",
+        "Supply matters here too. The company's supply list names makes available through JIE: pressure gauges from WIKA, Micro and SHRIJI; thermowells, thermocouples and RTD sensors; mechanical measuring instruments from brands such as Mitutoyo, Baker and Insize; and temperature and PID controllers — ask the Hubli office about availability.",
+        "Named customers in Hubli include Jandu Construction India, KPR Constructions, Kirloskar Electric Company, the South Western Railway, RNS Motors Ltd across all branches with RNS Trucking under Bharat Benz for Karnataka, Nidec Industrial Automation, Fastners & Allied Products, Miven Mayfran Conveyors, Micon Engineers, Microfinish Valves & Pumps, Khimji Flow Equipments, Shalimar Valves of Anchatageri, and Flowserve Microfinish Pumps & Valves.",
+        "As everywhere in the business, JIE keeps pricing simple and cost-effective, with calibration restricted to the equipment that needs to meet product-liability and safety requirements, and certification maintained and updated, traceable to National / International Standards."
+      ]
+    },
+    {
+      "slug": "dharwad",
+      "serviceArea": true,
+      "heading": "Calibration services across Dharwad",
+      "metaTitle": "Calibration service coverage in Dharwad | JIE",
+      "metaDescription": "Instrument calibration, tool-error adjustment, spares and on-site calibration for Dharwad customers, served from nearby Hubli and Belgaum.",
+      "narrative": [
+        "Dharwad is a service area rather than an address. JIE has no office in Dharwad; the nearest places to meet the team are the calibration laboratory in Udyambag, Belgaum and the branch office in Hubli listed on the JIE contact page.",
+        "That has not kept the work away. Names reaching across Dharwad appear throughout the company's own customer list, most of them automotive and engineering plants: Tata Motors & Tata Hitachi, Tata Marcopolo, RSB Transmission (I) Ltd., Spicer India Pvt. Ltd. of Jodalli, Uni Deritend Ltd & UNI Abex Ltd., Uni-Vtl, Star Auto Industries of Belur, the Goa and Dharwad works of Automobile Corporation Goa Ltd — and, on the hydraulics side, HYDROLINES-INDIA.",
+        "For these customers the company provides much the same menu as anywhere else: instrument calibration across the six disciplines; tool-error adjustment to bring gauges back into tolerance; and the supply of spare parts — pressure gauges, thermocouples and RTD sensors, electrical instruments, lab instruments, and temperature and PID controllers.",
+        "On-site calibration matters most for a factory belt like this. For selected instruments and equipment, JIE brings calibration to the facility: surface plates, Trimos height gauges, bench centres, CMMs, hardness testers, UTM, FTM and CTM are among the instruments named for on-site work, saving the time and travel cost of moving large machines to a laboratory.",
+        "Everything follows the process the company describes: receive and inspect, calibrate, document, return — with documentation intended to satisfy industry, regulatory and audit requirements, and certification traceable to National / International Standards.",
+        "To start calibration or repair work in Dharwad, the quickest route is WhatsApp or a phone call: the team will confirm what needs collecting, what can be calibrated on-site, and what documentation an audit will ask for."
+      ]
+    }
+  ]
+}

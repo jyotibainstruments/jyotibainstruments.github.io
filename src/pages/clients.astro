@@ -1,0 +1,172 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import Button from '../components/Button.astro';
+import CtaPanel from '../components/CtaPanel.astro';
+import { primaryPhone } from '../config/site';
+import { clientsPage, clientsBySector } from '../lib/content';
+import { breadcrumbJsonLd, collectionPageJsonLd } from '../lib/seo';
+import { slugify } from '../lib/slug';
+import { serviceEnquiry } from '../lib/whatsapp';
+import { telHref } from '../lib/url';
+
+const content = clientsPage;
+
+const items = [
+  { name: 'Home', path: '/' },
+  { name: 'Clients', path: '/clients/' },
+];
+
+const sectors = clientsBySector;
+const enquiry = serviceEnquiry('scope for calibration, repairs or supplies in your plant');
+---
+
+<SiteLayout
+  title={content.metaTitle}
+  description={content.metaDescription}
+  path="/clients/"
+  jsonLd={[
+    collectionPageJsonLd({
+      name: content.heading,
+      description: content.metaDescription,
+      path: '/clients/',
+    }),
+    breadcrumbJsonLd(items),
+  ]}
+>
+  <PageHeader heading={content.heading} intro={content.intro} items={items}>
+    <Fragment slot="actions">
+      <WhatsAppButton placement="clients" message={enquiry} label="Enquire on WhatsApp" />
+      {primaryPhone && <Button href={telHref(primaryPhone)} variant="ghost">Call {primaryPhone}</Button>}
+    </Fragment>
+  </PageHeader>
+
+  <Section tone="surface" labelledby="clients-index" id="sector-index">
+    <h2 id="clients-index">Sectors on this page</h2>
+    <ul class="sector-nav">
+      {sectors.map(({ sector, clients }) => (
+        <li>
+          <a href={`#sector-${slugify(sector)}`}>{sector}</a>
+          <span>{`(${clients.length})`}</span>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  {sectors.map(({ sector, clients }, index) => (
+    <Section tone={index % 2 === 0 ? 'bg' : 'surface'} labelledby={`sector-${slugify(sector)}`} id={`sector-${slugify(sector)}`}>
+      <SectionHeading id={`sector-${slugify(sector)}`} title={sector} intro={`${clients.length} customers named in this sector.`} />
+
+      <ul class="clients">
+        {clients.map((client) => (
+          <li class:list={{ 'is-featured': client.featured }}>
+            <span class="clients__name">{client.name}</span>
+            {
+              client.featured && (
+                <span class="clients__tag">{content.featuredLabel}</span>
+              )
+            }
+            <span class="clients__location">{client.location}</span>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  ))}
+
+  <CtaPanel
+    title="Your name could be in this list next"
+    text="Send the instruments on your floor and the calibration, repair or supply needs behind them."
+    placement="clients-cta"
+  />
+</SiteLayout>
+
+<style>
+  .sector-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sector-nav li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+
+  .sector-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--crimson);
+    font-weight: 650;
+    font-size: var(--text-sm);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  .sector-nav span {
+    color: var(--ink-3);
+    font-size: var(--text-xs);
+  }
+
+  .clients {
+    display: grid;
+    gap: var(--space-3) var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 640px) {
+    .clients {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .clients {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .clients li {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: var(--space-3) 0 var(--space-3) var(--space-4);
+    border-left: 3px solid var(--line);
+  }
+
+  .clients li.is-featured {
+    border-left-color: var(--gold);
+  }
+
+  .clients__name {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+
+  .clients__tag {
+    align-self: flex-start;
+    margin-top: 0.35em;
+    padding: 0.2em 0.6em;
+    border-radius: 999px;
+    background: var(--crimson-50);
+    color: var(--crimson);
+    font-size: 0.75rem;
+    font-weight: 650;
+  }
+
+  .clients__location {
+    margin-top: 0.2em;
+    color: var(--ink-3);
+    font-size: var(--text-xs);
+  }
+</style>
