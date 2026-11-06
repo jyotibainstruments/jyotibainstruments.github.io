@@ -1,0 +1,11 @@
+---
+import Section from '../Section.astro';
+import SectionHeading from '../SectionHeading.astro';
+import ProcessSteps from '../ProcessSteps.astro';
+import { home } from '../../lib/content';
+---
+
+<Section labelledby="process-title">
+  <SectionHeading id="process-title" title={home.process.title} intro={home.process.intro} />
+  <ProcessSteps />
+</Section>

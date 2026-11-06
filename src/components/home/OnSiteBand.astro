@@ -1,0 +1,134 @@
+---
+import Section from '../Section.astro';
+import SectionHeading from '../SectionHeading.astro';
+import Button from '../Button.astro';
+import { home, orderedServices } from '../../lib/content';
+import { url } from '../../lib/url';
+
+const onSite = orderedServices.find((service) => service.slug === 'on-site-calibration');
+const instruments = onSite?.instruments ?? [];
+---
+
+<Section tone="crimson" labelledby="onsite-title">
+  <SectionHeading id="onsite-title" tone="crimson" title={home.onSite.title} intro={home.onSite.summary} />
+
+  <div class="grid">
+    <ul class="points">
+      {
+        home.onSite.points.map((point) => (
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true" focusable="false">
+              <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>{point}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="panel">
+      <h3>Instruments include</h3>
+      <ul class="instruments">
+        {
+          instruments.map((instrument) => (
+            <li>
+              <span class="dot" aria-hidden="true"></span>
+              {instrument}
+            </li>
+          ))
+        }
+      </ul>
+      <Button href={url('/services/on-site-calibration/')} variant="ghost" size="sm">
+        On-site calibration details
+      </Button>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .grid {
+    display: grid;
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  @media (min-width: 880px) {
+    .grid {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: var(--space-8);
+    }
+  }
+
+  .points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .points li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 700;
+  }
+
+  .points svg {
+    width: 22px;
+    height: 22px;
+    flex: none;
+    color: var(--gold-on-crimson);
+  }
+
+  .panel {
+    padding: var(--space-5);
+    border: 1px solid rgb(255 255 255 / 18%);
+    border-radius: var(--radius-card);
+    background: rgb(255 255 255 / 8%);
+  }
+
+  .panel h3 {
+    margin: 0 0 var(--space-4);
+    color: #ffffff;
+    font-size: var(--text-sm);
+  }
+
+  .instruments {
+    display: grid;
+    gap: var(--space-2) var(--space-5);
+    margin: 0 0 var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 520px) {
+    .instruments {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .instruments li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    margin: 0;
+    color: rgb(255 255 255 / 88%);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+  }
+
+  .dot {
+    width: 5px;
+    height: 5px;
+    flex: none;
+    margin-top: 0.5em;
+    border-radius: var(--radius-pill);
+    background: var(--gold-on-crimson);
+  }
+</style>

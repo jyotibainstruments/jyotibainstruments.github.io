@@ -1,0 +1,21 @@
+{
+  "name": "Jyotiba Instruments Enterprises",
+  "short_name": "JIE",
+  "description": "Calibration, repairs and sales of precision measuring instruments.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#EEF5F8",
+  "theme_color": "#74092B",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

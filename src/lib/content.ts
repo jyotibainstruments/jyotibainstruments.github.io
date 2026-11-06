@@ -4,6 +4,7 @@ import companiesJson from '../data/companies.json';
 import clientsJson from '../data/clients.json';
 import servicesJson from '../data/services.json';
 import processJson from '../data/process.json';
+import homeJson from '../data/home.json';
 
 /**
  * Validates a JSON collection and fails the build with a readable list of
@@ -257,6 +258,48 @@ export const processSteps = parseCollection(
   z.array(processStepSchema).min(1),
   processJson,
 );
+
+/* Home */
+
+const homeSectionSchema = z.object({
+  title: z.string().min(1),
+  intro: z.string().min(1),
+});
+
+const homeItemSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+});
+
+const homeSchema = z.object({
+  hero: z.object({
+    eyebrow: z.string().min(1),
+    title: z.string().min(1),
+    summary: z.string().min(1),
+    chips: z.array(z.string().min(1)).min(1),
+  }),
+  services: homeSectionSchema,
+  products: homeSectionSchema,
+  disciplines: homeSectionSchema,
+  onSite: z.object({
+    title: z.string().min(1),
+    summary: z.string().min(1),
+    points: z.array(z.string().min(1)).min(1),
+  }),
+  process: homeSectionSchema,
+  why: homeSectionSchema.extend({ items: z.array(homeItemSchema).min(1) }),
+  clients: homeSectionSchema,
+  industries: homeSectionSchema.extend({ items: z.array(homeItemSchema).min(1) }),
+  locations: homeSectionSchema,
+  cta: z.object({
+    title: z.string().min(1),
+    summary: z.string().min(1),
+  }),
+});
+
+export type HomeContent = z.infer<typeof homeSchema>;
+
+export const home = parseCollection('home', homeSchema, homeJson);
 
 /* Derived views */
 

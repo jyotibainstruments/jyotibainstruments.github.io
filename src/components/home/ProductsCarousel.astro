@@ -1,0 +1,141 @@
+---
+import Section from '../Section.astro';
+import SectionHeading from '../SectionHeading.astro';
+import Card from '../Card.astro';
+import Carousel from '../Carousel.astro';
+import WhatsAppButton from '../WhatsAppButton.astro';
+import { companyPath, home, visibleCompanies } from '../../lib/content';
+import { url } from '../../lib/url';
+
+const hasCompanies = visibleCompanies.length > 0;
+---
+
+<Section labelledby="products-title">
+  <SectionHeading
+    id="products-title"
+    title={home.products.title}
+    intro={home.products.intro}
+    link={{ label: 'All products', href: url('/products/') }}
+  />
+
+  {
+    hasCompanies ? (
+      <Carousel label="Product catalogues">
+        {visibleCompanies.map((company) => (
+          <Card href={url(companyPath(company.slug))}>
+            <div class="product-card">
+              <span class="product-card__name">{company.name}</span>
+              <span class="product-card__action">
+                View catalogue
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </div>
+          </Card>
+        ))}
+      </Carousel>
+    ) : (
+      <div class="empty">
+        <p>
+          <strong>Catalogues coming soon.</strong> Product catalogue pages are being prepared. In the
+          meantime, ask us for specifications and pricing on WhatsApp.
+        </p>
+        <div class="empty__actions">
+          <WhatsAppButton placement="home-products" size="sm" />
+          <a class="empty__link" href={url('/products/')}>
+            All products
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    )
+  }
+</Section>
+
+<style>
+  .product-card {
+    flex: 1;
+    display: flex;
+    min-height: 140px;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+
+  .product-card__name {
+    color: var(--ink);
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    letter-spacing: var(--tracking-heading);
+  }
+
+  .product-card__action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    color: var(--crimson);
+    font-size: var(--text-xs);
+    font-weight: 650;
+  }
+
+  .product-card__action svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+  }
+
+  .empty {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border: 1px dashed rgb(116 9 43 / 28%);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+  }
+
+  .empty p {
+    max-width: 60ch;
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+
+  .empty strong {
+    color: var(--ink);
+  }
+
+  .empty__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .empty__link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 0.4em;
+    color: var(--crimson);
+    font-size: var(--text-sm);
+    font-weight: 650;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .empty__link:hover {
+    text-decoration: underline;
+  }
+
+  .empty__link svg {
+    width: 14px;
+    height: 14px;
+  }
+</style>

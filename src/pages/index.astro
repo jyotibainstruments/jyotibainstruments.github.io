@@ -1,101 +1,53 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
-import Placeholder from '../components/Placeholder.astro';
-import { site } from '../config/site';
-import { buildTitle, organizationJsonLd, webSiteJsonLd } from '../lib/seo';
+import Hero from '../components/home/Hero.astro';
+import ServicesOverview from '../components/home/ServicesOverview.astro';
+import ProductsCarousel from '../components/home/ProductsCarousel.astro';
+import Disciplines from '../components/home/Disciplines.astro';
+import OnSiteBand from '../components/home/OnSiteBand.astro';
+import ProcessSection from '../components/home/ProcessSection.astro';
+import WhyJie from '../components/home/WhyJie.astro';
+import ClientsMarquee from '../components/home/ClientsMarquee.astro';
+import Industries from '../components/home/Industries.astro';
+import Locations from '../components/home/Locations.astro';
+import FinalCta from '../components/home/FinalCta.astro';
+import { primaryOffice, site } from '../config/site';
+import {
+  buildTitle,
+  localBusinessJsonLd,
+  organizationJsonLd,
+  webSiteJsonLd,
+} from '../lib/seo';
 
 const title = buildTitle('Calibration, repairs and sales');
 const description =
-  'Calibration, repair and sales of industrial measuring instruments, with a calibration lab in Belgaum, Karnataka.';
+  'Calibration, repairs and sales of industrial measuring instruments from a lab in Belgaum and a branch in Hubli. Enquire on WhatsApp.';
+
+const branchOffice = site.offices.find((office) => office.kind === 'branch');
+
+const jsonLd = [
+  organizationJsonLd(),
+  webSiteJsonLd(),
+  localBusinessJsonLd(primaryOffice),
+  ...(branchOffice ? [localBusinessJsonLd(branchOffice)] : []),
+];
 ---
 
 <SiteLayout
   title={title}
   description={description}
   path="/"
-  jsonLd={[organizationJsonLd(), webSiteJsonLd()]}
+  jsonLd={jsonLd}
 >
-  <section class="hero">
-    <div class="container hero__inner">
-      <div class="hero__copy">
-        <p class="eyebrow">Belgaum · Hubli · Dharwad · Pune · Ahmedabad</p>
-        <h1>Calibration, repairs and sales of precision measuring instruments</h1>
-        <p class="hero__lead">
-          {site.name} provides industrial measuring instruments, calibration, sales and repair
-          services from its calibration lab in Belgaum and branch office in Hubli.
-        </p>
-        <p class="hero__note">{site.tagline}</p>
-      </div>
-      <div class="hero__mark">
-        <Placeholder ratio="4 / 3" label="Lab photo to be supplied" />
-      </div>
-    </div>
-    <div class="ruler" aria-hidden="true"></div>
-  </section>
+  <Hero />
+  <ServicesOverview />
+  <ProductsCarousel />
+  <Disciplines />
+  <OnSiteBand />
+  <ProcessSection />
+  <WhyJie />
+  <ClientsMarquee />
+  <Industries />
+  <Locations />
+  <FinalCta />
 </SiteLayout>
-
-<style>
-  .hero {
-    padding-block: clamp(48px, 7vw, 88px) 0;
-  }
-
-  .hero__inner {
-    display: grid;
-    gap: var(--space-8);
-    align-items: center;
-  }
-
-  @media (min-width: 860px) {
-    .hero__inner {
-      grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
-      gap: var(--space-10);
-    }
-  }
-
-  .eyebrow {
-    margin-bottom: var(--space-3);
-  }
-
-  h1 {
-    max-width: 18ch;
-    margin-bottom: var(--space-5);
-  }
-
-  .hero__lead {
-    max-width: 56ch;
-    color: var(--ink-2);
-    font-size: var(--text-lg);
-  }
-
-  .hero__note {
-    margin-bottom: 0;
-    color: var(--crimson);
-    font-size: var(--text-sm);
-    font-weight: 600;
-  }
-
-  .hero__mark {
-    justify-self: start;
-  }
-
-  @media (min-width: 860px) {
-    .hero__mark {
-      justify-self: end;
-    }
-  }
-
-  .hero__mark {
-    width: 100%;
-    max-width: 520px;
-  }
-
-  @media (min-width: 860px) {
-    .hero__mark {
-      max-width: none;
-    }
-  }
-
-  .hero .ruler {
-    margin-top: clamp(40px, 6vw, 72px);
-  }
-</style>

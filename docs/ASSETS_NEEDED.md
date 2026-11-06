@@ -15,6 +15,12 @@ The site renders a neutral `Placeholder` wherever an image is missing. Do not us
 
 For each image: permission to publish, a short caption, and a note on what it shows. Images will be converted to AVIF/WebP with `astro:assets`.
 
+## Brand assets
+
+- [x] Primary logo (supplied 2026-11-06 as `public/Logo/JIE_light.svg`, `JIE_dark.svg` plus PNGs).
+- [x] Favicon set (supplied 2026-11-06 in `public/Logo/favicon/`).
+- [ ] Confirmation that the favicon gauge mark is the intended icon at 16px; it differs from the full wordmark logo.
+
 ## Brand logos (with permission)
 
 - [ ] Mahr
@@ -47,6 +53,5 @@ The owner supplies the PDFs. The site builds the viewer and facade.
 ## Other
 
 - [ ] ISO/IEC 17025 certificate scan, if the claim is to be shown (see `OPEN_QUESTIONS.md`).
-- [ ] A simplified square logo mark for favicons. The full logo is used for now; it is detailed at 32px.
 - [ ] Privacy policy wording, if analytics is enabled.
 - [ ] Product photographs for the four highlighted products, if available.

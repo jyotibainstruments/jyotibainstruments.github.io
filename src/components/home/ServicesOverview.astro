@@ -1,0 +1,105 @@
+---
+import Section from '../Section.astro';
+import SectionHeading from '../SectionHeading.astro';
+import Card from '../Card.astro';
+import { calibrationOverview, home, otherServices } from '../../lib/content';
+import { url } from '../../lib/url';
+
+const services = [
+  ...(calibrationOverview ? [calibrationOverview] : []),
+  ...otherServices,
+];
+---
+
+<Section tone="surface" labelledby="services-title">
+  <SectionHeading
+    id="services-title"
+    title={home.services.title}
+    intro={home.services.intro}
+    link={{ label: 'All services', href: url('/services/') }}
+  />
+
+  <ul class="grid">
+    {
+      services.map((service) => (
+        <li>
+          <Card href={url(service.path)}>
+            <div class="service-card">
+              <h3>{service.navTitle}</h3>
+              <p>{service.summary}</p>
+              <span class="more">
+                Learn more
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </div>
+          </Card>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .grid {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .grid > li {
+    display: flex;
+    margin: 0;
+  }
+
+  @media (min-width: 640px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .service-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .service-card h3 {
+    margin: 0;
+    font-size: var(--text-lg);
+  }
+
+  .service-card p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+  }
+
+  .more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    margin-top: auto;
+    padding-top: var(--space-4);
+    color: var(--crimson);
+    font-size: var(--text-xs);
+    font-weight: 650;
+  }
+
+  .more svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+  }
+</style>

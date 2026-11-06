@@ -1,0 +1,89 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  intro?: string;
+  link?: { label: string; href: string };
+  tone?: 'default' | 'crimson';
+}
+
+const { id, title, intro, link, tone = 'default' } = Astro.props;
+---
+
+<div class:list={['section-head', tone === 'crimson' && 'section-head--crimson']}>
+  <div class="section-head__text">
+    <h2 id={id}>{title}</h2>
+    {intro && <p>{intro}</p>}
+  </div>
+  {
+    link && (
+      <a class="section-head__link" href={link.href}>
+        <span>{link.label}</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+          <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    )
+  }
+</div>
+
+<style>
+  .section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-7);
+  }
+
+  .section-head h2 {
+    margin: 0;
+  }
+
+  .section-head p {
+    max-width: 62ch;
+    margin: var(--space-3) 0 0;
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+
+  .section-head__link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 0.4em;
+    color: var(--crimson);
+    font-size: var(--text-sm);
+    font-weight: 650;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .section-head__link:hover {
+    color: var(--crimson-900);
+    text-decoration: underline;
+  }
+
+  .section-head__link svg {
+    width: 15px;
+    height: 15px;
+    flex: none;
+  }
+
+  .section-head--crimson h2 {
+    color: #ffffff;
+  }
+
+  .section-head--crimson p {
+    color: rgb(255 255 255 / 84%);
+  }
+
+  .section-head--crimson .section-head__link {
+    color: var(--gold-on-crimson);
+  }
+
+  .section-head--crimson .section-head__link:hover {
+    color: #ffffff;
+  }
+</style>

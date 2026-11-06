@@ -1,0 +1,53 @@
+---
+import Section from '../Section.astro';
+import SectionHeading from '../SectionHeading.astro';
+import { home } from '../../lib/content';
+---
+
+<Section tone="surface" labelledby="industries-title">
+  <SectionHeading id="industries-title" title={home.industries.title} intro={home.industries.intro} />
+
+  <ul class="industries">
+    {
+      home.industries.items.map((item) => (
+        <li class="industry">
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .industries {
+    display: grid;
+    gap: var(--space-6) var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 760px) {
+    .industries {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .industry {
+    margin: 0;
+    padding-left: var(--space-4);
+    border-left: 3px solid var(--gold);
+  }
+
+  .industry h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-lg);
+  }
+
+  .industry p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+</style>

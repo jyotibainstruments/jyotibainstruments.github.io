@@ -25,7 +25,7 @@ const serviceLinks = [
     <div class="footer__brand">
       <div class="footer__logo">
         <a href={url('/')} aria-label="Jyotiba Instruments Enterprises home">
-          <Logo height={52} tone="white" decorative />
+          <Logo height={52} tone="onDark" decorative />
         </a>
       </div>
       <p>
@@ -254,6 +254,8 @@ const serviceLinks = [
     justify-content: space-between;
     gap: var(--space-3);
     padding-block: var(--space-3);
+    /* Clearance for the fixed WhatsApp button in the bottom-right corner. */
+    padding-right: calc(56px + 20px + var(--space-4));
   }
 
   .footer__bottom p {

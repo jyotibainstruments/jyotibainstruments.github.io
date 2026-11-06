@@ -18,6 +18,7 @@ Questions for the owner. The site does not wait for answers: anything missing is
 12. **Dharwad.** There is no office in the source. The plan is a service-area page using the Dharwad customers listed in CONTENT.md. Confirm.
 13. **Privacy policy.** Required if analytics is enabled. `PUBLIC_GA_ID` is not set, so no analytics are loaded yet. Provide privacy wording or approval to write a short factual page.
 14. **Custom domain.** The site currently targets `https://jyotibainstruments.github.io`. If a custom domain is added later, set `ASTRO_SITE`, add `public/CNAME`, and submit the new sitemap.
+15. **Dark logo lettering on crimson.** The supplied `JIE_dark.svg` letters are rose `#BD254C` on crimson `#74092B` (about 1.9:1). Logos are exempt from WCAG text contrast, but the wordmark reads faintly in the footer. Approve this variant as-is, or supply a footer variant with white or `#F0C45A` lettering.
 
 ## Not supplied, so not displayed
 

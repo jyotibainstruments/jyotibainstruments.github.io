@@ -1,23 +1,26 @@
 ---
-import logoUrl from '../assets/brand/jie-logo.svg?url';
+import lightLogo from '../assets/brand/jie-logo-light.svg?url';
+import darkLogo from '../assets/brand/jie-logo-dark.svg?url';
 
 interface Props {
   height?: number;
-  tone?: 'brand' | 'white';
+  /** onLight on white surfaces, onDark on the crimson footer. */
+  tone?: 'onLight' | 'onDark';
   decorative?: boolean;
   class?: string;
 }
 
-const { height = 44, tone = 'brand', decorative = false, class: className } = Astro.props;
-const width = Math.round((height * 845) / 840);
+const { height = 44, tone = 'onLight', decorative = false, class: className } = Astro.props;
+const width = Math.round((height * 1109) / 1005);
+const src = tone === 'onDark' ? darkLogo : lightLogo;
 ---
 
 <img
-  src={logoUrl}
+  src={src}
   width={width}
   height={height}
   alt={decorative ? '' : 'Jyotiba Instruments Enterprises'}
-  class:list={['logo', tone === 'white' && 'logo--white', className]}
+  class:list={['logo', className]}
   style={`height: ${height}px; width: auto;`}
   loading="eager"
   decoding="async"
@@ -26,9 +29,5 @@ const width = Math.round((height * 845) / 840);
 <style>
   .logo {
     max-width: none;
-  }
-
-  .logo--white {
-    filter: brightness(0) invert(1);
   }
 </style>

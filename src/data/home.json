@@ -1,0 +1,93 @@
+{
+  "hero": {
+    "eyebrow": "Belgaum · Hubli · Dharwad · Pune · Ahmedabad",
+    "title": "Calibration, repairs and sales of precision measuring instruments",
+    "summary": "JIE is a trusted partner providing industrial measuring instruments, calibration, sales and repair services, with a commitment to accurate results and reliable support for measurement needs.",
+    "chips": [
+      "Traceable to National / International Standards",
+      "2000+ customers",
+      "Calibration lab in Belgaum"
+    ]
+  },
+  "services": {
+    "title": "Services",
+    "intro": "Calibration, on-site calibration, repairs and tool-error adjustment, and supply of spare parts and instruments."
+  },
+  "products": {
+    "title": "Products",
+    "intro": "Measuring instruments and spares from leading brands, with calibration and repair support for all major brands of measuring instruments."
+  },
+  "disciplines": {
+    "title": "Calibration disciplines",
+    "intro": "Precise, reliable and traceable calibration for a wide range of instruments and equipment, helping industries, institutions and hospitals meet quality, safety and regulatory requirements."
+  },
+  "onSite": {
+    "title": "On-site calibration at your facility",
+    "summary": "JIE has developed on-site calibration facilities for selected instruments and equipment. Calibration is performed at your facility, saving time and travel cost, and refers to BIS and ISO standards.",
+    "points": ["Convenient", "Reliable", "Professional"]
+  },
+  "process": {
+    "title": "How calibration works",
+    "intro": "Four steps from receipt to return, with documentation for industry, regulatory and audit requirements."
+  },
+  "why": {
+    "title": "Why choose JIE",
+    "intro": "A calibration partner for measurement needs across manufacturing, service, medical and civil customers.",
+    "items": [
+      {
+        "title": "Experienced and skilled team",
+        "description": "Calibration and repair work is carried out by an experienced and skilled team."
+      },
+      {
+        "title": "State-of-the-art calibration facility",
+        "description": "Calibration is carried out at a state-of-the-art calibration facility in Belgaum."
+      },
+      {
+        "title": "Prompt and cost-effective service",
+        "description": "Simple and cost-effective pricing, with quick service and minimal downtime."
+      },
+      {
+        "title": "Traceable to National / International Standards",
+        "description": "Certification is maintained and updated, traceable to National / International Standards."
+      }
+    ]
+  },
+  "clients": {
+    "title": "Trusted by leading industries",
+    "intro": "A selection of the customers named by JIE across cement, hydraulics, automotive, power, medical, government and logistics work."
+  },
+  "industries": {
+    "title": "Industries we serve",
+    "intro": "Instruments and equipment for manufacturing, service, medical and civil customers.",
+    "items": [
+      {
+        "title": "Cement and construction",
+        "description": "Compressive strength of cubes, aggregate and building material testing, and force measuring machines."
+      },
+      {
+        "title": "Automotive and engineering",
+        "description": "Measuring instruments, gauges and test equipment for manufacturing and engineering customers."
+      },
+      {
+        "title": "Power and railways",
+        "description": "Calibration for thermal power and railway customers."
+      },
+      {
+        "title": "Medical and healthcare",
+        "description": "Bio-medical equipment calibration for hospitals and medical institutes."
+      },
+      {
+        "title": "Government and forensic",
+        "description": "Calibration for government projects and regional forensic science laboratories."
+      }
+    ]
+  },
+  "locations": {
+    "title": "Calibration lab and branch office",
+    "intro": "The calibration lab is in Udyambag, Belgaum, with a branch office in Hubli."
+  },
+  "cta": {
+    "title": "Your Equipment Our Priority.",
+    "summary": "Tell us what needs calibration, repair or replacement. We look forward to hearing from you."
+  }
+}

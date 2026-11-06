@@ -44,9 +44,11 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : absoluteAsset(ogImage)
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
-    <link rel="icon" href={asset('/favicon-32.png')} sizes="32x32" type="image/png" />
-    <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png')} />
+    <link rel="icon" href={asset('/favicon.ico')} sizes="32x32" />
+    <link rel="icon" href={asset('/favicon-16x16.png')} type="image/png" sizes="16x16" />
+    <link rel="icon" href={asset('/favicon-32x32.png')} type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" sizes="180x180" href={asset('/apple-touch-icon.png')} />
+    <link rel="manifest" href={asset('/site.webmanifest')} />
     <link rel="sitemap" type="application/xml" href={asset('/sitemap-index.xml')} />
 
     <link rel="preload" href={headingFont} as="font" type="font/woff2" crossorigin="anonymous" />

@@ -1,0 +1,142 @@
+---
+import Section from '../Section.astro';
+import SectionHeading from '../SectionHeading.astro';
+import Card from '../Card.astro';
+import { site } from '../../config/site';
+import { home } from '../../lib/content';
+import { mapSearchHref, telHref, url } from '../../lib/url';
+
+const offices = site.offices.filter((office) => office.kind === 'lab' || office.kind === 'branch');
+---
+
+<Section labelledby="locations-title">
+  <SectionHeading
+    id="locations-title"
+    title={home.locations.title}
+    intro={home.locations.intro}
+    link={{ label: 'All locations', href: url('/locations/') }}
+  />
+
+  <ul class="grid">
+    {
+      offices.map((office) => (
+        <li>
+          <Card>
+            <div class="location">
+              <h3>{office.shortName}</h3>
+              <address>{office.address}</address>
+
+              {office.phones.length > 0 && (
+                <ul class="phones">
+                  {office.phones.map((phone) => (
+                    <li>
+                      <a href={telHref(phone)}>{phone}</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {office.mapQuery && (
+                <a class="map" href={mapSearchHref(office.mapQuery)} target="_blank" rel="noopener">
+                  Open in Google Maps
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                    <path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span class="sr-only">(opens in a new tab)</span>
+                </a>
+              )}
+            </div>
+          </Card>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .grid {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .grid > li {
+    display: flex;
+    margin: 0;
+  }
+
+  @media (min-width: 760px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .location {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .location h3 {
+    margin: 0;
+    font-size: var(--text-lg);
+  }
+
+  .location address {
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+    font-style: normal;
+    line-height: 1.65;
+  }
+
+  .phones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .phones li {
+    margin: 0;
+  }
+
+  .phones a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    color: var(--crimson);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .phones a:hover {
+    text-decoration: underline;
+  }
+
+  .map {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 0.4em;
+    margin-top: auto;
+    color: var(--crimson);
+    font-size: var(--text-sm);
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .map:hover {
+    text-decoration: underline;
+  }
+
+  .map svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+  }
+</style>

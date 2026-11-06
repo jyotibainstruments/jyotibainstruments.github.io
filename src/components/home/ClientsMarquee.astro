@@ -1,0 +1,20 @@
+---
+import Section from '../Section.astro';
+import SectionHeading from '../SectionHeading.astro';
+import LogoMarquee from '../LogoMarquee.astro';
+import { featuredClients, home } from '../../lib/content';
+import { url } from '../../lib/url';
+
+const names = featuredClients.map((client) => client.name);
+---
+
+<Section labelledby="clients-title">
+  <SectionHeading
+    id="clients-title"
+    title={home.clients.title}
+    intro={home.clients.intro}
+    link={{ label: 'All clients', href: url('/clients/') }}
+  />
+
+  <LogoMarquee items={names} label="Featured clients" />
+</Section>

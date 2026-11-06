@@ -1,65 +1,107 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { optimize } from 'svgo';
 
+/**
+ * Brand assets.
+ *
+ * The owner supplies two logo variants in public/Logo/:
+ *   JIE_light.svg — for white and light surfaces (white plate, dark lettering)
+ *   JIE_dark.svg  — for dark and crimson surfaces (transparent, light gauge)
+ *
+ * Run `npm run brand` after replacing either file. Favicons come from the
+ * owner-supplied set in public/Logo/favicon/ and are copied to the site root.
+ */
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const master = path.join(root, 'design', 'jie-logo-original.svg');
+const sourceDir = path.join(root, 'public', 'Logo');
+const faviconDir = path.join(sourceDir, 'favicon');
 const brandDir = path.join(root, 'src', 'assets', 'brand');
 const publicDir = path.join(root, 'public');
 
-const background = '#EEF5F8';
+const background = '#FFFFFF';
 const crimson = '#74092B';
 
-const source = await readFile(master, 'utf8');
-const { data: optimized } = optimize(source, {
-  path: master,
-  multipass: true,
-  plugins: [
-    {
-      name: 'preset-default',
-      params: {
-        overrides: {
-          convertColors: false,
-        },
-      },
-    },
-    'removeDimensions',
-  ],
-});
-
 await mkdir(brandDir, { recursive: true });
-await mkdir(publicDir, { recursive: true });
 
-await writeFile(path.join(brandDir, 'jie-logo.svg'), optimized, 'utf8');
-await writeFile(path.join(publicDir, 'favicon.svg'), optimized, 'utf8');
-
-const svgBuffer = Buffer.from(optimized);
-const transparent = { r: 255, g: 255, b: 255, alpha: 0 };
-
-async function squareIcon(size, padding, file) {
-  const inner = Math.max(1, Math.round(size * (1 - padding * 2)));
-  const logo = await sharp(svgBuffer, { density: 384 })
-    .resize(inner, inner, { fit: 'contain', background: transparent })
-    .png()
-    .toBuffer();
-
-  await sharp({
-    create: { width: size, height: size, channels: 4, background },
-  })
-    .composite([{ input: logo, gravity: 'center' }])
-    .png({ compressionLevel: 9 })
-    .toFile(path.join(publicDir, file));
+function optimizeLogo(file) {
+  return readFile(file, 'utf8').then((source) =>
+    optimize(source, {
+      path: file,
+      multipass: true,
+      plugins: [
+        {
+          name: 'preset-default',
+          params: {
+            overrides: {
+              convertColors: false,
+            },
+          },
+        },
+        'removeDimensions',
+      ],
+    }).data,
+  );
 }
 
-await squareIcon(32, 0.08, 'favicon-32.png');
-await squareIcon(192, 0.1, 'favicon-192.png');
-await squareIcon(180, 0.1, 'apple-touch-icon.png');
-await squareIcon(512, 0.1, 'logo-512.png');
+const lightSvg = await optimizeLogo(path.join(sourceDir, 'JIE_light.svg'));
+const darkSvg = await optimizeLogo(path.join(sourceDir, 'JIE_dark.svg'));
 
-const ogLogo = await sharp(svgBuffer, { density: 384 })
-  .resize(520, 517, { fit: 'contain', background: transparent })
+await writeFile(path.join(brandDir, 'jie-logo-light.svg'), lightSvg, 'utf8');
+await writeFile(path.join(brandDir, 'jie-logo-dark.svg'), darkSvg, 'utf8');
+
+// Favicons: owner-supplied set, copied to the site root under standard names.
+const faviconFiles = [
+  'favicon.ico',
+  'favicon-16x16.png',
+  'favicon-32x32.png',
+  'apple-touch-icon.png',
+  'android-chrome-192x192.png',
+  'android-chrome-512x512.png',
+];
+
+for (const file of faviconFiles) {
+  await copyFile(path.join(faviconDir, file), path.join(publicDir, file));
+}
+
+// Schema.org logo and a shareable square.
+await copyFile(
+  path.join(faviconDir, 'android-chrome-512x512.png'),
+  path.join(publicDir, 'logo-512.png'),
+);
+
+// Obsolete icons generated from the old master.
+await Promise.all(
+  ['favicon.svg', 'favicon-32.png', 'favicon-192.png'].map((file) =>
+    rm(path.join(publicDir, file), { force: true }),
+  ),
+);
+
+const manifest = {
+  name: 'Jyotiba Instruments Enterprises',
+  short_name: 'JIE',
+  description: 'Calibration, repairs and sales of precision measuring instruments.',
+  start_url: '/',
+  display: 'standalone',
+  background_color: '#EEF5F8',
+  theme_color: crimson,
+  icons: [
+    { src: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
+    { src: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
+  ],
+};
+
+await writeFile(
+  path.join(publicDir, 'site.webmanifest'),
+  `${JSON.stringify(manifest, null, 2)}\n`,
+  'utf8',
+);
+
+// Open Graph card: logo on white with the crimson bar.
+const ogLogo = await sharp(Buffer.from(lightSvg), { density: 384 })
+  .resize({ height: 430, fit: 'inside' })
   .png()
   .toBuffer();
 
@@ -81,12 +123,16 @@ await sharp({
 
 console.log('Brand assets written:');
 for (const file of [
-  'src/assets/brand/jie-logo.svg',
-  'public/favicon.svg',
-  'public/favicon-32.png',
-  'public/favicon-192.png',
+  'src/assets/brand/jie-logo-light.svg',
+  'src/assets/brand/jie-logo-dark.svg',
+  'public/favicon.ico',
+  'public/favicon-16x16.png',
+  'public/favicon-32x32.png',
   'public/apple-touch-icon.png',
+  'public/android-chrome-192x192.png',
+  'public/android-chrome-512x512.png',
   'public/logo-512.png',
+  'public/site.webmanifest',
   'public/og-default.png',
 ]) {
   console.log(`  ${file}`);
