@@ -2,8 +2,22 @@
 import Section from '../Section.astro';
 import SectionHeading from '../SectionHeading.astro';
 import Card from '../Card.astro';
+import Button from '../Button.astro';
+import Icon from '../icons/Icon.astro';
+import type { IconName } from '../icons/types';
 import { calibrationDisciplines, home } from '../../lib/content';
 import { url } from '../../lib/url';
+
+const icons: Record<string, IconName> = {
+  'mechanical-pressure': 'gauge',
+  'electro-technical': 'bolt',
+  thermal: 'thermometer',
+  'fluid-flow': 'flow',
+  medical: 'flask',
+  civil: 'building',
+};
+
+const onSite = home.onSite;
 ---
 
 <Section tone="surface" labelledby="disciplines-title">
@@ -11,22 +25,52 @@ import { url } from '../../lib/url';
 
   <ul class="grid">
     {
-      calibrationDisciplines.map((discipline) => (
-        <li>
-          <Card href={url(discipline.path)}>
-            <div class="tile">
-              <h3>{discipline.navTitle}</h3>
-              <p>{discipline.examples.slice(0, 4).join(' · ')}</p>
-              <span class="more">
-                Calibration details
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                  <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
+      <>
+        {calibrationDisciplines.map((discipline) => (
+          <li>
+            <Card href={url(discipline.path)}>
+              <div class="tile">
+                <span class="icon-circle" aria-hidden="true">
+                  <Icon name={icons[discipline.slug] ?? 'gauge'} size={26} />
+                </span>
+                <h3>{discipline.navTitle}</h3>
+                <p>{discipline.examples.slice(0, 4).join(' · ')}</p>
+                <span class="more">
+                  Calibration details
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                    <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </div>
+            </Card>
+          </li>
+        ))}
+
+        <li class="onsite-item">
+          <article class="onsite">
+            <span class="onsite__icon" aria-hidden="true">
+              <Icon name="truck" size={28} />
+            </span>
+            <div class="onsite__copy">
+              <h3>{onSite.title}</h3>
+              <p>{onSite.summary}</p>
             </div>
-          </Card>
+            <ul class="onsite__points">
+              {onSite.points.map((point) => (
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true" focusable="false">
+                    <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  {point}
+                </li>
+              ))}
+            </ul>
+            <Button href={url('/services/on-site-calibration/')} variant="ghost" size="sm">
+              On-site calibration details
+            </Button>
+          </article>
         </li>
-      ))
+      </>
     }
   </ul>
 </Section>
@@ -64,6 +108,17 @@ import { url } from '../../lib/url';
     gap: var(--space-2);
   }
 
+  .icon-circle {
+    display: inline-grid;
+    width: 52px;
+    height: 52px;
+    margin-bottom: var(--space-3);
+    place-items: center;
+    border-radius: var(--radius-pill);
+    background: var(--crimson-50);
+    color: var(--crimson);
+  }
+
   .tile h3 {
     margin: 0;
     font-size: var(--text-lg);
@@ -91,5 +146,94 @@ import { url } from '../../lib/url';
     width: 14px;
     height: 14px;
     flex: none;
+  }
+
+  /* On-site calibration is the highlighted card in the discipline grid. */
+  .onsite-item {
+    grid-column: 1 / -1;
+  }
+
+  .onsite {
+    --focus-gap: var(--crimson);
+    --focus-keyline: #ffffff;
+
+    display: grid;
+    align-items: center;
+    gap: var(--space-5);
+    width: 100%;
+    padding: clamp(24px, 4vw, 36px);
+    border-radius: var(--radius-card);
+    background: var(--crimson);
+    color: #ffffff;
+  }
+
+  @media (min-width: 860px) {
+    .onsite {
+      grid-template-columns: auto minmax(0, 1.5fr) minmax(180px, 0.8fr) auto;
+      gap: var(--space-6);
+    }
+  }
+
+  .onsite__icon {
+    display: inline-grid;
+    width: 52px;
+    height: 52px;
+    place-items: center;
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 12%);
+    color: var(--gold-on-crimson);
+  }
+
+  .onsite h3 {
+    margin: 0 0 var(--space-2);
+    color: #ffffff;
+    font-size: var(--text-lg);
+  }
+
+  .onsite p {
+    max-width: 54ch;
+    margin: 0;
+    color: rgb(255 255 255 / 84%);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+  }
+
+  .onsite__points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .onsite__points li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0;
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+
+  .onsite__points svg {
+    width: 17px;
+    height: 17px;
+    flex: none;
+    color: var(--gold-on-crimson);
+  }
+
+  .onsite :global(.btn--ghost) {
+    border-color: rgb(255 255 255 / 65%);
+    color: #ffffff;
+    white-space: nowrap;
+  }
+
+  .onsite :global(.btn--ghost:hover) {
+    border-color: #ffffff;
+    background: #ffffff;
+    color: var(--crimson);
   }
 </style>

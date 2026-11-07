@@ -41,6 +41,17 @@ const { id, title, intro, link, tone = 'default' } = Astro.props;
     margin: 0;
   }
 
+  /* Short gold rule under every section heading: a deliberate, quiet accent. */
+  .section-head h2::after {
+    display: block;
+    width: 48px;
+    height: 4px;
+    margin-top: 0.7rem;
+    border-radius: 2px;
+    background: var(--gold);
+    content: '';
+  }
+
   .section-head p {
     max-width: 62ch;
     margin: var(--space-3) 0 0;

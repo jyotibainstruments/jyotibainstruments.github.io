@@ -37,15 +37,11 @@ const emptyMessage = serviceEnquiry('your calibration and repair services');
 >
   <PageHeader heading={productsPage.heading} intro={productsPage.intro} items={items}>
     <Fragment slot="actions">
-      {
-        companies.length > 0 && (
-          <WhatsAppButton
-            placement="products-hub"
-            message={serviceEnquiry('measuring instruments and gauges')}
-            label="Enquire on WhatsApp"
-          />
-        )
-      }
+      <WhatsAppButton
+        placement="products-hub"
+        message={serviceEnquiry('measuring instruments and gauges')}
+        label="Enquire on WhatsApp"
+      />
       {
         primaryPhone && (
           <Button href={telHref(primaryPhone)} variant="ghost">
@@ -102,19 +98,29 @@ const emptyMessage = serviceEnquiry('your calibration and repair services');
         </ul>
       </Section>
     ) : (
-      <Section labelledby="products-soon">
+      <Section labelledby="products-supply">
         <SectionHeading
-          id="products-soon"
-          title="Catalogues coming soon"
-          intro="Brand catalogues are being prepared. Until they are published, ask about any instrument directly on WhatsApp."
+          id="products-supply"
+          title="Instruments and spares supplied"
+          intro="Products from leading brands, with calibration and repair support for all major brands of measuring instruments."
         />
 
-        <div class="soon">
-          <p>
-            Tell us the instrument, gauge or spare part you need. JIE supplies products from leading brands and
-            provides calibration, repair and servicing for them too.
-          </p>
-          <WhatsAppButton placement="products-empty" message={emptyMessage} label="Ask about an instrument" />
+        <div class="supply">
+          <div class="supply__copy">
+            <p>
+              Tell us the instrument, gauge or spare part you need. JIE supplies products from
+              leading brands and provides calibration, repair and servicing for them too.
+            </p>
+            <WhatsAppButton placement="products-empty" message={emptyMessage} label="Ask about an instrument" />
+          </div>
+
+          <ul class="supply__list">
+            <li>Mechanical measuring instruments</li>
+            <li>Pressure gauges</li>
+            <li>Thermocouples and RTD sensors</li>
+            <li>Temperature and PID controllers</li>
+            <li>Electrical and lab instruments</li>
+          </ul>
         </div>
       </Section>
     )
@@ -191,20 +197,52 @@ const emptyMessage = serviceEnquiry('your calibration and repair services');
     flex: none;
   }
 
-  .soon {
+  .supply {
+    display: grid;
+    gap: var(--space-6);
+    padding: clamp(24px, 4vw, 40px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+  }
+
+  @media (min-width: 860px) {
+    .supply {
+      grid-template-columns: minmax(0, 1.1fr) minmax(240px, 0.9fr);
+      gap: var(--space-8);
+      align-items: center;
+    }
+  }
+
+  .supply__copy {
     display: grid;
     justify-items: start;
     gap: var(--space-4);
-    max-width: 62ch;
-    padding: clamp(24px, 4vw, 40px);
-    border: 1px dashed rgb(116 9 43 / 30%);
-    border-radius: var(--radius-card);
-    background: var(--crimson-50);
   }
 
-  .soon p {
+  .supply__copy p {
+    max-width: 56ch;
     margin: 0;
     color: var(--ink-2);
     font-size: var(--text-sm);
+  }
+
+  .supply__list {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding: var(--space-5);
+    border-radius: var(--radius-card);
+    background: var(--bg);
+    list-style: none;
+  }
+
+  .supply__list li {
+    margin: 0;
+    padding-left: var(--space-4);
+    border-left: 3px solid var(--gold);
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+    line-height: 1.5;
   }
 </style>

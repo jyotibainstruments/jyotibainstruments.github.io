@@ -136,3 +136,9 @@ Panels: "Expert Service & Support", "Quality You Can Rely On", "Long-Term Partne
 ## 9. Not supplied: do not invent
 
 Founding date, ownership, directors, staff or bios; website or social accounts; accreditation body, certificate number, scope, validity; uncertainty values, ranges, CMCs, equipment inventory, turnaround times; price lists, payment or warranty terms; opening hours; manufacturer authorisation or dealer certificates; product codes or ranges for FCDM, Octagon LMM 300, Torque Master; testimonials; case studies; photographs; customer logos.
+
+## 10. Display permissions (owner-approved 2026-11-07)
+
+- **Brands.** Section 6 brand names may be shown on the site as a plain list headed "Brands we deal with" (names only: Mahr, Markvel, Mitutoyo, Baker, Mass, Insize, Kains, Crystal, Luthra, plus Britool, WIKA, Micro, SHRIJI, Reliable). Never write "authorised", "official" or "distributor".
+- **Featured instruments.** The four brochure products in section 5 may appear as cards with their stated features. No codes, prices or ranges.
+- **Placeholders.** A `Placeholder` never renders caption text such as "to be supplied" on a production build. If an image is missing, redesign the layout so the slot is not needed.

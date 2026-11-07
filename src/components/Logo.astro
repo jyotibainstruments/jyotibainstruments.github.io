@@ -1,18 +1,15 @@
 ---
 import lightLogo from '../assets/brand/jie-logo-light.svg?url';
-import darkLogo from '../assets/brand/jie-logo-dark.svg?url';
 
 interface Props {
   height?: number;
-  /** onLight on white surfaces, onDark on the crimson footer. */
-  tone?: 'onLight' | 'onDark';
   decorative?: boolean;
   class?: string;
 }
 
-const { height = 44, tone = 'onLight', decorative = false, class: className } = Astro.props;
+const { height = 44, decorative = false, class: className } = Astro.props;
 const width = Math.round((height * 1109) / 1005);
-const src = tone === 'onDark' ? darkLogo : lightLogo;
+const src = lightLogo;
 ---
 
 <img

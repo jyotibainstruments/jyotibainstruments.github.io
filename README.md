@@ -128,7 +128,7 @@ Five brand seeds exist in `src/data/companies.json`: Mahr, Mitutoyo, Insize, Bak
 ```
 
 4. **Set `published: true`.** The build then generates `/products/<company>/`, adds it to the sitemap, nav dropdown, footer and home carousel.
-- A company with `published: true` but **no PDF** shows a "Catalogues coming soon" panel — that is supported and safe.
+- A company with `published: true` but **no PDF** shows a neutral enquiry panel for that brand — that is supported and safe.
 - `PUBLIC_SHOW_DRAFTS=1 npm run dev` previews unpublished companies during development only.
 
 ## Replace a PDF

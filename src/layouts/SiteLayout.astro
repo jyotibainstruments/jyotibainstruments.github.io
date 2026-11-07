@@ -4,6 +4,7 @@ import TopBar from '../components/TopBar.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
+import MobileActionBar from '../components/MobileActionBar.astro';
 import type { JsonLd } from '../lib/seo';
 
 interface Props {
@@ -29,4 +30,5 @@ const props = Astro.props;
   <div class="ruler" aria-hidden="true"></div>
   <Footer />
   <FloatingWhatsApp />
+  <MobileActionBar />
 </BaseLayout>

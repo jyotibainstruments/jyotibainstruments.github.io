@@ -1,6 +1,6 @@
 # Assets needed
 
-The site renders a neutral `Placeholder` wherever an image is missing. Do not use stock-photo hotlinks or invented logos.
+The site never renders "to be supplied"-style captions. Where an image is missing, the slot is redesigned around real content (for example the home hero's quick-contact card and the neutral catalogue cover). Do not use stock-photo hotlinks or invented logos. A hero photo dropped in at `public/images/hero.(avif|webp|jpg|jpeg|png)` is picked up automatically at build time.
 
 ## Photographs (from JIE, with permission)
 

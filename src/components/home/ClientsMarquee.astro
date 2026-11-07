@@ -1,14 +1,14 @@
 ---
 import Section from '../Section.astro';
 import SectionHeading from '../SectionHeading.astro';
-import LogoMarquee from '../LogoMarquee.astro';
-import { featuredClients, home } from '../../lib/content';
+import { clientsBySector, featuredClients, home } from '../../lib/content';
+import { slugify } from '../../lib/slug';
 import { url } from '../../lib/url';
 
 const names = featuredClients.map((client) => client.name);
 ---
 
-<Section labelledby="clients-title">
+<Section tone="surface" labelledby="clients-title">
   <SectionHeading
     id="clients-title"
     title={home.clients.title}
@@ -16,5 +16,128 @@ const names = featuredClients.map((client) => client.name);
     link={{ label: 'All clients', href: url('/clients/') }}
   />
 
-  <LogoMarquee items={names} label="Featured clients" />
+  <ul class="names" aria-label="Featured clients">
+    {
+      names.map((name) => (
+        <li>{name}</li>
+      ))
+    }
+  </ul>
+
+  <div class="sectors">
+    <h3 class="sectors__title">Sectors we serve</h3>
+    <ul class="sectors__list">
+      {
+        clientsBySector.map((group) => (
+          <li>
+            <a href={`${url('/clients/')}#sector-${slugify(group.sector)}`}>{group.sector}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </Section>
+
+<style>
+  .names {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .names li {
+    margin: 0;
+    padding: 0.35rem var(--space-4);
+    border-right: 1px solid var(--line);
+    color: var(--ink-2);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .names li:last-child {
+    border-right: 0;
+  }
+
+  @media (max-width: 520px) {
+    .names {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      justify-content: stretch;
+    }
+
+    .names li {
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+    }
+
+    .names li:nth-child(odd) {
+      border-right: 1px solid var(--line);
+    }
+
+    .names li:nth-last-child(-n + 2) {
+      border-bottom: 0;
+    }
+  }
+
+  .sectors {
+    margin-top: var(--space-7);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--line);
+  }
+
+  .sectors__title {
+    margin: 0 0 var(--space-3);
+    color: var(--ink-3);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .sectors__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sectors__list li {
+    margin: 0;
+  }
+
+  .sectors__list a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    background: var(--bg);
+    color: var(--ink-2);
+    font-size: var(--text-xs);
+    font-weight: 550;
+    text-decoration: none;
+    transition:
+      border-color var(--dur-fast) var(--ease),
+      color var(--dur-fast) var(--ease);
+  }
+
+  .sectors__list a:hover {
+    border-color: var(--crimson);
+    color: var(--crimson);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>

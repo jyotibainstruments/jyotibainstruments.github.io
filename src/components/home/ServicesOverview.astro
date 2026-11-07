@@ -2,6 +2,8 @@
 import Section from '../Section.astro';
 import SectionHeading from '../SectionHeading.astro';
 import Card from '../Card.astro';
+import Icon from '../icons/Icon.astro';
+import type { IconName } from '../icons/types';
 import { calibrationOverview, home, otherServices } from '../../lib/content';
 import { url } from '../../lib/url';
 
@@ -9,6 +11,13 @@ const services = [
   ...(calibrationOverview ? [calibrationOverview] : []),
   ...otherServices,
 ];
+
+const icons: Record<string, IconName> = {
+  calibration: 'gauge',
+  'on-site-calibration': 'truck',
+  'repairs-and-tool-error-adjustment': 'wrench',
+  'spare-parts-and-instruments': 'clipboard',
+};
 ---
 
 <Section tone="surface" labelledby="services-title">
@@ -25,6 +34,9 @@ const services = [
         <li>
           <Card href={url(service.path)}>
             <div class="service-card">
+              <span class="icon-circle" aria-hidden="true">
+                <Icon name={icons[service.slug] ?? 'gauge'} size={26} />
+              </span>
               <h3>{service.navTitle}</h3>
               <p>{service.summary}</p>
               <span class="more">
@@ -61,6 +73,13 @@ const services = [
     }
   }
 
+  @media (min-width: 640px) {
+    /* Two lines reserved so every card's body starts on the same baseline. */
+    .service-card h3 {
+      min-height: 2.4em;
+    }
+  }
+
   @media (min-width: 1080px) {
     .grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -72,6 +91,17 @@ const services = [
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
+  }
+
+  .icon-circle {
+    display: inline-grid;
+    width: 52px;
+    height: 52px;
+    margin-bottom: var(--space-3);
+    place-items: center;
+    border-radius: var(--radius-pill);
+    background: var(--crimson-50);
+    color: var(--crimson);
   }
 
   .service-card h3 {

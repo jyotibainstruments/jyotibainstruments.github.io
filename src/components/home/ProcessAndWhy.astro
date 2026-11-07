@@ -1,0 +1,180 @@
+---
+import Section from '../Section.astro';
+import SectionHeading from '../SectionHeading.astro';
+import Icon from '../icons/Icon.astro';
+import type { IconName } from '../icons/types';
+import { home, processSteps } from '../../lib/content';
+
+const stepIcons: IconName[] = ['clipboard', 'gauge', 'shield', 'truck'];
+const reasonIcons: IconName[] = ['wrench', 'building', 'clock', 'shield'];
+---
+
+<Section labelledby="process-title">
+  <SectionHeading id="process-title" title={home.process.title} intro={home.process.intro} />
+
+  <div class="split">
+    <ol class="process">
+      {
+        processSteps.map((step, index) => (
+          <li class="process__step">
+            <span class="icon-circle" aria-hidden="true">
+              <Icon name={stepIcons[index] ?? 'gauge'} size={24} />
+            </span>
+            <div>
+              <span class="process__num" aria-hidden="true">
+                Step {index + 1}
+              </span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="why">
+      <h3 class="why__title">{home.why.title}</h3>
+      <p class="why__intro">{home.why.intro}</p>
+
+      <ul class="why__list">
+        {
+          home.why.items.map((item, index) => (
+            <li class="why__item">
+              <span class="icon-circle icon-circle--sm" aria-hidden="true">
+                <Icon name={reasonIcons[index] ?? 'shield'} size={20} />
+              </span>
+              <div>
+                <h4>{item.title}</h4>
+                <p>{item.description}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .split {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  @media (min-width: 960px) {
+    .split {
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: var(--space-10);
+      align-items: start;
+    }
+  }
+
+  .process {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .process__step {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-4);
+    margin: 0;
+    padding: var(--space-5) 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .process__step:first-child {
+    padding-top: 0;
+  }
+
+  .process__step:last-child {
+    border-bottom: 0;
+  }
+
+  .icon-circle {
+    display: inline-grid;
+    width: 52px;
+    height: 52px;
+    place-items: center;
+    border-radius: var(--radius-pill);
+    background: var(--crimson-50);
+    color: var(--crimson);
+  }
+
+  .icon-circle--sm {
+    width: 44px;
+    height: 44px;
+  }
+
+  .process__num {
+    display: block;
+    margin-bottom: 0.15rem;
+    color: var(--ink-3);
+    font-family: var(--font-heading);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .process__step h3 {
+    margin: 0 0 var(--space-1);
+    font-size: var(--text-lg);
+  }
+
+  .process__step p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+
+  .why {
+    padding: clamp(22px, 4vw, 34px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+  }
+
+  .why__title {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-xl);
+  }
+
+  .why__intro {
+    margin: 0 0 var(--space-4);
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+
+  .why__list {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .why__item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-3);
+    margin: 0;
+    padding-block: var(--space-4);
+    border-top: 1px solid var(--line);
+  }
+
+  .why__item h4 {
+    margin: 0 0 0.2rem;
+    font-size: var(--text-sm);
+  }
+
+  .why__item p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+  }
+</style>

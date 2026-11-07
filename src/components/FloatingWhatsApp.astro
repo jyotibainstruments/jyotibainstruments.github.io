@@ -51,6 +51,13 @@ const link = waProps(serviceEnquiry('your calibration and repair services'), 'fl
     display: none;
   }
 
+  /* On mobile the fixed action bar replaces the floating button. */
+  @media (max-width: 767.98px) {
+    .floating-wa {
+      display: none;
+    }
+  }
+
   @media print {
     .floating-wa {
       display: none;

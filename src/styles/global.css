@@ -55,6 +55,13 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Clear the fixed mobile action bar (48px buttons + 8px padding either side). */
+@media (max-width: 767.98px) {
+  body {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom));
+  }
+}
+
 #main:focus {
   outline: none;
 }

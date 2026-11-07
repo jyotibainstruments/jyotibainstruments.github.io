@@ -1,5 +1,5 @@
 ---
-import Placeholder from './Placeholder.astro';
+import Icon from './icons/Icon.astro';
 import WhatsAppButton from './WhatsAppButton.astro';
 import { site } from '../config/site';
 import { asset } from '../lib/url';
@@ -25,11 +25,14 @@ const fallbackMessage = `Hello JIE, I am interested in ${name} instruments. Plea
 
 {
   !pdf || !pdfUrl ? (
-    <div class="catalogue catalogue--soon">
-      <p class="catalogue__soon">Catalogue coming soon.</p>
-      <p class="catalogue__soon-note">Ask about {name} instruments on WhatsApp meanwhile.</p>
+    <div class="catalogue catalogue--enquiry">
+      <h2 class="catalogue__enquiry-title">{name} instruments and spares</h2>
+      <p class="catalogue__enquiry-note">
+        Ask about {name} instruments and spares on WhatsApp for specifications and pricing. JIE also
+        calibrates, repairs and services all major brands of measuring instruments.
+      </p>
       <WhatsAppButton
-        placement={`catalogue-${slug}-soon`}
+        placement={`catalogue-${slug}-enquiry`}
         label={`Enquire about ${name} instruments on WhatsApp`}
         message={fallbackMessage}
       />
@@ -60,7 +63,14 @@ const fallbackMessage = `Hello JIE, I am interested in ${name} instruments. Plea
           {poster ? (
             <img src={asset(poster)} alt={`${name} catalogue first page`} width="640" height="853" loading="lazy" />
           ) : (
-            <Placeholder ratio="3 / 4" label="Catalogue cover to be supplied" />
+            <div class="catalogue__cover" aria-hidden="true">
+              <span class="catalogue__cover-mark">
+                <Icon name="gauge" size={30} />
+              </span>
+              <span class="catalogue__cover-name">{name}</span>
+              <span class="catalogue__cover-rule"></span>
+              <span class="catalogue__cover-sub">Calibration · Repairs · Sales</span>
+            </div>
           )}
         </div>
 
@@ -134,23 +144,22 @@ const fallbackMessage = `Hello JIE, I am interested in ${name} instruments. Plea
     gap: var(--space-5);
   }
 
-  .catalogue--soon {
+  .catalogue--enquiry {
     justify-items: start;
     gap: var(--space-3);
     padding: clamp(24px, 4vw, 40px);
-    border: 1px dashed rgb(116 9 43 / 30%);
+    border: 1px solid var(--line);
     border-radius: var(--radius-card);
-    background: var(--crimson-50);
+    background: var(--surface);
   }
 
-  .catalogue__soon {
+  .catalogue__enquiry-title {
     margin: 0;
-    font-family: var(--font-heading);
-    font-size: var(--text-lg);
-    font-weight: 700;
+    font-size: var(--text-xl);
   }
 
-  .catalogue__soon-note {
+  .catalogue__enquiry-note {
+    max-width: 62ch;
     margin: 0;
     color: var(--ink-2);
     font-size: var(--text-sm);
@@ -220,6 +229,58 @@ const fallbackMessage = `Hello JIE, I am interested in ${name} instruments. Plea
     border: 1px solid var(--line);
     border-radius: var(--radius-card);
     background: var(--crimson-50);
+  }
+
+  /* Neutral cover used until the owner supplies a first-page poster. */
+  .catalogue__cover {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: var(--space-2);
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    padding: var(--space-5);
+    border: 1px solid var(--crimson-900);
+    border-radius: var(--radius-card);
+    background:
+      radial-gradient(circle at 82% 12%, rgb(255 255 255 / 14%), transparent 42%),
+      linear-gradient(160deg, var(--crimson), var(--crimson-900));
+    color: #ffffff;
+  }
+
+  .catalogue__cover-mark {
+    display: inline-grid;
+    width: 48px;
+    height: 48px;
+    margin-bottom: auto;
+    place-items: center;
+    border: 1px solid rgb(255 255 255 / 22%);
+    border-radius: var(--radius-pill);
+    color: var(--gold-on-crimson);
+  }
+
+  .catalogue__cover-name {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    letter-spacing: var(--tracking-heading);
+    line-height: 1.1;
+  }
+
+  .catalogue__cover-rule {
+    width: 48px;
+    height: 4px;
+    margin-block: var(--space-1);
+    border-radius: 2px;
+    background: var(--gold-on-crimson);
+  }
+
+  .catalogue__cover-sub {
+    color: rgb(255 255 255 / 82%);
+    font-size: var(--text-xs);
+    font-weight: 550;
+    letter-spacing: 0.04em;
   }
 
   .catalogue__body {

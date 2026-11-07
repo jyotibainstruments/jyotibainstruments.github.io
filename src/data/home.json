@@ -56,32 +56,6 @@
     "title": "Trusted by leading industries",
     "intro": "A selection of the customers named by JIE across cement, hydraulics, automotive, power, medical, government and logistics work."
   },
-  "industries": {
-    "title": "Industries we serve",
-    "intro": "Instruments and equipment for manufacturing, service, medical and civil customers.",
-    "items": [
-      {
-        "title": "Cement and construction",
-        "description": "Compressive strength of cubes, aggregate and building material testing, and force measuring machines."
-      },
-      {
-        "title": "Automotive and engineering",
-        "description": "Measuring instruments, gauges and test equipment for manufacturing and engineering customers."
-      },
-      {
-        "title": "Power and railways",
-        "description": "Calibration for thermal power and railway customers."
-      },
-      {
-        "title": "Medical and healthcare",
-        "description": "Bio-medical equipment calibration for hospitals and medical institutes."
-      },
-      {
-        "title": "Government and forensic",
-        "description": "Calibration for government projects and regional forensic science laboratories."
-      }
-    ]
-  },
   "locations": {
     "title": "Calibration lab and branch office",
     "intro": "The calibration lab is in Udyambag, Belgaum, with a branch office in Hubli."

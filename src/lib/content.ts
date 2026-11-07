@@ -365,7 +365,6 @@ const homeSchema = z.object({
   process: homeSectionSchema,
   why: homeSectionSchema.extend({ items: z.array(homeItemSchema).min(1) }),
   clients: homeSectionSchema,
-  industries: homeSectionSchema.extend({ items: z.array(homeItemSchema).min(1) }),
   locations: homeSectionSchema,
   cta: z.object({
     title: z.string().min(1),

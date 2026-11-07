@@ -56,7 +56,7 @@ Dharwad has no office in the source. Its page covers "service area" content and 
 
 **Signature detail:** a thin ruler-tick strip (CSS `repeating-linear-gradient`, crimson at 12% opacity) under the hero and above the footer. It is the one measurement-themed motif; do not add others (no dials, gauges or gradients-with-glow).
 
-**Imagery:** real photographs of the lab, instruments and team from the owner (see `ASSETS_NEEDED.md`). Until they arrive, use a `<Placeholder>` component (soft tinted block, aspect ratio set, small caption "Photo to be supplied"). Do not draw fake product illustrations.
+**Imagery:** real photographs of the lab, instruments and team from the owner (see `ASSETS_NEEDED.md`). No "to be supplied" caption ever renders in production: where an image is missing, redesign the slot around real content (the home hero uses a quick-contact card until a photo exists). Do not draw fake product illustrations.
 
 **Motion:** subtle only. 150 to 200 ms hover transitions, fade-up on scroll via CSS `animation-timeline: view()` where supported, otherwise no animation. Everything honours `prefers-reduced-motion`.
 
@@ -76,7 +76,7 @@ Dharwad has no office in the source. Its page covers "service area" content and 
 
 **Breadcrumbs** on all inner pages (visible and in JSON-LD).
 
-**Other shared components:** `Section`, `Card`, `Button`, `WhatsAppButton`, `Carousel` (CSS scroll-snap, arrow buttons, swipe, no autoplay), `LogoMarquee`, `Faq` (`<details>`), `ProcessSteps`, `StatRow`, `Placeholder`, `CatalogueViewer`, `Seo`.
+**Other shared components:** `Section`, `Card`, `Button`, `WhatsAppButton`, `Carousel` (CSS scroll-snap, arrow buttons, swipe, no autoplay), `Faq` (`<details>`), `ProcessSteps`, `StatRow`, `CatalogueViewer`, `MobileActionBar`, inline `icons/Icon`, `Seo`.
 
 ## 5. Page specs
 
@@ -118,7 +118,7 @@ Dharwad has no office in the source. Its page covers "service area" content and 
 ## 7. Catalogue viewer (`CatalogueViewer.astro`)
 
 The owner provides the PDFs (some will contain clickable WhatsApp links inside the PDF) and places them at `public/catalogues/<slug>.pdf`. You build the viewer.
-- **Facade first:** render a card with page-1 poster (`public/catalogues/<slug>.jpg` if present, else Placeholder), the gold button "Open catalogue", a plain `<a href>` "Open PDF in a new tab" and "Download PDF". Nothing from PDF.js loads until the tap.
+- **Facade first:** render a card with page-1 poster (`public/catalogues/<slug>.jpg` if present, otherwise a neutral cover with the brand name), the gold button "Open catalogue", a plain `<a href>` "Open PDF in a new tab" and "Download PDF". Nothing from PDF.js loads until the tap.
 - **On tap:** insert an `<iframe>` pointing to the self-hosted PDF.js viewer: `{base}pdfjs/web/viewer.html?file={encoded pdf url}#zoom=page-width` (and `#page=N` for category chips). Height `min(85svh, 900px)`, `title` set, plus a fullscreen toggle button on the wrapper.
 - **PDF.js setup:** download the latest stable official `-dist.zip` release from github.com/mozilla/pdf.js/releases, unpack to `public/pdfjs/`, delete the sample PDF. Check the current release layout and docs before wiring it. Light theming only (toolbar in crimson via an override stylesheet linked from `viewer.html`); do not alter functionality.
 - **Critical:** PDF links must not navigate inside the iframe (wa.me refuses framing). Set the viewer's `externalLinkTarget` to open in a new tab (BLANK) via the supported option or event hook, or by patching the default in the self-hosted copy. Acceptance test: tapping a `wa.me` link inside a test PDF opens WhatsApp or a new tab, on desktop and on a phone.

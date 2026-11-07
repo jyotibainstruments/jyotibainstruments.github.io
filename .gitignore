@@ -20,6 +20,7 @@ npm-debug.log*
 coverage/
 playwright-report/
 test-results/
+docs/screenshots/
 
 # Editor and OS noise
 .vscode/

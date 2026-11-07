@@ -4,10 +4,20 @@ import SectionHeading from '../SectionHeading.astro';
 import Card from '../Card.astro';
 import Carousel from '../Carousel.astro';
 import WhatsAppButton from '../WhatsAppButton.astro';
+import Icon from '../icons/Icon.astro';
 import { companyPath, home, visibleCompanies } from '../../lib/content';
 import { url } from '../../lib/url';
 
 const hasCompanies = visibleCompanies.length > 0;
+
+/* Categories from the brochure's supply list, used while no catalogue is published. */
+const supplies = [
+  'Mechanical measuring instruments',
+  'Pressure gauges',
+  'Thermocouples and RTD sensors',
+  'Temperature and PID controllers',
+  'Electrical and lab instruments',
+];
 ---
 
 <Section labelledby="products-title">
@@ -36,19 +46,34 @@ const hasCompanies = visibleCompanies.length > 0;
         ))}
       </Carousel>
     ) : (
-      <div class="empty">
-        <p>
-          <strong>Catalogues coming soon.</strong> Product catalogue pages are being prepared. In the
-          meantime, ask us for specifications and pricing on WhatsApp.
-        </p>
-        <div class="empty__actions">
-          <WhatsAppButton placement="home-products" size="sm" />
-          <a class="empty__link" href={url('/products/')}>
-            All products
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-              <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
+      <div class="supply">
+        <div class="supply__copy">
+          <span class="icon-circle" aria-hidden="true">
+            <Icon name="clipboard" size={26} />
+          </span>
+          <h3>Ask for specifications and pricing</h3>
+          <p>
+            Instruments and spares are supplied from leading brands, with calibration and repair
+            support for all major brands of measuring instruments. Tell us the instrument and we will
+            reply with specifications and pricing.
+          </p>
+          <WhatsAppButton placement="home-products" label="Enquire on WhatsApp" />
+        </div>
+
+        <div class="supply__list">
+          <h4>Instruments and spares supplied</h4>
+          <ul>
+            {
+              supplies.map((supply) => (
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true" focusable="false">
+                    <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  {supply}
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </div>
     )
@@ -88,54 +113,85 @@ const hasCompanies = visibleCompanies.length > 0;
     flex: none;
   }
 
-  .empty {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    padding: var(--space-6);
-    border: 1px dashed rgb(116 9 43 / 28%);
+  .supply {
+    display: grid;
+    gap: var(--space-6);
+    padding: clamp(24px, 4vw, 40px);
+    border: 1px solid var(--line);
     border-radius: var(--radius-card);
     background: var(--surface);
   }
 
-  .empty p {
-    max-width: 60ch;
-    margin: 0;
+  @media (min-width: 880px) {
+    .supply {
+      grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+      gap: var(--space-9);
+      align-items: center;
+    }
+  }
+
+  .icon-circle {
+    display: inline-grid;
+    width: 52px;
+    height: 52px;
+    margin-bottom: var(--space-3);
+    place-items: center;
+    border-radius: var(--radius-pill);
+    background: var(--crimson-50);
+    color: var(--crimson);
+  }
+
+  .supply h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-xl);
+  }
+
+  .supply p {
+    max-width: 54ch;
+    margin: 0 0 var(--space-5);
     color: var(--ink-2);
     font-size: var(--text-sm);
   }
 
-  .empty strong {
-    color: var(--ink);
+  .supply__list {
+    padding: var(--space-5);
+    border-radius: var(--radius-card);
+    background: var(--bg);
   }
 
-  .empty__actions {
+  .supply__list h4 {
+    margin: 0 0 var(--space-3);
+    color: var(--ink-3);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .supply__list ul {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .supply__list li {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-3);
-  }
-
-  .empty__link {
-    display: inline-flex;
-    min-height: 44px;
-    align-items: center;
-    gap: 0.4em;
-    color: var(--crimson);
+    align-items: flex-start;
+    gap: 0.55rem;
+    margin: 0;
+    color: var(--ink-2);
     font-size: var(--text-sm);
-    font-weight: 650;
-    text-decoration: none;
-    white-space: nowrap;
+    line-height: 1.5;
   }
 
-  .empty__link:hover {
-    text-decoration: underline;
-  }
-
-  .empty__link svg {
-    width: 14px;
-    height: 14px;
+  .supply__list svg {
+    width: 17px;
+    height: 17px;
+    flex: none;
+    margin-top: 0.15rem;
+    color: var(--crimson);
   }
 </style>
