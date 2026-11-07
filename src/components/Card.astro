@@ -21,6 +21,7 @@ const Tag = href ? 'a' : as;
     border: 1px solid var(--line);
     border-radius: var(--radius-card);
     background: var(--surface);
+    box-shadow: var(--shadow-card);
     color: var(--ink);
   }
 
@@ -37,12 +38,20 @@ const Tag = href ? 'a' : as;
   }
 
   .card--link:hover {
-    border-color: rgb(116 9 43 / 35%);
-    box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--crimson) 45%, var(--line));
+    box-shadow: var(--shadow-card-hover);
     color: var(--ink);
   }
 
   .card--link:active {
-    transform: translateY(1px);
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card--link:hover,
+    .card--link:active {
+      transform: none;
+    }
   }
 </style>

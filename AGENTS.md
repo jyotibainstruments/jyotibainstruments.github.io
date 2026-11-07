@@ -41,24 +41,34 @@ Create these scripts in Phase 1. A phase is not done until `npm run build` passe
 | Token | Value | Use |
 |---|---|---|
 | `--bg` | `#EEF5F8` | Page background (the main colour) |
-| `--surface` | `#FFFFFF` | Cards, header |
-| `--crimson` | `#74092B` | Brand accent: headings accents, bands, footer, links |
-| `--crimson-900` | `#4E061D` | Hover and pressed states, dark text on tints |
-| `--crimson-50` | `#F6E8EC` | Tinted panels |
-| `--gold` | `#D4951A` | **Interactive accent: all primary buttons**, focus rings, highlights |
-| `--gold-hover` | `#E0A52B` | Button hover |
-| `--ink` | `#1F1A1C` | Body text |
-| `--ink-2` | `#4A4046` | Secondary text |
-| `--ink-3` | `#6B5F66` | Captions (minimum size 14px) |
-| `--line` | `#D5E0E6` | Borders |
+| `--surface` | `#FFFFFF` | Cards, header, white plates |
+| `--on-crimson` | `#FFFFFF` | Text and icons on crimson surfaces |
+| `--crimson` | `#74092B` | Brand accent: links, icon accents and the single solid emphasis band on a page |
+| `--crimson-900` | `#4E061D` | Footer and top bar, hover and pressed states, dark text on tints |
+| `--crimson-50` | `#F6E8EC` | Tinted panels and the inner-page header band |
+| `--gold` | `#E5A524` | **Interactive only:** primary buttons, active nav underline, focus rings, the short heading underline bar |
+| `--gold-hover` | `#F0B429` | Primary button hover |
+| `--gold-pressed` | `#C98F14` | Primary button pressed |
+| `--gold-edge` | `#B97F0F` | 1px border on gold buttons and the floating button |
+| `--gold-on-crimson` | `#F0C45A` | Small text and links on crimson |
+| `--ink` | `#111111` | Body text (matches the logo black) |
+| `--ink-2` | `#4A4F57` | Secondary text |
+| `--ink-3` | `#5E646C` | Captions (minimum size 14px) and form-control borders |
+| `--line` | `#B9C8D1` | Card and divider hairlines (never the only cue for an input) |
+| `--line-soft` | `#D5E0E6` | Subtle dividers inside cards and between same-tone sections |
 
-Contrast rules (measured):
-- Ink on gold = 6.6:1, so **gold buttons always use `--ink` text**. White on gold fails (2.6:1).
-- Gold is never used as text colour on `--bg` or white (2.4:1). Use it as a fill, border, underline or icon only.
-- Gold on crimson = 4.5:1. Allowed for large text (24px+) and icons on crimson bands only. Use `#F0C45A` (7.0:1) for small gold text on crimson.
-- White or `--bg` on crimson = 10.5 to 11.6:1.
+Contrast rules (measured; enforced by `scripts/check-contrast.mjs`):
+- Ink on gold = 8.8:1, so **gold buttons always use `--ink` text**. White on gold fails (2.2:1).
+- Gold is never used as text colour on `--bg` or white (2.0/2.2:1). Use it as a fill, border or indicator only: primary buttons, active nav, focus and the heading bar.
+- Gold on crimson = 5.4:1. It is allowed for large text (24px+) and icons; use `--gold-on-crimson` (`#F0C45A`, 7.0:1) for small text and links on crimson.
+- White/`--on-crimson` on crimson = 11.6:1; on `--crimson-900` = 15.4:1. `--bg` on crimson is 10.5:1 and on `--crimson-900` 13.9:1.
+- Body text: `--ink` on `--bg` 17.1:1, `--ink-2` 7.5:1, `--ink-3` 5.4:1. On `--surface`: 18.9 / 8.2 / 6.0:1.
+- Form controls use a 1.5px `--ink-3` border at rest (6.0:1 on white) and a `--crimson` border on focus (11.6:1). `--line` is 1.7:1 on white, so it is not used as the only input boundary.
+- Focus ring: 3px `--gold` plus a 1px `--crimson-900` keyline immediately outside (white keyline on crimson surfaces). The keyline is the compliant 3:1 boundary (13.9:1 on `--bg`, 15.4:1 on white); gold against the keyline is 7.1:1.
+- `--gold-edge` against `--bg` is 3.1:1 and against white 3.4:1, so gold buttons keep a visible edge on pale surfaces.
 - Use `#74092B` exactly (`rgb(116, 9, 43)`). The logo SVG's letter fill is `#76122E`; leave the SVG untouched.
 - No WhatsApp green. WhatsApp buttons are gold with the WhatsApp glyph, so the palette stays strictly brand-derived.
+- At most one solid `--crimson` band or panel per page. The footer and top bar are `--crimson-900`; inner-page headers are `--crimson-50`.
 
 ## Logo
 

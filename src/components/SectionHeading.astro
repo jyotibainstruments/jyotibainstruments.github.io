@@ -83,11 +83,15 @@ const { id, title, intro, link, tone = 'default' } = Astro.props;
   }
 
   .section-head--crimson h2 {
-    color: #ffffff;
+    color: var(--on-crimson);
+  }
+
+  .section-head--crimson h2::after {
+    background: var(--gold-on-crimson);
   }
 
   .section-head--crimson p {
-    color: rgb(255 255 255 / 84%);
+    color: color-mix(in srgb, var(--on-crimson) 84%, transparent);
   }
 
   .section-head--crimson .section-head__link {
@@ -95,6 +99,6 @@ const { id, title, intro, link, tone = 'default' } = Astro.props;
   }
 
   .section-head--crimson .section-head__link:hover {
-    color: #ffffff;
+    color: var(--on-crimson);
   }
 </style>

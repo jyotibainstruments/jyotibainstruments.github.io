@@ -39,22 +39,23 @@ Dharwad has no office in the source. Its page covers "service area" content and 
 
 ## 3. Design system
 
-**Mood:** clean, airy, photo-led, confident. Think a modern industrial supplier, not a SaaS landing page. Light `--bg` (#EEF5F8) everywhere, white cards, crimson bands for emphasis, gold only on buttons and small highlights.
+**Mood:** clean, airy, photo-led, confident. Think a modern industrial supplier, not a SaaS landing page. Light `--bg` (#EEF5F8) everywhere, white cards, crimson panels for emphasis, gold only on interactive elements: primary buttons, the active nav underline, focus rings and the short heading underline bar.
 
-**Layout:** container max 1200px, side gutter 20px (24px from 768px up) using `padding-inline: max(20px, env(safe-area-inset-left))`. Section vertical padding `clamp(56px, 8vw, 104px)`. Background rhythm: `--bg`, white, `--bg`, crimson band, `--bg`... never two crimson bands adjacent.
+**Layout:** container max 1200px, side gutter 20px (24px from 768px up) using `padding-inline: max(20px, env(safe-area-inset-left))`. Section vertical padding `clamp(56px, 8vw, 104px)`. Background rhythm: `--bg`, white, `--bg`, crimson panel, `--bg`... never two crimson panels adjacent, and at most one solid `--crimson` band or panel per page (the footer and top bar are `--crimson-900` and do not count). Where two same-tone sections meet, a 1px `--line-soft` top border marks the join. Inner-page headers are a slim `--crimson-50` band with the breadcrumb and h1 in `--crimson-900`.
 
-**Type:** headings Plus Jakarta Sans Variable (800 for h1, 700 for h2/h3, letter-spacing -0.02em). Body Inter Variable 17px/1.65. Scale: h1 `clamp(2.25rem, 1.6rem + 3vw, 3.75rem)`, h2 `clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem)`, h3 1.25rem, small 0.875rem. Keep line length under 70ch. Sentence case everywhere. No all-caps eyebrow labels on every section; use one small eyebrow only in the hero.
+**Type:** headings Plus Jakarta Sans Variable (800 for h1, 700 for h2/h3, letter-spacing -0.02em, `text-wrap: balance`). Body Inter Variable 17px/1.65, `text-wrap: pretty`. Scale: h1 `clamp(2.25rem, 1.6rem + 3vw, 3.75rem)`, h2 `clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem)`, h3 1.25rem, small 0.875rem. Keep line length at or under 68ch (`--measure`). Sentence case everywhere. No all-caps eyebrow labels on every section; use one small eyebrow only in the hero. Phone numbers, addresses and the GSTIN use tabular numerals.
 
-**Shape and depth:** card radius 16px, button radius 12px, pills 999px. Shadow `0 1px 2px rgba(31,26,28,.06), 0 8px 24px rgba(31,26,28,.08)`. Borders 1px `--line`.
+**Shape and depth:** card radius 16px, button radius 12px, pills 999px. Cards are white with a 1px `--line` border and `--shadow-card` (`0 1px 2px` at 6% ink, `0 8px 24px` at 8% ink). Linked cards raise to `--shadow-card-hover` and translate up 2px over 150ms, both disabled under `prefers-reduced-motion`. Borders 1px `--line` for cards and dividers; never the only boundary for a control.
 
 **Buttons:**
-- Primary (gold fill, ink text, 48px high, bold): all main CTAs including WhatsApp (with the WhatsApp glyph in ink).
+- Primary (gold fill, `--gold-edge` 1px border, ink text, 48px high, bold, radius 12px): all main CTAs including WhatsApp (with the WhatsApp glyph in ink).
 - Secondary (crimson fill, white text): "View catalogue", "Learn more".
-- Ghost (crimson text, crimson 1.5px border) for tertiary actions.
-- On crimson bands: primary stays gold; secondary becomes white fill with crimson text.
-- Hover: primary to `--gold-hover`, secondary to `--crimson-900`. Pressed: translateY(1px). Visible 3px gold focus ring with 2px offset (on crimson use white offset).
+- Ghost (crimson text, crimson 1.5px border, transparent fill) for tertiary actions.
+- On crimson panels: primary stays gold; secondary becomes white fill with crimson text; ghost becomes white text and border.
+- Hover: primary to `--gold-hover`, secondary to `--crimson-900`, ghost to `--crimson-50`. Pressed: `translateY(1px)`, primary to `--gold-pressed`. Disabled: 45% opacity and no pointer events.
+- Focus: 3px `--gold` ring with a 1px `--crimson-900` keyline immediately outside (white keyline on crimson surfaces). The keyline is the compliant 3:1 boundary; gold alone is 1.96:1 on `--bg`.
 
-**Signature detail:** a thin ruler-tick strip (CSS `repeating-linear-gradient`, crimson at 12% opacity) under the hero and above the footer. It is the one measurement-themed motif; do not add others (no dials, gauges or gradients-with-glow).
+**Signature detail:** a thin ruler-tick strip (CSS `repeating-linear-gradient`, crimson at 18% opacity) under the hero and above the footer. It is the one measurement-themed motif; do not add others (no dials, gauges or gradients-with-glow).
 
 **Imagery:** real photographs of the lab, instruments and team from the owner (see `ASSETS_NEEDED.md`). No "to be supplied" caption ever renders in production: where an image is missing, redesign the slot around real content (the home hero uses a quick-contact card until a photo exists). Do not draw fake product illustrations.
 
@@ -62,7 +63,7 @@ Dharwad has no office in the source. Its page covers "service area" content and 
 
 ## 4. Global components
 
-**Top bar** (crimson, 36px, hidden under 640px except one `tel:` link): primary phone numbers as `tel:` links, one email as `mailto:`, plain text "Belgaum · Hubli · Dharwad · Pune · Ahmedabad".
+**Top bar** (`--crimson-900`, 36px, hidden under 640px except one `tel:` link): primary phone numbers as `tel:` links, one email as `mailto:`, plain text "Belgaum · Hubli · Dharwad · Pune · Ahmedabad".
 
 **Header** (white, sticky, 72px, 1px bottom border): logo (44px high, links to `/`), nav, gold WhatsApp button "Chat on WhatsApp". Nav: Home, About, **Services ▾**, **Products ▾**, Clients, Contact.
 - Services dropdown: Calibration (with the six disciplines as a second column), On-site calibration, Repairs and tool-error adjustment, Spare parts and instruments.
@@ -72,7 +73,7 @@ Dharwad has no office in the source. Its page covers "service area" content and 
 
 **Floating WhatsApp button:** fixed bottom-right, 56px gold circle with glyph, `aria-label="Chat on WhatsApp"`, offset by `env(safe-area-inset-bottom)`. Hidden while the catalogue viewer is open.
 
-**Footer** (crimson, white text, white logo variant): columns for company summary and GSTIN; Services links; Products links; Contact (Belgaum lab and Hubli addresses, phones, emails). Bottom bar: copyright "© {current year} Jyotiba Instruments Enterprises", Privacy link. Ruler-tick strip above.
+**Footer** (`--crimson-900`, white text, full-colour logo on a white plate): columns for company summary and GSTIN; Services links; Products links; Contact (Belgaum lab and Hubli addresses, phones, emails). Bottom bar: copyright "© {current year} Jyotiba Instruments Enterprises", Privacy link. Ruler-tick strip above.
 
 **Breadcrumbs** on all inner pages (visible and in JSON-LD).
 
@@ -85,7 +86,7 @@ Dharwad has no office in the source. Its page covers "service area" content and 
 2. *Services.* Four cards: Calibration, On-site calibration, Repairs and tool-error adjustment, Spare parts and instruments. Each links to its page.
 3. *Products carousel.* One card per published company (logo or wordmark, name, "View catalogue"). Card links to `/products/[company]/`. Snap carousel with prev/next buttons; the section heading links to `/products/`.
 4. *Calibration disciplines.* Six tiles with 3 to 4 example instruments each (from CONTENT.md), linking to the discipline pages.
-5. *On-site calibration band* (crimson). Short benefits (convenient, reliable, professional; saves time and travel cost) and the instruments listed in CONTENT.md.
+5. *On-site calibration highlight* (a `--crimson-50` panel with a crimson left border, inside the discipline grid). Short benefits (convenient, reliable, professional; saves time and travel cost) and the instruments listed in CONTENT.md.
 6. *Process.* Receive and inspect, Calibrate, Documentation, Return.
 7. *Why JIE.* The five reasons from the brochure, omitting any unconfirmed claim.
 8. *Clients.* Logo marquee of featured clients (CSS-only scroll, pauses on hover and focus, static grid under reduced motion), link to `/clients/`.

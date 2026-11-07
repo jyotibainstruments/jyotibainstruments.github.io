@@ -9,12 +9,16 @@ interface Item {
 interface Props {
   items: Item[];
   class?: string;
+  tone?: 'default' | 'tinted';
 }
 
-const { items, class: className } = Astro.props;
+const { items, class: className, tone = 'default' } = Astro.props;
 ---
 
-<nav class:list={['breadcrumbs', className]} aria-label="Breadcrumb">
+<nav
+  class:list={['breadcrumbs', tone === 'tinted' && 'breadcrumbs--tinted', className]}
+  aria-label="Breadcrumb"
+>
   <ol>
     {
       items.map((item, index) => (
@@ -76,5 +80,19 @@ const { items, class: className } = Astro.props;
   .breadcrumbs [aria-current='page'] {
     color: var(--ink-3);
     font-weight: 600;
+  }
+
+  /* On the pale crimson page-header band. */
+  .breadcrumbs--tinted li:not(:last-child)::after {
+    background: color-mix(in srgb, var(--crimson-900) 30%, transparent);
+  }
+
+  .breadcrumbs--tinted a,
+  .breadcrumbs--tinted [aria-current='page'] {
+    color: var(--crimson-900);
+  }
+
+  .breadcrumbs--tinted a:hover {
+    color: var(--crimson);
   }
 </style>

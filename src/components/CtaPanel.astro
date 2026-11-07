@@ -44,8 +44,7 @@ const { title, text, placement, service, message, class: className } = Astro.pro
   }
 
   .cta__panel {
-    --focus-gap: var(--crimson);
-    --focus-keyline: #ffffff;
+    --focus-keyline: var(--on-crimson);
 
     display: grid;
     gap: var(--space-6);
@@ -53,7 +52,7 @@ const { title, text, placement, service, message, class: className } = Astro.pro
     padding: clamp(28px, 5vw, 56px);
     border-radius: 24px;
     background: var(--crimson);
-    color: #ffffff;
+    color: var(--on-crimson);
   }
 
   @media (min-width: 880px) {
@@ -65,13 +64,13 @@ const { title, text, placement, service, message, class: className } = Astro.pro
 
   .cta h2 {
     margin: 0 0 var(--space-3);
-    color: #ffffff;
+    color: var(--on-crimson);
   }
 
   .cta p {
     max-width: 52ch;
     margin: 0;
-    color: rgb(255 255 255 / 84%);
+    color: color-mix(in srgb, var(--on-crimson) 84%, transparent);
     font-size: var(--text-sm);
   }
 
@@ -82,13 +81,13 @@ const { title, text, placement, service, message, class: className } = Astro.pro
   }
 
   .cta__panel :global(.btn--ghost) {
-    border-color: rgb(255 255 255 / 65%);
-    color: #ffffff;
+    border-color: color-mix(in srgb, var(--on-crimson) 65%, transparent);
+    color: var(--on-crimson);
   }
 
   .cta__panel :global(.btn--ghost:hover) {
-    border-color: #ffffff;
-    background: #ffffff;
+    border-color: var(--on-crimson);
+    background: var(--surface);
     color: var(--crimson);
   }
 </style>

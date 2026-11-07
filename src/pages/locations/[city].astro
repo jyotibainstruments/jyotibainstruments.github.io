@@ -171,8 +171,8 @@ const ctaMessage = serviceEnquiry(`calibration, repairs or supplies in ${cityNam
     justify-items: start;
     gap: var(--space-2);
     padding: clamp(24px, 4vw, 36px);
-    border: 1px solid rgb(116 9 43 / 16%);
-    border-left: 4px solid var(--gold);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--crimson);
     border-radius: var(--radius-card);
     background: var(--surface);
   }
@@ -235,7 +235,7 @@ const ctaMessage = serviceEnquiry(`calibration, repairs or supplies in ${cityNam
   .prose__text {
     display: grid;
     gap: var(--space-4);
-    max-width: 70ch;
+    max-width: var(--measure);
   }
 
   .prose__text p {
@@ -307,7 +307,7 @@ const ctaMessage = serviceEnquiry(`calibration, repairs or supplies in ${cityNam
     flex-direction: column;
     margin: 0;
     padding: var(--space-3) 0 var(--space-3) var(--space-4);
-    border-left: 3px solid var(--gold);
+    border-left: 3px solid var(--crimson);
   }
 
   .clients__name {

@@ -111,6 +111,7 @@ h4 {
 p {
   max-width: var(--measure);
   margin: 0 0 var(--space-4);
+  text-wrap: pretty;
 }
 
 p:last-child,
@@ -121,12 +122,18 @@ ol:last-child {
 
 a {
   color: var(--crimson);
+  text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
 }
 
 a:hover {
   color: var(--crimson-900);
+}
+
+a[href^='tel:'],
+address {
+  font-variant-numeric: tabular-nums;
 }
 
 ul,
@@ -193,22 +200,32 @@ hr {
 }
 
 .section--crimson {
-  --focus-gap: var(--crimson);
-  --focus-keyline: #ffffff;
+  --focus-keyline: var(--on-crimson);
 
   background: var(--crimson);
-  color: #ffffff;
+  color: var(--on-crimson);
 }
 
 .section--crimson h1,
 .section--crimson h2,
 .section--crimson h3,
 .section--crimson h4 {
-  color: #ffffff;
+  color: var(--on-crimson);
 }
 
 .section--crimson a:not([class]) {
   color: var(--gold-on-crimson);
+}
+
+/*
+ * Where two sections share a background, a hairline keeps the join legible
+ * without adding a full alternating band.
+ */
+.section--surface + .section--surface,
+.section:not(.section--surface):not(.section--crimson)
+  + .section:not(.section--surface):not(.section--crimson),
+.section:not(.section--surface):not(.section--crimson) + .cta {
+  border-top: 1px solid var(--line-soft);
 }
 
 .prose p,
@@ -226,7 +243,7 @@ hr {
 }
 
 .ruler {
-  --tick: rgb(116 9 43 / 12%);
+  --tick: var(--ruler-tick);
 
   height: 10px;
   background:
@@ -244,11 +261,11 @@ hr {
   justify-content: center;
   gap: 0.5em;
   padding: 0 1.4rem;
-  border: 1.5px solid transparent;
+  border: 1px solid transparent;
   border-radius: var(--radius-button);
   font-family: var(--font-body);
   font-size: 1rem;
-  font-weight: 650;
+  font-weight: 700;
   line-height: 1.2;
   text-align: center;
   text-decoration: none;
@@ -267,32 +284,42 @@ hr {
   transform: translateY(1px);
 }
 
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.45;
+  pointer-events: none;
 }
 
 .btn--primary {
+  border-color: var(--gold-edge);
   background: var(--gold);
   color: var(--ink);
 }
 
 .btn--primary:hover {
+  border-color: var(--gold-edge);
   background: var(--gold-hover);
+  color: var(--ink);
+}
+
+.btn--primary:active {
+  border-color: var(--gold-edge);
+  background: var(--gold-pressed);
   color: var(--ink);
 }
 
 .btn--secondary {
   background: var(--crimson);
-  color: #ffffff;
+  color: var(--on-crimson);
 }
 
 .btn--secondary:hover {
   background: var(--crimson-900);
-  color: #ffffff;
+  color: var(--on-crimson);
 }
 
 .btn--ghost {
+  border-width: 1.5px;
   border-color: var(--crimson);
   background: transparent;
   color: var(--crimson);
@@ -325,7 +352,7 @@ hr {
 
 .section--crimson .btn--secondary,
 .footer .btn--secondary {
-  background: #ffffff;
+  background: var(--surface);
   color: var(--crimson);
 }
 
@@ -337,24 +364,50 @@ hr {
 
 .section--crimson .btn--ghost,
 .footer .btn--ghost {
-  border-color: rgb(255 255 255 / 65%);
-  color: #ffffff;
+  border-color: color-mix(in srgb, var(--on-crimson) 65%, transparent);
+  color: var(--on-crimson);
 }
 
 .section--crimson .btn--ghost:hover,
 .footer .btn--ghost:hover {
-  border-color: #ffffff;
-  background: #ffffff;
+  border-color: var(--on-crimson);
+  background: var(--surface);
   color: var(--crimson);
+}
+
+/* Form controls: 48px tall, 16px text (no mobile zoom), visible 1.5px border. */
+:where(input:not([type='checkbox'], [type='radio']), select, textarea) {
+  min-height: 48px;
+  padding: 0 0.9rem;
+  border: 1.5px solid var(--ink-3);
+  border-radius: var(--radius-button);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+:where(textarea) {
+  min-height: 120px;
+  padding-block: 0.75rem;
+}
+
+:where(input:not([type='checkbox'], [type='radio']), select, textarea)::placeholder {
+  color: var(--ink-3);
+  opacity: 1;
+}
+
+:where(input:not([type='checkbox'], [type='radio']), select, textarea):focus {
+  border-color: var(--crimson);
 }
 
 /* Accessibility */
 :where(a, button, input, select, textarea, summary, [tabindex]:not([tabindex='-1'])):focus-visible {
   outline: none;
   box-shadow:
-    0 0 0 2px var(--focus-gap),
-    0 0 0 5px var(--focus-ring),
-    0 0 0 6px var(--focus-keyline);
+    0 0 0 3px var(--focus-ring),
+    0 0 0 4px var(--focus-keyline);
 }
 
 @media (forced-colors: active) {
@@ -408,6 +461,13 @@ hr {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  .btn:active,
+  .card--link:hover,
+  .floating-wa:hover,
+  .floating-wa:active {
+    transform: none;
+  }
 }
 
 /* Print: quiet, ink-friendly pages. The contact page is the printable one. */
@@ -427,12 +487,12 @@ hr {
 
   html,
   body {
-    background: #ffffff;
+    background: Canvas;
     scroll-behavior: auto;
   }
 
   body {
-    color: #000000;
+    color: CanvasText;
     font-size: 11.5pt;
   }
 
@@ -440,11 +500,11 @@ hr {
   h2,
   h3,
   h4 {
-    color: #000000;
+    color: CanvasText;
   }
 
   a {
-    color: #000000;
+    color: CanvasText;
     text-decoration: none;
   }
 
@@ -454,12 +514,12 @@ hr {
 
   .section--surface,
   .section--crimson {
-    background: #ffffff;
-    color: #000000;
+    background: Canvas;
+    color: CanvasText;
   }
 
   .card {
-    border: 1px solid #cccccc;
+    border: 1px solid GrayText;
     box-shadow: none;
     break-inside: avoid;
   }
@@ -469,11 +529,11 @@ hr {
   }
 
   .eyebrow {
-    color: #444444;
+    color: GrayText;
   }
 
   small,
   .eyebrow {
-    color: #444444;
+    color: GrayText;
   }
 }

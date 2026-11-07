@@ -201,8 +201,8 @@ const cityPage = (slug: string) => url(`/locations/${slug}/`);
   .audiences {
     max-width: 62ch;
     padding: clamp(20px, 4vw, 32px);
-    border: 1px solid rgb(116 9 43 / 16%);
-    border-left: 4px solid var(--gold);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--crimson);
     border-radius: var(--radius-card);
     background: var(--crimson-50);
   }
@@ -310,7 +310,7 @@ const cityPage = (slug: string) => url(`/locations/${slug}/`);
     align-items: center;
     gap: 0.5em;
     padding: 0.5em 0.9em;
-    border: 1px solid var(--gold);
+    border: 1px solid var(--line);
     border-radius: 999px;
     background: var(--surface);
     color: var(--ink);
@@ -323,7 +323,7 @@ const cityPage = (slug: string) => url(`/locations/${slug}/`);
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--gold);
+    background: var(--crimson);
   }
 
   .places-note {
