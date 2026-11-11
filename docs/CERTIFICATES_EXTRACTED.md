@@ -44,7 +44,7 @@
 ## 3. MAHR Authorization Certificate (`mahr-authorization-certificate`, authorisation)
 
 - **Issuer:** Mahr Metrology India Pvt. Ltd.
-- **Number/Ref:** **omitted from publication** (Ref. No. reads `MMIPL/DIS/ALY2026/27SE` but is sideways in a photo; owner to confirm)
+- **Number/Ref:** `MMIPL/DIS/ALY2026/27SE` (read from photo, sideways; published per owner request)
 - **Issued:** 2026-01-01 (01st January 2026, India)
 - **Valid until:** 2026-12-31 (Valid Till: December 31, 2026)
 - **Holder as printed:** `Jyotiba Instruments Enterprises`
@@ -99,7 +99,7 @@
 
 ## Still held back / notes
 
-- **MAHR Ref. No. `MMIPL/DIS/ALY2026/27SE`:** not published (sideways/unconfirmed in photo) — owner to confirm.
+- **MAHR Ref. No. `MMIPL/DIS/ALY2026/27SE`:** published per owner request (“release all held back works”). Read from a sideways photo; confirm if a clearer reference differs.
 - **MAHR PDF orientation:** rotated view not applied (no `qpdf`/`mutool`/`pypdf` available). File kept byte-identical; neutral cover shown for PDF card; upright scan requested in `docs/ASSETS_NEEDED.md`.
 - **PDF previews:** page-1 previews not generated (no Playwright/Chromium rasterization path executed here); neutral covers used.
 - **Expiry:** Mahr and Insize authorisations expire 2026-12-31; auto-hidden after expiry (Asia/Kolkata, inclusive) with warning; `check-certificates` warns within 60 days (expected now, exit 0).
