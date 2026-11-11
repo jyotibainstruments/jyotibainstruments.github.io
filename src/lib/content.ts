@@ -658,6 +658,7 @@ const certificateSchema = z.object({
   signatory: z.string().min(1).nullable().default(null),
   eventDates: z.string().min(1).nullable().default(null),
   venue: z.string().min(1).nullable().default(null),
+  embedUrl: z.string().url().nullable().default(null),
 });
 
 export type Certificate = z.infer<typeof certificateSchema>;
