@@ -7,8 +7,14 @@ import Card from '../../components/Card.astro';
 import WhatsAppButton from '../../components/WhatsAppButton.astro';
 import CtaPanel from '../../components/CtaPanel.astro';
 import CatalogueViewer from '../../components/CatalogueViewer.astro';
-import { companyPath, getService, visibleCompanies } from '../../lib/content';
+import {
+  companyPath,
+  displayableAuthorisationForBrand,
+  getService,
+  visibleCompanies,
+} from '../../lib/content';
 import type { Company } from '../../lib/content';
+import { claims } from '../../config/site';
 import { breadcrumbJsonLd, companyTitle, companyDescription } from '../../lib/seo';
 import { productEnquiry, serviceEnquiry } from '../../lib/whatsapp';
 import { url } from '../../lib/url';
@@ -51,6 +57,7 @@ const relatedLinks = [getService('mechanical-pressure'), getService('repairs-and
 const others = visibleCompanies.filter((item) => item.slug !== company.slug);
 const enquiryMessage = productEnquiry(`${company.name} instruments`);
 const cantFindMessage = serviceEnquiry(`${company.name} instruments`);
+const authorisation = claims.showAuthorisedBrands ? displayableAuthorisationForBrand(company.slug) : undefined;
 ---
 
 <SiteLayout
@@ -67,6 +74,25 @@ const cantFindMessage = serviceEnquiry(`${company.name} instruments`);
       message={enquiryMessage}
     />
   </PageHeader>
+
+  {authorisation && (
+    <Section tone="bg" labelledby="company-authorisation">
+      <SectionHeading id="company-authorisation" title="Brand authorisation" />
+      <Card class="authorisation">
+        {company.slug === 'mahr' ? (
+          <>
+            <p><strong>Authorised by Mahr Metrology India Pvt. Ltd. to sell and distribute Mahr Dimensional Metrology Products and Mahr Rotary Stroke Bearing in Belgaum and Hubli. Valid till 31 December 2026.</strong></p>
+            {authorisation.quote && <p>As printed: “{authorisation.quote}”</p>}
+          </>
+        ) : company.slug === 'insize' ? (
+          <p><strong>Authorised dealer of INSIZE CO., LTD. in India. Valid till 31 December 2026.</strong></p>
+        ) : (
+          <p><strong>Brand authorisation certificate on file.</strong></p>
+        )}
+        <a class="btn btn--ghost" href={url(`/certificates/#${authorisation.id}`)}>View certificate</a>
+      </Card>
+    </Section>
+  )}
 
   <Section tone="surface" labelledby="company-catalogue">
     <SectionHeading id="company-catalogue" title="Catalogue" />

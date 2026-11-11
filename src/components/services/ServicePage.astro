@@ -3,8 +3,12 @@ import type { Service } from '../../lib/content';
 import {
   calibrationDisciplines,
   clientsBySector,
+  getCertificate,
+  isCertificateDisplayable,
+  nablScopeForDiscipline,
   relatedServices,
 } from '../../lib/content';
+import { claims } from '../../config/site';
 import PageHeader from '../PageHeader.astro';
 import Section from '../Section.astro';
 import SectionHeading from '../SectionHeading.astro';
@@ -15,7 +19,7 @@ import Button from '../Button.astro';
 import WhatsAppButton from '../WhatsAppButton.astro';
 import CtaPanel from '../CtaPanel.astro';
 import { primaryPhone } from '../../config/site';
-import { telHref, url } from '../../lib/url';
+import { asset, telHref, url } from '../../lib/url';
 
 interface Item {
   name: string;
@@ -35,6 +39,23 @@ const civilClients =
   service.slug === 'civil'
     ? (clientsBySector.find((group) => group.sector === 'Cement and construction')?.clients ?? [])
     : [];
+
+const nablScope =
+  claims.showNablClaim && service.kind === 'discipline' ? nablScopeForDiscipline(service.slug) : 'none';
+const nablScopeCert = claims.showNablClaim ? getCertificate('nabl-scope-of-accreditation') : undefined;
+const showNablBox =
+  nablScope !== 'none' &&
+  nablScopeCert !== undefined &&
+  isCertificateDisplayable(nablScopeCert);
+
+const nablScopeCopy =
+  service.slug === 'mechanical-pressure'
+    ? 'Only instruments in the scope: gauges and dimensional instruments (micrometers, vernier and dial calipers, bore, snap, plug, ring and thread gauges, height gauges, profile projectors), pressure and vacuum gauges (0 to 1000 bar hydraulic, 0 to 40 bar pneumatic, minus 0.80 bar to 0), and on site hardness testers. List nothing else as accredited.'
+    : service.slug === 'civil'
+      ? 'Only the civil-lab items inside the dimensional schedule: slump cone, moulds (cube, beam), flakiness and elongation gauge, core cutter, test sieves. Not compression testing machines or anything else.'
+      : 'Selected instruments are covered by the NABL accredited scope.';
+
+const showNablOtherNote = service.slug === 'mechanical-pressure' || service.slug === 'civil';
 
 // Alternate background tones block by block so no two sections share a background.
 let tone: 'bg' | 'surface' = 'bg';
@@ -101,19 +122,38 @@ const lowerTitle = service.title.charAt(0).toLowerCase() + service.title.slice(1
 
 {
   instrumentsTone && (
-    <Section tone={instrumentsTone} labelledby="service-instruments">
-      <SectionHeading id="service-instruments" title={service.listTitle} />
+    <Section tone={instrumentsTone} labelledby={service.instruments.length > 0 ? 'service-instruments' : 'service-accreditation'}>
+      <SectionHeading
+        id={service.instruments.length > 0 ? 'service-instruments' : 'service-accreditation'}
+        title={service.instruments.length > 0 ? service.listTitle : 'Accreditation'}
+      />
 
-      <ul class="checklist">
-        {service.instruments.map((instrument) => (
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true" focusable="false">
-              <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <span>{instrument}</span>
-          </li>
-        ))}
-      </ul>
+      {showNablBox && nablScopeCert && (
+        <Card class="accreditation">
+          <p class="accreditation__kicker">Accreditation</p>
+          <h3>NABL accredited scope (Belgaum laboratory)</h3>
+          <p>{nablScopeCopy}</p>
+          {showNablOtherNote && (
+            <p>Other instruments on this page are calibrated but are not covered by the NABL accredited scope.</p>
+          )}
+          <a class="btn btn--ghost" href={asset(nablScopeCert.file)} target="_blank" rel="noopener">
+            View accredited scope (PDF)
+          </a>
+        </Card>
+      )}
+
+      {service.instruments.length > 0 && (
+        <ul class="checklist">
+          {service.instruments.map((instrument) => (
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true" focusable="false">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>{instrument}</span>
+            </li>
+          ))}
+        </ul>
+      )}
     </Section>
   )
 }

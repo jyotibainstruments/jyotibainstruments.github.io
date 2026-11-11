@@ -5,7 +5,13 @@ import Card from '../Card.astro';
 import Carousel from '../Carousel.astro';
 import WhatsAppButton from '../WhatsAppButton.astro';
 import Icon from '../icons/Icon.astro';
-import { companyPath, home, visibleCompanies } from '../../lib/content';
+import { claims } from '../../config/site';
+import {
+  companyPath,
+  displayableAuthorisationForBrand,
+  home,
+  visibleCompanies,
+} from '../../lib/content';
 import { url } from '../../lib/url';
 
 const hasCompanies = visibleCompanies.length > 0;
@@ -31,19 +37,27 @@ const supplies = [
   {
     hasCompanies ? (
       <Carousel label="Product catalogues">
-        {visibleCompanies.map((company) => (
-          <Card href={url(companyPath(company.slug))}>
-            <div class="product-card">
-              <span class="product-card__name">{company.name}</span>
-              <span class="product-card__action">
-                View catalogue
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                  <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-            </div>
-          </Card>
-        ))}
+        {visibleCompanies.map((company) => {
+          const authorisation = claims.showAuthorisedBrands
+            ? displayableAuthorisationForBrand(company.slug)
+            : undefined;
+          return (
+            <Card href={url(companyPath(company.slug))}>
+              <div class="product-card">
+                <div class="product-card__head">
+                  <span class="product-card__name">{company.name}</span>
+                  {authorisation && <span class="product-card__badge">Authorised</span>}
+                </div>
+                <span class="product-card__action">
+                  View catalogue
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                    <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </div>
+            </Card>
+          );
+        })}
       </Carousel>
     ) : (
       <div class="supply">
@@ -96,6 +110,26 @@ const supplies = [
     font-size: var(--text-xl);
     font-weight: 800;
     letter-spacing: var(--tracking-heading);
+  }
+
+  .product-card__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .product-card__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    background: var(--crimson-50);
+    color: var(--crimson-900);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
   }
 
   .product-card__action {

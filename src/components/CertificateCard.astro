@@ -1,0 +1,332 @@
+---
+import { Image } from 'astro:assets';
+import CertificatePdfViewer from './CertificatePdfViewer.astro';
+import type { Certificate } from '../lib/content';
+import { asset } from '../lib/url';
+import belexImage from '../assets/certificates/belex-2026-appreciation.jpeg';
+import mahrAwardImage from '../assets/certificates/mahr-best-debutant-dealer-2025.jpeg';
+
+interface Props {
+  certificate: Certificate;
+}
+
+const { certificate } = Astro.props;
+
+const isPdf = certificate.file.toLowerCase().endsWith('.pdf');
+const assetImages: Record<string, ImageMetadata> = {
+  'belex-2026-appreciation': belexImage,
+  'mahr-best-debutant-dealer': mahrAwardImage,
+};
+const imageAsset = !isPdf ? assetImages[certificate.id] : undefined;
+
+function formatDate(value: string | null): string | null {
+  if (!value) return null;
+  const date = new Date(`${value}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return value;
+  return new Intl.DateTimeFormat('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
+}
+
+const issued = formatDate(certificate.issued);
+const validUntil = formatDate(certificate.validUntil);
+const lastAmended = formatDate(certificate.lastAmended);
+const validity = [
+  issued ? `Issued ${issued}` : null,
+  validUntil ? `Valid until ${validUntil}` : null,
+  lastAmended ? `Last amended ${lastAmended}` : null,
+]
+  .filter(Boolean)
+  .join(' · ');
+---
+
+<article class="cert-card" id={certificate.id}>
+  <div class="cert-card__media">
+    {
+      isPdf ? (
+        <div class="cert-card__cover" aria-hidden="true">
+          <span class="cert-card__cover-mark">PDF</span>
+          <span class="cert-card__cover-pages">
+            {certificate.pages} {certificate.pages === 1 ? 'page' : 'pages'}
+          </span>
+        </div>
+      ) : imageAsset ? (
+        <button
+          type="button"
+          class="cert-card__preview cert-card__preview--contain"
+          data-cert-open={certificate.id}
+          aria-label={`View ${certificate.title}`}
+        >
+          <Image src={imageAsset} alt="" widths={[480, 800]} sizes="(min-width: 760px) 260px, 100vw" loading="lazy" />
+        </button>
+      ) : (
+        <div class="cert-card__cover" aria-hidden="true">
+          <span class="cert-card__cover-mark">Image</span>
+        </div>
+      )
+    }
+  </div>
+
+  <div class="cert-card__body">
+    <p class="cert-card__issuer">{certificate.issuer}</p>
+    <h3 class="cert-card__title">{certificate.title}</h3>
+    {validity && <p class="cert-card__meta">{validity}</p>}
+    {certificate.eventDates && <p class="cert-card__meta">{certificate.eventDates}{certificate.venue ? ` · ${certificate.venue}` : ''}</p>}
+    {certificate.territory && <p class="cert-card__meta">Territory: {certificate.territory}</p>}
+    {certificate.productLines.length > 0 && (
+      <p class="cert-card__meta">Product lines: {certificate.productLines.join(', ')}</p>
+    )}
+    <p class="cert-card__summary">{certificate.summary}</p>
+    {certificate.quote && <blockquote class="cert-card__quote">“{certificate.quote}”</blockquote>}
+    {certificate.signatory && <p class="cert-card__meta">Signed: {certificate.signatory}</p>}
+    {certificate.number && certificate.kind !== 'accreditation' && certificate.kind !== 'scope' && (
+      <p class="cert-card__meta">Reference: {certificate.number}</p>
+    )}
+
+    <div class="cert-card__actions">
+      {
+        isPdf ? (
+          <CertificatePdfViewer
+            id={certificate.id}
+            title={certificate.title}
+            file={certificate.file}
+            preview={null}
+            pages={certificate.pages}
+            alt={certificate.alt}
+          />
+        ) : imageAsset ? (
+          <>
+            <button class="btn btn--primary" type="button" data-cert-open={certificate.id}>
+              View certificate
+            </button>
+            <dialog class="cert-dialog" data-cert-dialog={certificate.id} aria-label={certificate.title}>
+              <div class="cert-dialog__bar">
+                <p class="cert-dialog__title">{certificate.title}</p>
+                <button type="button" class="cert-dialog__close" data-cert-close={certificate.id}>Close</button>
+              </div>
+              <div class="cert-dialog__body">
+                <Image src={imageAsset} alt={certificate.alt} widths={[960, 1600, imageAsset.width]} sizes="100vw" loading="lazy" />
+              </div>
+            </dialog>
+          </>
+        ) : (
+          <a class="btn btn--ghost" href={asset(certificate.file)} target="_blank" rel="noopener">
+            Open file
+          </a>
+        )
+      }
+    </div>
+  </div>
+</article>
+
+<style>
+  .cert-card {
+    display: grid;
+    gap: var(--space-5);
+    padding: var(--space-5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+
+  @media (min-width: 760px) {
+    .cert-card {
+      grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
+      align-items: start;
+    }
+  }
+
+  .cert-card__preview,
+  .cert-card__cover {
+    display: grid;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--crimson-50);
+  }
+
+  .cert-card__preview {
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .cert-card__preview :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cert-card__preview--contain {
+    background: var(--surface);
+  }
+
+  .cert-card__preview--contain :global(img),
+  .cert-dialog__body :global(img) {
+    object-fit: contain;
+  }
+
+  .cert-card__cover {
+    place-content: end start;
+    gap: var(--space-1);
+    padding: var(--space-4);
+    color: var(--crimson-900);
+  }
+
+  .cert-card__cover-mark {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: 800;
+  }
+
+  .cert-card__cover-pages {
+    font-size: var(--text-sm);
+    color: var(--ink-2);
+  }
+
+  .cert-card__body {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+  }
+
+  .cert-card__issuer,
+  .cert-card__meta,
+  .cert-card__summary,
+  .cert-card__title,
+  .cert-card__quote {
+    margin: 0;
+  }
+
+  .cert-card__issuer {
+    color: var(--crimson);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .cert-card__title {
+    font-size: var(--text-xl);
+  }
+
+  .cert-card__meta {
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+
+  .cert-card__summary {
+    color: var(--ink-2);
+  }
+
+  .cert-card__quote {
+    padding-left: var(--space-3);
+    border-left: 3px solid var(--crimson);
+    color: var(--ink);
+    font-size: var(--text-sm);
+  }
+
+  .cert-card__actions {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .cert-card__actions :global(.cert-pdf__card) {
+    grid-template-columns: 1fr;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .cert-card__actions :global(.cert-pdf__poster) {
+    display: none;
+  }
+
+  .cert-card__actions :global(.cert-pdf__body) {
+    gap: var(--space-3);
+  }
+
+  .cert-dialog {
+    width: min(1100px, calc(100% - 2rem));
+    max-height: calc(100% - 2rem);
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+  }
+
+  .cert-dialog::backdrop {
+    background: rgb(17 17 17 / 0.72);
+  }
+
+  .cert-dialog__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .cert-dialog__title {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .cert-dialog__close {
+    min-height: 44px;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .cert-dialog__body {
+    padding: var(--space-4);
+    overflow: auto;
+  }
+
+  .cert-dialog__body :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    touch-action: pinch-zoom;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLDialogElement>('[data-cert-dialog]').forEach((dialog) => {
+    const id = dialog.dataset.certDialog;
+    if (!id) return;
+    const openers = document.querySelectorAll<HTMLElement>(`[data-cert-open="${id}"]`);
+    const closer = dialog.querySelector<HTMLButtonElement>(`[data-cert-close="${id}"]`);
+    let lastFocus: HTMLElement | null = null;
+
+    const open = () => {
+      lastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      if (!dialog.open) dialog.showModal();
+    };
+
+    openers.forEach((el) => el.addEventListener('click', open));
+    closer?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('close', () => {
+      lastFocus?.focus();
+    });
+  });
+</script>

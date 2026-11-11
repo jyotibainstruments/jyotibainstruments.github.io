@@ -3,10 +3,19 @@ import Section from '../Section.astro';
 import SectionHeading from '../SectionHeading.astro';
 import Icon from '../icons/Icon.astro';
 import type { IconName } from '../icons/types';
-import { home, processSteps } from '../../lib/content';
+import { claims } from '../../config/site';
+import {
+  displayableNablCertificate,
+  displayableNablScopeCertificate,
+  home,
+  processSteps,
+} from '../../lib/content';
+import { url } from '../../lib/url';
 
 const stepIcons: IconName[] = ['clipboard', 'gauge', 'shield', 'truck'];
 const reasonIcons: IconName[] = ['wrench', 'building', 'clock', 'shield'];
+const showNabl =
+  claims.showNablClaim && Boolean(displayableNablCertificate() && displayableNablScopeCertificate());
 ---
 
 <Section labelledby="process-title">
@@ -50,6 +59,19 @@ const reasonIcons: IconName[] = ['wrench', 'building', 'clock', 'shield'];
             </li>
           ))
         }
+        {showNabl && (
+          <li class="why__item why__item--nabl">
+            <span class="icon-circle icon-circle--sm" aria-hidden="true">
+              <Icon name="shield" size={20} />
+            </span>
+            <div>
+              <h4>
+                <a href={url('/certificates/')}>Calibration accredited by NABL for the scope listed</a>
+              </h4>
+              <p>Accreditation applies to the Belgaum laboratory for the scope listed in the annexure.</p>
+            </div>
+          </li>
+        )}
       </ul>
     </div>
   </div>

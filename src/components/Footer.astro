@@ -18,6 +18,13 @@ const serviceLinks = [
   ...otherServices.map((service) => ({ label: service.title, href: service.path })),
   { label: 'All services', href: '/services/' },
 ];
+
+const companyLinks = [
+  { label: 'About', href: '/about/' },
+  { label: 'Clients', href: '/clients/' },
+  { label: 'Certificates', href: '/certificates/' },
+  { label: 'Contact', href: '/contact/' },
+];
 ---
 
 <footer class="footer">
@@ -64,6 +71,19 @@ const serviceLinks = [
         <li>
           <a href={url('/products/')}>All products</a>
         </li>
+      </ul>
+    </nav>
+
+    <nav class="footer__col" aria-labelledby="footer-company">
+      <h2 id="footer-company">Company</h2>
+      <ul class="footer__links">
+        {
+          companyLinks.map((link) => (
+            <li>
+              <a href={url(link.href)}>{link.label}</a>
+            </li>
+          ))
+        }
       </ul>
     </nav>
 
@@ -149,8 +169,8 @@ const serviceLinks = [
 
   @media (min-width: 1000px) {
     .footer__grid {
-      grid-template-columns: 1.35fr 0.65fr 0.65fr 1.35fr;
-      gap: var(--space-6);
+      grid-template-columns: 1.3fr 0.7fr 0.7fr 0.7fr 1.3fr;
+      gap: var(--space-5);
     }
   }
 

@@ -9,7 +9,10 @@ export function buildTitle(page?: string): string {
   return page ? `${page} | ${site.shortName}` : `${site.name} | ${site.shortName}`;
 }
 
-export function organizationJsonLd(): JsonLd {
+export function organizationJsonLd(input?: {
+  hasCertification?: JsonLd;
+  awards?: string[];
+}): JsonLd {
   const email = site.emails.at(0);
 
   return {
@@ -22,6 +25,8 @@ export function organizationJsonLd(): JsonLd {
     logo: absoluteAsset('/logo-512.png'),
     ...(email ? { email } : {}),
     ...(primaryPhone ? { telephone: e164(primaryPhone) } : {}),
+    ...(input?.hasCertification ? { hasCertification: input.hasCertification } : {}),
+    ...(input?.awards && input.awards.length > 0 ? { award: input.awards } : {}),
   };
 }
 

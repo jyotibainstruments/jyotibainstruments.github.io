@@ -35,12 +35,17 @@ Brochure map is a schematic of the Udyambag lab relative to Udyambag Market, Rai
 
 ## 3. Claims and flags
 
-Displayable now: "Traceable to National / International Standards"; "Experienced & skilled team"; "State-of-the-art calibration facility"; "Prompt & cost-effective service"; "2000+ customers" (stated claim); "On-site calibration available for selected instruments"; "Minor repair work is free of charge for clients"; "Major repair work is charged extra at actual".
+Displayable now (source-backed): "Experienced & skilled team"; "State-of-the-art calibration facility"; "Prompt & cost-effective service"; "2000+ customers" (stated claim); "On-site calibration available for selected instruments"; "Minor repair work is free of charge for clients"; "Major repair work is charged extra at actual".
 
-**UNCONFIRMED (keep behind flags in `src/config/site.ts`, default `false`, do not render):**
-- `showIsoClaim`: letter says "ISO/IEC 17025:2005 Certified Lab"; brochure prints "ISO/IEC 1705:2005". Edition 2005 is obsolete (superseded by 2017) and no certificate number, accreditation body, scope or validity date was supplied. Never write "NABL" or "accredited".
+**Certificate-backed claims (confirmed, gated, rendered only when flag on, `verified: true`, in scope and in date; expired items auto-hidden, Asia/Kolkata inclusive):**
+- `showNablClaim` (enabled): NABL accreditation for JIE's calibration laboratory at Udyambag, Belgaum, CC-3243, ISO/IEC 17025:2017, valid 11 May 2025 to 10 May 2029, for the scope in the annexure (last amended 30 May 2025). Wording: "Calibration accredited by NABL for the scope listed" (home/Why JIE) and `/certificates/` intro as confirmed. Accreditation covers the Belgaum laboratory (and site-facility schedule) only. **No accreditation wording on Hubli, Pune, Ahmedabad or Repairs, Sales or Spares pages.** Never claim NABL accreditation for the whole business or disciplines outside the accredited scope. No NABL logo/symbol graphic. Discipline mapping (confirmed): `mechanical-pressure` partial (gauges/dimensional instruments as specified, pressure/vacuum gauges 0–1000 bar hydraulic, 0–40 bar pneumatic, −0.80 bar to 0, and on-site hardness testers); `civil` partial (slump cone, cube/beam moulds, flakiness and elongation gauge, core cutter, test sieves only); `electro-technical`, `thermal`, `fluid-flow`, `medical` none.
+- `showAuthorisedBrands` (enabled): INSIZE — "Authorised dealer of INSIZE CO., LTD. in India. Valid till 31 December 2026." (authorized dealer certificate, Jan 1 2026–Dec 31 2026). MAHR — "Authorised by Mahr Metrology India Pvt. Ltd. to sell and distribute Mahr Dimensional Metrology Products and Mahr Rotary Stroke Bearing in Belgaum and Hubli. Valid till 31 December 2026." (Jan 1 2026–Dec 31 2026; Mahr Ref. No. not published). MAHR badge shown only where Belgaum/Hubli applies, never on Dharwad/Pune/Ahmedabad pages.
+- `showAwards` (enabled): "Best Debutant Dealer 2025, Mahr Metrology India Pvt. Ltd." (award, 2025). "Appreciation memento for support to BelEx 2026, The Belgaum Chamber of Commerce & Industries (24 to 26 March 2026)" (event; not an award/prize, not named to JIE).
+
+**UNCONFIRMED / still gated:**
+- `showIsoClaim`: legacy brochure/letter ISO 2005 lines are obsolete/unverified and superseded by the confirmed NABL certificate; do not publish as a separate claim.
 - Any founding year, years in business, number of projects, team size.
-- Dealer or authorised-distributor status for any brand.
+- Dealer or authorised-distributor status for any brand outside a confirmed, in-date certificate.
 
 ## 4. Services
 
@@ -135,7 +140,22 @@ Panels: "Expert Service & Support", "Quality You Can Rely On", "Long-Term Partne
 
 ## 9. Not supplied: do not invent
 
-Founding date, ownership, directors, staff or bios; website or social accounts; accreditation body, certificate number, scope, validity; uncertainty values, ranges, CMCs, equipment inventory, turnaround times; price lists, payment or warranty terms; opening hours; manufacturer authorisation or dealer certificates; product codes or ranges for FCDM, Octagon LMM 300, Torque Master; testimonials; case studies; photographs; customer logos.
+Founding date, ownership, directors, staff or bios; website or social accounts; uncertainty values, ranges, CMCs, equipment inventory, turnaround times; price lists, payment or warranty terms; opening hours; product codes or ranges for FCDM, Octagon LMM 300, Torque Master; testimonials; case studies; photographs; customer logos.
+
+Certificate and authorisation source documents have been supplied, but accreditation, authorisation and recognition claims remain unpublished until the exact printed details are confirmed, recorded as verified data, and permitted by the site flags and validity rules (see `docs/CERTIFICATES_EXTRACTED.md` and section 3).
+
+## 11. Certificates and recognition (confirmed)
+
+Confirmed facts and wording are recorded in `docs/CERTIFICATES_EXTRACTED.md` and published via `src/data/certificates.json` (all six entries `verified: true`) with flags `showNablClaim`, `showAuthorisedBrands`, `showAwards` enabled. Expired certificates are auto-hidden at build time (Asia/Kolkata, expiry inclusive) with warnings.
+
+1. **NABL Certificate of Accreditation (CC-3243):** NABL, accreditation, JYOTIBA INSTRUMENTS ENTERPRISES, Udyambag Belgaum facility, ISO/IEC 17025:2017 (calibration), 2025-05-11 to 2029-05-10, signed Anita Rani / N. Venkateswaran.
+2. **NABL Scope of Accreditation (CC-3243):** annexure, 20 pages, last amended 2025-05-30, scope as confirmed (mechanical-pressure partial, civil partial; electro-technical/thermal/fluid-flow/medical none).
+3. **INSIZE Authorized Dealer:** INSIZE CO., LTD., authorized dealer in India, 2026-01-01 to 2026-12-31.
+4. **MAHR Authorization Certificate:** Mahr Metrology India Pvt. Ltd., authorized to sell and distribute Mahr Dimensional Metrology Products and Mahr Rotary Stroke Bearing in Belgaum & Hubli, 2026-01-01 to 2026-12-31, signed Deepayan Das (Managing Director). Ref. No. not published (owner to confirm).
+5. **Best Debutant Dealer 2025:** Mahr Metrology India Pvt. Ltd., award/trophy, 2025.
+6. **BelEx 2026 appreciation memento:** The Belgaum Chamber of Commerce & Industries, Belagavi, 24–26 March 2026, Belgaum Foundry Cluster, Udyambag (appreciation for support; not an award/prize).
+
+See `docs/CERTIFICATES_EXTRACTED.md` for exact printed wording, constraints, and held-back notes (MAHR Ref. No., PDF orientation, previews).
 
 ## 10. Display permissions (owner-approved 2026-11-07)
 

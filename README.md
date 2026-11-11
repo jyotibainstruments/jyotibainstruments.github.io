@@ -145,9 +145,19 @@ Overwrite the file at `public/catalogues/<slug>.pdf` with the same filename, com
 
 The site ships no third-party script by default. Setting the environment variable `PUBLIC_GA_ID` to a GA4 Measurement ID (`G-XXXXXXX`) during build enables a self-contained gtag loader with IP anonymisation and a single `whatsapp_click` event carrying the button placement. Everything analytics-related renders only when the ID is set — matching `src/data/privacy-page.json`. Add it as a GitHub Actions secret/env or locally when testing.
 
-## Unconfirmed claims
+## Claims and certificates
 
-Flags in `src/config/site.ts` (`showIsoClaim`, `showDealerStatus`, …) are all `false`. Flip one **only** after the owner supplies evidence (certificate, dealer letter). ISO/IEC 17025 must never be worded as "NABL" or "accredited".
+`showIsoClaim`/`showDealerStatus` remain `false`. `showNablClaim`, `showAuthorisedBrands` and `showAwards` are enabled for confirmed, verified certificates in `src/data/certificates.json` (`docs/CERTIFICATES_EXTRACTED.md`). NABL claims follow the certificate wording and accredited scope only (Belgaum laboratory and site-facility schedule; no accreditation wording on Hubli, Pune, Ahmedabad or Repairs, Sales or Spares pages; no NABL logo/symbol). "Authorised" brand claims require a confirmed, in-date certificate for the stated brand, territory and period.
+
+**Expiry:** certificates past `validUntil` are automatically hidden at build time (Asia/Kolkata, expiry date inclusive) with a build warning; `check-certificates` warns within 60 days but does not fail on expired hidden items. A scheduled GitHub Actions rebuild runs daily at 18:35 UTC (00:05 IST) so expired items drop off without a push. **Note:** GitHub pauses scheduled workflow runs after 60 days of repository inactivity.
+
+## When a certificate renews
+
+1. Save the new source document in `inbox/certificates/` (original, not committed) and place the public file in `public/certificates/` with the stable descriptive name used in `src/data/certificates.json` (or update the `file` path if the name must change). Do not edit the document content.
+2. Read/confirm the exact printed details and update `docs/CERTIFICATES_EXTRACTED.md` and `docs/CONTENT.md` with confirmed facts/quoted wording only.
+3. Update the matching entry in `src/data/certificates.json`: `number`, `issued`, `validUntil`, `summary`, `pages`, `alt`, `disciplineScopes`/fields as applicable, and set `verified: true` only when confirmed.
+4. Generate/update preview assets (PDF page 1 to AVIF/WebP; images via `astro:assets` in `src/assets/certificates/` as applicable) and set `preview` paths.
+5. Commit and push (or let the next scheduled rebuild pick up an already-updated `validUntil` only if committed). Run `npm run certificates` and `NODE_OPTIONS="--max-old-space-size=4096" npm run build` (or `npm run audit`) and confirm `dist/` renders only permitted claims. Update `docs/OPEN_QUESTIONS.md`/`docs/ASSETS_NEEDED.md` if anything remains pending.
 
 ## Repository layout
 

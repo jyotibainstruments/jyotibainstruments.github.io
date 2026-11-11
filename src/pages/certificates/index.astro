@@ -1,0 +1,112 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Section from '../../components/Section.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import CertificateCard from '../../components/CertificateCard.astro';
+import { claims } from '../../config/site';
+import {
+  displayableCertificatesByKind,
+  displayableNablCertificate,
+  displayableNablScopeCertificate,
+} from '../../lib/content';
+import { breadcrumbJsonLd } from '../../lib/seo';
+
+const title = 'Certificates and recognition | JIE';
+const description =
+  'NABL accreditation (CC-3243), brand authorisations and recognition for Jyotiba Instruments Enterprises.';
+
+const items = [
+  { name: 'Home', path: '/' },
+  { name: 'Certificates and recognition', path: '/certificates/' },
+];
+
+const nablCert = claims.showNablClaim ? displayableNablCertificate() : undefined;
+const nablScope = claims.showNablClaim ? displayableNablScopeCertificate() : undefined;
+const accreditation = [nablCert, nablScope].filter((item): item is NonNullable<typeof item> => Boolean(item));
+const authorisations = claims.showAuthorisedBrands
+  ? displayableCertificatesByKind('authorisation')
+  : [];
+const recognition = claims.showAwards
+  ? [...displayableCertificatesByKind('award'), ...displayableCertificatesByKind('event')]
+  : [];
+
+const hasAny = accreditation.length > 0 || authorisations.length > 0 || recognition.length > 0;
+
+const nablIntro =
+  'JIE\'s calibration laboratory at Udyambag, Belgaum is accredited by NABL to ISO/IEC 17025:2017 (certificate CC-3243, valid 11 May 2025 to 10 May 2029) for the scope in the annexure.';
+
+const pageIntro = accreditation.length > 0
+  ? [nablIntro]
+  : ['Documents are shown here only after their details are confirmed and verified.'];
+
+const jsonLd = [breadcrumbJsonLd(items)];
+---
+
+<SiteLayout title={title} description={description} path="/certificates/" jsonLd={jsonLd}>
+  <PageHeader
+    heading="Certificates and recognition"
+    intro={pageIntro}
+    items={items}
+  />
+
+  {
+    !hasAny ? (
+      <Section tone="bg" labelledby="certificates-status">
+        <SectionHeading
+          id="certificates-status"
+          title="Documents"
+          intro="Confirmed documents will appear here once they are verified and in date."
+        />
+      </Section>
+    ) : (
+      <>
+        {accreditation.length > 0 && (
+          <Section tone="bg" labelledby="accreditation-title">
+            <SectionHeading
+              id="accreditation-title"
+              title="Accreditation"
+              intro="Accreditation covers the Belgaum laboratory (and its site-facility schedule) only, for the scope in the annexure."
+            />
+            <div class="cert-grid">
+              {accreditation.map((certificate) => <CertificateCard certificate={certificate} />)}
+            </div>
+          </Section>
+        )}
+
+        {authorisations.length > 0 && (
+          <Section tone="surface" labelledby="authorisations-title">
+            <SectionHeading
+              id="authorisations-title"
+              title="Brand authorisations"
+              intro="Brand authorisations for the stated territory and period."
+            />
+            <div class="cert-grid">
+              {authorisations.map((certificate) => <CertificateCard certificate={certificate} />)}
+            </div>
+          </Section>
+        )}
+
+        {recognition.length > 0 && (
+          <Section tone="bg" labelledby="recognition-title">
+            <SectionHeading
+              id="recognition-title"
+              title="Recognition"
+              intro="Recognition documents as stated."
+            />
+            <div class="cert-grid">
+              {recognition.map((certificate) => <CertificateCard certificate={certificate} />)}
+            </div>
+          </Section>
+        )}
+      </>
+    )
+  }
+</SiteLayout>
+
+<style>
+  .cert-grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+</style>

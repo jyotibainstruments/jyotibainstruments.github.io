@@ -1,0 +1,170 @@
+---
+import { asset } from '../lib/url';
+
+interface Props {
+  id: string;
+  title: string;
+  file: string;
+  preview?: string | null;
+  pages?: number;
+  alt: string;
+  showDownload?: boolean;
+}
+
+const { id, title, file, preview = null, pages = 1, alt, showDownload = true } = Astro.props;
+
+const viewerUrl = asset('/pdfjs/web/viewer.html');
+const pdfUrl = asset(file);
+---
+
+<div
+  class="cert-pdf"
+  data-cert-pdf
+  data-cert-name={title}
+  data-cert-viewer={viewerUrl}
+  data-cert-pdf={pdfUrl}
+>
+  <div class="cert-pdf__card" data-cert-facade>
+    <div class="cert-pdf__poster">
+      {preview ? (
+        <img src={asset(preview)} alt={alt} width="640" height="853" loading="lazy" />
+      ) : (
+        <div class="cert-pdf__cover" aria-hidden="true">
+          <span class="cert-pdf__cover-mark">PDF</span>
+          <span class="cert-pdf__cover-name">{title}</span>
+          <span class="cert-pdf__cover-sub">{pages} {pages === 1 ? 'page' : 'pages'}</span>
+        </div>
+      )}
+    </div>
+
+    <div class="cert-pdf__body">
+      <div class="cert-pdf__actions">
+        <button class="btn btn--primary" type="button" data-cert-open data-catalogue-open={`cert-${id}`}>
+          View certificate
+        </button>
+        {showDownload && (
+          <a class="btn btn--ghost" href={pdfUrl} download>
+            Download PDF
+          </a>
+        )}
+      </div>
+      <ul class="cert-pdf__links">
+        <li><a href={pdfUrl} target="_blank" rel="noopener">Open PDF in a new tab</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cert-pdf__viewer" data-cert-panel hidden>
+    <div class="cert-pdf__bar">
+      <p class="cert-pdf__title">{title}</p>
+      <div class="cert-pdf__bar-actions">
+        <button type="button" data-cert-full class="cert-pdf__barbtn">Fullscreen</button>
+        <button type="button" data-cert-close class="cert-pdf__barbtn cert-pdf__barbtn--emphasis">Close</button>
+      </div>
+    </div>
+    <div class="cert-pdf__frame" data-cert-frame role="region" aria-label={`Viewer: ${title}`}></div>
+  </div>
+</div>
+
+<style>
+  .cert-pdf { display: grid; gap: var(--space-4); }
+  .cert-pdf__card {
+    display: grid; gap: var(--space-5); align-items: start;
+    padding: clamp(16px, 3vw, 24px);
+    border: 1px solid var(--line); border-radius: var(--radius-card);
+    background: var(--surface); box-shadow: var(--shadow-card);
+  }
+  @media (min-width: 640px) { .cert-pdf__card { grid-template-columns: minmax(140px, 200px) minmax(0, 1fr); } }
+  .cert-pdf__poster img {
+    display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover;
+    border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--crimson-50);
+  }
+  .cert-pdf__cover {
+    display: flex; flex-direction: column; justify-content: flex-end; gap: var(--space-2);
+    width: 100%; aspect-ratio: 3 / 4; padding: var(--space-4);
+    border: 1px solid var(--crimson-900); border-radius: var(--radius-card);
+    background: linear-gradient(160deg, var(--crimson), var(--crimson-900)); color: var(--on-crimson);
+  }
+  .cert-pdf__cover-mark {
+    display: inline-grid; width: 44px; height: 44px; margin-bottom: auto; place-items: center;
+    border: 1px solid color-mix(in srgb, var(--on-crimson) 22%, transparent); border-radius: var(--radius-pill);
+    font-size: var(--text-xs); font-weight: 700;
+  }
+  .cert-pdf__cover-name { font-family: var(--font-heading); font-size: var(--text-base); font-weight: 800; line-height: 1.2; }
+  .cert-pdf__cover-sub { color: color-mix(in srgb, var(--on-crimson) 82%, transparent); font-size: var(--text-xs); }
+  .cert-pdf__body { display: grid; align-content: start; gap: var(--space-4); }
+  .cert-pdf__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  .cert-pdf__links { margin: 0; padding: 0; list-style: none; }
+  .cert-pdf__links a { display: inline-block; padding-block: var(--space-2); color: var(--crimson); font-size: var(--text-sm); font-weight: 600; }
+  .cert-pdf__viewer { display: grid; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--surface); box-shadow: var(--shadow-card); }
+  .cert-pdf__bar {
+    --focus-keyline: var(--on-crimson);
+    display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4);
+    padding: var(--space-2) var(--space-3); background: var(--crimson-900); color: var(--on-crimson);
+  }
+  .cert-pdf__title { margin: 0; flex: 1 1 auto; font-family: var(--font-heading); font-size: var(--text-sm); font-weight: 700; }
+  .cert-pdf__bar-actions { display: flex; gap: var(--space-2); }
+  .cert-pdf__barbtn {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0.4rem 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--on-crimson) 65%, transparent); border-radius: 12px;
+    background: transparent; color: var(--on-crimson); font-size: var(--text-xs); font-weight: 650; cursor: pointer;
+  }
+  .cert-pdf__barbtn:hover { background: var(--surface); border-color: var(--surface); color: var(--crimson); }
+  .cert-pdf__frame { height: min(85svh, 900px); background: var(--bg); }
+  .cert-pdf__frame:fullscreen { height: 100svh; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-cert-pdf]').forEach((root) => {
+    const facade = root.querySelector<HTMLElement>('[data-cert-facade]');
+    const panel = root.querySelector<HTMLElement>('[data-cert-panel]');
+    const openBtn = root.querySelector<HTMLButtonElement>('[data-cert-open]');
+    const closeBtn = root.querySelector<HTMLButtonElement>('[data-cert-close]');
+    const fullBtn = root.querySelector<HTMLButtonElement>('[data-cert-full]');
+    const frameHost = root.querySelector<HTMLElement>('[data-cert-frame]');
+    if (!facade || !panel || !openBtn || !closeBtn || !fullBtn || !frameHost) return;
+
+    const name = root.dataset.certName ?? 'certificate';
+    const viewerBase = root.dataset.certViewer ?? '';
+    const pdfUrl = root.dataset.certPdf ?? '';
+    let iframe: HTMLIFrameElement | null = null;
+
+    const close = (): void => {
+      panel.hidden = true;
+      facade.hidden = false;
+      if (iframe) { iframe.remove(); iframe = null; }
+      delete document.body.dataset.catalogueOpen;
+      openBtn.focus();
+    };
+
+    const open = (): void => {
+      if (!iframe) {
+        iframe = document.createElement('iframe');
+        iframe.setAttribute('title', `${name} viewer`);
+        frameHost.replaceChildren(iframe);
+      }
+      iframe.src = `${viewerBase}?file=${encodeURIComponent(pdfUrl)}#zoom=page-width`;
+      facade.hidden = true;
+      panel.hidden = false;
+      document.body.dataset.catalogueOpen = 'true';
+      closeBtn.focus();
+    };
+
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+
+    const supportsFullscreen = 'requestFullscreen' in document.documentElement;
+    if (supportsFullscreen) {
+      const setFullName = (): void => {
+        fullBtn.textContent = document.fullscreenElement ? 'Exit fullscreen' : 'Fullscreen';
+      };
+      fullBtn.addEventListener('click', () => {
+        if (document.fullscreenElement) void document.exitFullscreen().catch(() => undefined);
+        else void panel.requestFullscreen().catch(() => undefined);
+      });
+      document.addEventListener('fullscreenchange', setFullName);
+    } else {
+      fullBtn.hidden = true;
+    }
+  });
+</script>

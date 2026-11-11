@@ -13,6 +13,7 @@ import contactPageJson from '../data/contact-page.json';
 import locationsJson from '../data/locations.json';
 import privacyPageJson from '../data/privacy-page.json';
 import notFoundJson from '../data/not-found.json';
+import certificatesJson from '../data/certificates.json';
 
 /**
  * Validates a JSON collection and fails the build with a readable list of
@@ -98,6 +99,7 @@ const companySchema = z.object({
     )
     .default([]),
   published: z.boolean(),
+  confirmed: z.boolean().default(false),
 });
 
 export type Company = z.infer<typeof companySchema>;
@@ -606,3 +608,171 @@ const notFoundSchema = z.object({
 export type NotFoundPage = z.infer<typeof notFoundSchema>;
 
 export const notFoundPage = parseCollection('not-found page', notFoundSchema, notFoundJson);
+
+/* Certificates */
+
+export const certificateDisciplines = [
+  'mechanical-pressure',
+  'electro-technical',
+  'thermal',
+  'fluid-flow',
+  'medical',
+  'civil',
+] as const;
+
+const disciplineScopeSchema = z.enum(['full', 'partial', 'none']);
+
+const disciplineScopesSchema = z.object({
+  'mechanical-pressure': disciplineScopeSchema,
+  'electro-technical': disciplineScopeSchema,
+  thermal: disciplineScopeSchema,
+  'fluid-flow': disciplineScopeSchema,
+  medical: disciplineScopeSchema,
+  civil: disciplineScopeSchema,
+});
+
+const isoDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+
+const certificateSchema = z.object({
+  id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Use lowercase letters, digits and single hyphens'),
+  kind: z.enum(['accreditation', 'scope', 'authorisation', 'award', 'event']),
+  title: z.string().min(1),
+  issuer: z.string().min(1),
+  holderAsPrinted: z.string().min(1).nullable().default(null),
+  number: z.string().min(1).nullable().default(null),
+  issued: isoDateSchema.nullable().default(null),
+  validUntil: isoDateSchema.nullable().default(null),
+  lastAmended: isoDateSchema.nullable().default(null),
+  summary: z.string().min(1),
+  brand: z.string().min(1).nullable().default(null),
+  file: z.string().min(1),
+  preview: z.string().min(1).nullable().default(null),
+  pages: z.number().int().positive(),
+  alt: z.string().min(1),
+  verified: z.boolean(),
+  order: z.number().int().nonnegative(),
+  disciplineScopes: disciplineScopesSchema.nullable().default(null),
+  territory: z.string().min(1).nullable().default(null),
+  productLines: z.array(z.string().min(1)).default([]),
+  quote: z.string().min(1).nullable().default(null),
+  signatory: z.string().min(1).nullable().default(null),
+  eventDates: z.string().min(1).nullable().default(null),
+  venue: z.string().min(1).nullable().default(null),
+});
+
+export type Certificate = z.infer<typeof certificateSchema>;
+export type CertificateDiscipline = (typeof certificateDisciplines)[number];
+export type DisciplineScope = z.infer<typeof disciplineScopeSchema>;
+
+export const certificates = parseCollection(
+  'certificates',
+  z
+    .array(certificateSchema)
+    .refine((items) => hasUniqueValues(items.map((item) => item.id)), {
+      message: 'Certificate ids must be unique',
+    })
+    .superRefine((items, ctx) => {
+      items.forEach((item, index) => {
+        if (item.kind !== 'event' && !item.holderAsPrinted) {
+          ctx.addIssue({
+            code: 'custom',
+            path: [index, 'holderAsPrinted'],
+            message: 'holderAsPrinted is required except for event certificates',
+          });
+        }
+        if (item.kind === 'authorisation' && !item.brand) {
+          ctx.addIssue({
+            code: 'custom',
+            path: [index, 'brand'],
+            message: 'Authorisation certificates must set a brand slug',
+          });
+        }
+        if ((item.kind === 'accreditation' || item.kind === 'scope') && !item.disciplineScopes) {
+          ctx.addIssue({
+            code: 'custom',
+            path: [index, 'disciplineScopes'],
+            message: 'NABL accreditation/scope entries must include disciplineScopes',
+          });
+        }
+      });
+    }),
+  certificatesJson,
+);
+
+export const certificatesByKind = (kind: Certificate['kind']) =>
+  certificates.filter((item) => item.kind === kind).sort((a, b) => a.order - b.order);
+
+function todayInKolkata(): string {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Kolkata',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date());
+}
+
+function isCertificateInDate(certificate: Certificate): boolean {
+  if (!certificate.validUntil) return true;
+  // Expiry date inclusive in Asia/Kolkata.
+  return todayInKolkata() <= certificate.validUntil;
+}
+
+const warnedExpired = new Set<string>();
+
+export function isCertificateDisplayable(certificate: Certificate): boolean {
+  if (!certificate.verified) return false;
+  if (!isCertificateInDate(certificate)) {
+    if (!warnedExpired.has(certificate.id)) {
+      warnedExpired.add(certificate.id);
+      console.warn(
+        `[certificates] "${certificate.id}" expired on ${certificate.validUntil} (Asia/Kolkata) and is hidden from output.`,
+      );
+    }
+    return false;
+  }
+  return true;
+}
+
+export function displayableCertificatesByKind(kind: Certificate['kind']): Certificate[] {
+  return certificatesByKind(kind).filter((item) => isCertificateDisplayable(item));
+}
+
+export function displayableAuthorisationForBrand(brand: string): Certificate | undefined {
+  return certificates.find(
+    (item) =>
+      item.kind === 'authorisation' &&
+      item.brand === brand &&
+      isCertificateDisplayable(item),
+  );
+}
+
+export function hasDisplayableCertificates(): boolean {
+  return certificates.some((item) => isCertificateDisplayable(item));
+}
+
+export function getCertificate(id: string): Certificate | undefined {
+  return certificates.find((item) => item.id === id);
+}
+
+export function nablScopeForDiscipline(slug: string): DisciplineScope {
+  if (!certificateDisciplines.includes(slug as CertificateDiscipline)) return 'none';
+  const source = certificates.find(
+    (item) =>
+      item.kind === 'scope' &&
+      item.disciplineScopes &&
+      isCertificateDisplayable(item),
+  );
+  return source?.disciplineScopes?.[slug as CertificateDiscipline] ?? 'none';
+}
+
+export function displayableNablScopeCertificate(): Certificate | undefined {
+  return certificates.find(
+    (item) => item.kind === 'scope' && isCertificateDisplayable(item),
+  );
+}
+
+export function displayableNablCertificate(): Certificate | undefined {
+  return certificates.find(
+    (item) => item.kind === 'accreditation' && isCertificateDisplayable(item),
+  );
+}

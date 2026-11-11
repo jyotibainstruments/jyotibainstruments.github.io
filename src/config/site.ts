@@ -9,6 +9,9 @@ export type { Office };
 
 export type ClaimFlag =
   | 'showIsoClaim'
+  | 'showNablClaim'
+  | 'showAuthorisedBrands'
+  | 'showAwards'
   | 'showFoundingYear'
   | 'showYearsInBusiness'
   | 'showTeamSize'
@@ -17,10 +20,16 @@ export type ClaimFlag =
 
 /**
  * All unconfirmed claims are off. Flip only after the owner supplies evidence.
- * ISO/IEC 17025: never write "NABL" or "accredited".
+ * ISO/IEC 17025: never write "NABL" or "accredited" unless `showNablClaim` is
+ * enabled and the certificate/scope data is verified and in-date.
+ * Brand "authorised" wording is allowed only behind `showAuthorisedBrands`
+ * for certificates that state it, for the named brand, territory and period.
  */
 export const claims: Record<ClaimFlag, boolean> = {
   showIsoClaim: false,
+  showNablClaim: true,
+  showAuthorisedBrands: true,
+  showAwards: true,
   showFoundingYear: false,
   showYearsInBusiness: false,
   showTeamSize: false,

@@ -3,7 +3,12 @@ import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import Button from '../Button.astro';
 import WhatsAppButton from '../WhatsAppButton.astro';
-import { home } from '../../lib/content';
+import { claims } from '../../config/site';
+import {
+  displayableNablCertificate,
+  displayableNablScopeCertificate,
+  home,
+} from '../../lib/content';
 import { site } from '../../config/site';
 import { asset, telHref, url } from '../../lib/url';
 
@@ -11,6 +16,8 @@ const { hero } = home;
 
 const lab = site.offices.find((office) => office.kind === 'lab');
 const branch = site.offices.find((office) => office.kind === 'branch');
+const showNablChip =
+  claims.showNablClaim && Boolean(displayableNablCertificate() && displayableNablScopeCertificate());
 
 /**
  * The hero falls back to the quick-contact card. When the owner supplies a
@@ -31,14 +38,29 @@ const heroSrc = heroPhoto ? asset(`/images/${heroPhoto}`) : null;
 
       <ul class="chips">
         {
-          hero.chips.map((chip) => (
-            <li class="chip">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true" focusable="false">
-                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              <span>{chip}</span>
-            </li>
-          ))
+          hero.chips.map((chip) => {
+            const isLabChip = chip === 'Calibration lab in Belgaum';
+            if (isLabChip && showNablChip) {
+              return (
+                <li class="chip chip--link">
+                  <a href={url('/certificates/')}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true" focusable="false">
+                      <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span>Calibration accredited by NABL for the scope listed</span>
+                  </a>
+                </li>
+              );
+            }
+            return (
+              <li class="chip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true" focusable="false">
+                  <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span>{chip}</span>
+              </li>
+            );
+          })
         }
       </ul>
 
@@ -188,6 +210,25 @@ const heroSrc = heroPhoto ? asset(`/images/${heroPhoto}`) : null;
     height: 16px;
     flex: none;
     color: var(--crimson);
+  }
+
+  .chip--link {
+    padding: 0;
+  }
+
+  .chip--link a {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.85rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .chip--link a:hover {
+    color: var(--crimson);
+    text-decoration: underline;
   }
 
   .hero__media {

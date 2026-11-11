@@ -7,17 +7,8 @@
     "pdf": null,
     "categories": [],
     "highlights": [],
-    "published": false
-  },
-  {
-    "slug": "mitutoyo",
-    "name": "Mitutoyo",
-    "logo": null,
-    "intro": null,
-    "pdf": null,
-    "categories": [],
-    "highlights": [],
-    "published": false
+    "published": false,
+    "confirmed": true
   },
   {
     "slug": "insize",
@@ -27,7 +18,19 @@
     "pdf": null,
     "categories": [],
     "highlights": [],
-    "published": false
+    "published": false,
+    "confirmed": true
+  },
+  {
+    "slug": "mitutoyo",
+    "name": "Mitutoyo",
+    "logo": null,
+    "intro": null,
+    "pdf": null,
+    "categories": [],
+    "highlights": [],
+    "published": false,
+    "confirmed": false
   },
   {
     "slug": "baker",
@@ -37,7 +40,8 @@
     "pdf": null,
     "categories": [],
     "highlights": [],
-    "published": false
+    "published": false,
+    "confirmed": false
   },
   {
     "slug": "wika",
@@ -47,6 +51,7 @@
     "pdf": null,
     "categories": [],
     "highlights": [],
-    "published": false
+    "published": false,
+    "confirmed": false
   }
 ]

@@ -8,7 +8,13 @@ import ProcessAndWhy from '../components/home/ProcessAndWhy.astro';
 import ClientsMarquee from '../components/home/ClientsMarquee.astro';
 import Locations from '../components/home/Locations.astro';
 import FinalCta from '../components/home/FinalCta.astro';
-import { primaryOffice, site } from '../config/site';
+import { claims, primaryOffice, site } from '../config/site';
+import {
+  displayableNablCertificate,
+  displayableNablScopeCertificate,
+  getCertificate,
+  isCertificateDisplayable,
+} from '../lib/content';
 import {
   buildTitle,
   localBusinessJsonLd,
@@ -22,8 +28,31 @@ const description =
 
 const branchOffice = site.offices.find((office) => office.kind === 'branch');
 
+const nablCert = claims.showNablClaim ? displayableNablCertificate() : undefined;
+const nablScope = claims.showNablClaim ? displayableNablScopeCertificate() : undefined;
+const hasCertification =
+  nablCert && nablScope
+    ? {
+        '@type': 'Certification',
+        name: 'ISO/IEC 17025:2017 accreditation (certificate CC-3243)',
+        issuedBy: {
+          '@type': 'Organization',
+          name: 'National Accreditation Board for Testing and Calibration Laboratories (NABL)',
+        },
+        certificationIdentification: 'CC-3243',
+        validFrom: '2025-05-11',
+        expires: '2029-05-10',
+      }
+    : undefined;
+
+const bestDealer = claims.showAwards ? getCertificate('mahr-best-debutant-dealer') : undefined;
+const awards =
+  bestDealer && isCertificateDisplayable(bestDealer)
+    ? ['Best Debutant Dealer 2025 (Mahr Metrology India Pvt. Ltd.)']
+    : [];
+
 const jsonLd = [
-  organizationJsonLd(),
+  organizationJsonLd({ hasCertification, awards }),
   webSiteJsonLd(),
   localBusinessJsonLd(primaryOffice),
   ...(branchOffice ? [localBusinessJsonLd(branchOffice)] : []),

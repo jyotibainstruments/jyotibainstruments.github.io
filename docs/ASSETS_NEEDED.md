@@ -51,8 +51,17 @@ Until permission and files arrive, the site shows text wordmarks.
 
 The owner supplies the PDFs. The site builds the viewer and facade.
 
+## Certificates and recognition
+
+Confirmed certificates/recognition are published (see `docs/CERTIFICATES_EXTRACTED.md`, `src/data/certificates.json`). Originals remain in `inbox/certificates/` (gitignored, not committed). Public PDFs are in `public/certificates/` (descriptive names); JPEG recognitions are in `src/assets/certificates/` via `astro:assets`.
+
+- [ ] **Upright scan of the Mahr certificate:** `public/certificates/jie-mahr-authorization-certificate.pdf` is a photograph of the framed certificate turned 90 degrees; no lossless rotation tool was available, so it is published as-is (neutral cover shown). Replace with an upright scan/PDF when available.
+- [ ] **Mahr reference number:** confirm `MMIPL/DIS/ALY2026/27SE` (sideways in photo, not published).
+- [ ] **PDF page-1 previews:** generate page-1 previews for PDF certificates as AVIF/WebP when a rasterization path is available (Playwright/Chromium viewer capture was not executed in this environment); `preview` is currently `null`.
+- [ ] **Renewals for 2027:** supply renewed Mahr and Insize authorization certificates before 31 Dec 2026 (auto-hidden after expiry, Asia/Kolkata inclusive; daily scheduled rebuild configured).
+- [ ] On renewal/replacement: supply the new document, confirm details, update data/validity, and replace files as described in `README.md`.
+
 ## Other
 
-- [ ] ISO/IEC 17025 certificate scan, if the claim is to be shown (see `OPEN_QUESTIONS.md`).
 - [ ] Privacy policy wording, if analytics is enabled.
 - [ ] Product photographs for the four highlighted products, if available.

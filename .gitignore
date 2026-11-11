@@ -27,3 +27,6 @@ docs/screenshots/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Local certificate originals (never commit)
+inbox/
